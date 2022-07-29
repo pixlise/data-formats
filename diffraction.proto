@@ -1,0 +1,36 @@
+syntax = "proto3";
+option go_package = "./;protos";
+
+
+message Diffraction {
+
+    string target_id=1;
+    int32 drive_id=2;
+    int32 site_id=3;
+
+    string target=4;
+    string site=5;
+    string title=6;
+
+    string sol=7;
+    int32 rtt=8;
+    int32 sclk=9;
+
+
+    message Location {
+        string id=1;
+        
+        message Peak {
+            int32 peak_channel=1;
+            float effect_size=2;
+            float baseline_variation=3;
+            float global_difference=4;
+            float difference_sigma=5;
+            float peak_height=6;
+        }
+        repeated Peak peaks = 2;
+    }
+
+    repeated Location locations=10;
+
+}

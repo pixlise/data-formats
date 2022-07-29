@@ -1,0 +1,183 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+message Experiment
+{
+    /* Dataset Summary meta fields are stored as JSON outside of here, a lot of those values being derived from
+    *  counts of items in this file. The rest are fields on the root of Experiment here. This way anything that
+    *  has access to an Experiment file won't need to also download the corresponding Dataset Summary.
+    */
+    string target_id=1;
+    int32 drive_id=11;
+    int32 site_id=12;
+
+    string target=13;
+    string site=14;
+    string title=15;
+
+    reserved 16; // SOL used to be defined as int32
+    string sol=25;
+    int32 rtt=17;
+    int32 sclk=18;
+
+    /* Counts, these can be counted by iterating through Locations but we store them here for reference */
+    int32 bulk_spectra=19;
+    int32 dwell_spectra=20;
+    int32 max_spectra=21;
+    int32 normal_spectra=22;
+    int32 pseudo_intensities=23;
+
+    /* This is the main or default context image to show. It matches either one of the images in aligned_context_images
+    *  or one in unaligned_context_images
+    */
+    string main_context_image=2;
+
+    /* Aligned context image - describes which PMC images are defined for, and if they're trapezoid corrected. This is
+    *  stored in the same order as location BeamLocation i/j coordinates, so [0] is BeamLocation.image_i/image_j and
+    *  [1] is BeamLocation.context_locations[0], etc
+    *  Can think of this as the metadata to describe what's in a beam location object
+    */
+    message ContextImageCoordinateInfo
+    {
+        string image=1; /* image file name */
+        int32 pmc=2;    /* PMC for the image */
+        bool trapezoid_corrected=3; /* Is this image trapezoid corrected */
+    }
+    repeated ContextImageCoordinateInfo aligned_context_images=24;
+
+    /* Any other images, which we don't have beam location information for are in this array */
+    repeated string unaligned_context_images=6;
+
+    /* Matched context image - list of context images which have been transformed to match a given PMC's MCC
+    *  image (in aligned_context_images), for example WATSON images. The image needs to be transformed so the MCC image
+    *  area matches pixel-for-pixel, but the image is likely to be of a different size, so we include an x/y offset.
+    *  This gives the top-left pixel coordinate of MCC image relative to the top-left of the matched image. This way
+    *  the PMC beam locations can be reused to draw their position on the matched image.
+    */
+    message MatchedContextImageInfo
+    {
+        string image=1;        /* image file name */
+        int32 aligned_index=2; /* aligned_context_images array index this one matches */
+        float x_offset=3;      /* x-offset of matched left edge vs aligned image */
+        float y_offset=4;      /* y-offset of matched top edge vs aligned image */
+        float x_scale=5;       /* x-scale of matched vs aligned width, if matched is 2000 wide, aligned is 1000, this=2 */
+        float y_scale=6;       /* y-scale of matched vs aligned height */
+    }
+    repeated MatchedContextImageInfo matched_aligned_context_images=26;
+
+    /* If we were generated when a bulk sum quant file existed, the file name is stored here for loading */
+    string bulk_sum_quant_file=9;
+
+    /* What is the detector configuration that this file was generated for */
+    string detector_config=10;
+
+    /* The labels and types of metadata fields we've stored in locations. This way MetaDataItem can refer to
+    *  these arrays and not need to store redundant copies of the field name strings
+    */
+    repeated string meta_labels=3;
+
+    enum MetaDataType
+    {
+        MT_FLOAT=0;
+        MT_INT=1;
+        MT_STRING=2;
+    }
+    repeated MetaDataType meta_types=4;
+
+    message Location
+    {
+        string id=1;
+
+        message MetaDataItem
+        {
+            /* Only storing the metadata label outside of the item, here we just store its index */
+            int32 label_idx=1;
+
+            /* NOTE: in javascript protobuf there is no "has" function, so each of these report their default 
+            *  value which means if it's a 0 or 0.0 or '' we don't actually know what type to treat it as, so we
+            *  are putting types in an enum list instead, one for each meta_label at the root object!
+            */
+            float fvalue=2;
+            int32 ivalue=3;
+            string svalue=4;
+        }
+
+        repeated MetaDataItem meta=2;
+
+        message BeamLocation
+        {
+            float x=1;
+            float y=2;
+            float z=3;
+            float geom_corr=7;
+
+            /* Relative to the image whose file name is in main_context_image */
+            float image_i=4;
+            float image_j=5;
+
+            message Coordinate2D
+            {
+                float i=1;
+                float j=2;
+            }
+
+            /* Each context image is taken at different locations, so needs its own relative set of beam location
+            *  coordinates. The image_i/image_j coordinates are relative to main_context_image, while here we store
+            *  other coordinates, which are relative to the corresponding array item of aligned_context_images. Ended up
+            *  this way because we originally we only had one set of i/j's, relative to one context image, and
+            *  extending by adding another array was the smoothest in terms of backwards compatibility.
+            */
+            repeated Coordinate2D context_locations=6;
+        }
+
+        BeamLocation beam=3;
+
+        enum SpectrumCompression
+        {
+            RAW = 0; /* Storing raw data, so N*int32 in size */
+            ZERO_RUN = 1; /* 0's all have a count after them. Assumption is a lot of runs of 0's */
+            RLE = 2; /* Run length encoding, assumption is many numbers have long runs */
+        }
+
+        SpectrumCompression spectrum_compression=4;
+
+        /* Spectrum data, stored as specified in spectrum_compression */
+        message DetectorSpectrum
+        {
+            repeated MetaDataItem meta=1;
+            repeated int32 spectrum=2;
+            int32 spectrumMax=3;
+        }
+
+        /* Need multiple of these, detector A & B but can have normal & dwell */
+        repeated DetectorSpectrum detectors=5;
+
+        /* Ability to store an image per PMC, FM data several images with different PMCs in the file name */
+        string context_image=6;
+
+        /* Storage of pseudo-intensities. NOTE: we currently assume there'll be a detector_id, we may only store
+        *  one set, with detector_id missing, this data structure works in both scenarios
+        */
+        message PseudoIntensityData
+        {
+            string detector_id=1;
+            /* Storage of each column of pseudo-intensity values */
+            repeated float element_intensities=2;
+        }
+        repeated PseudoIntensityData pseudo_intensities=7;
+    }
+
+    repeated Location locations=5;
+
+    /* If we have pseudo-intensity data, this will contain the labels of the elements from the CSV, along with
+    *  their channel start/end
+    */
+    message PseudoIntensityRange
+    {
+        string name=1;
+        int32 channel_start=2;
+        int32 channel_end=3;
+    }
+    repeated PseudoIntensityRange pseudo_intensity_ranges=8;
+}
+

@@ -1,0 +1,35 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message Quantification {
+
+  repeated string labels=1;
+
+  enum QuantDataType {
+      QT_FLOAT=0;
+      QT_INT=1;
+  }
+  repeated QuantDataType types=2;
+
+  message QuantLocation {
+    int32 pmc=1;
+    int32 rtt=2;
+    int32 sclk=3;
+    //string filename=4;
+
+    message QuantDataItem {
+      float fvalue=2;
+      int32 ivalue=3;
+    }
+
+    repeated QuantDataItem values=5;
+  }
+
+  message QuantLocationSet {
+    string detector=1;
+    repeated QuantLocation location=2;
+  }
+
+  repeated QuantLocationSet locationSet=3;
+}
