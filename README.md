@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/519254091.svg)](https://zenodo.org/badge/latestdoi/519254091)
+
 # Data Formats for PIXLISE
 
 ## What is this?
