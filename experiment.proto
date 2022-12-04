@@ -1,11 +1,13 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+
 message Experiment
 {
     /* Dataset Summary meta fields are stored as JSON outside of here, a lot of those values being derived from
     *  counts of items in this file. The rest are fields on the root of Experiment here. This way anything that
     *  has access to an Experiment file won't need to also download the corresponding Dataset Summary.
+    *  NOTE: Now that we support combining scans, these fields may not be set if it's a combination dataset
     */
     string target_id=1;
     int32 drive_id=11;
@@ -20,7 +22,15 @@ message Experiment
     int32 rtt=17;
     int32 sclk=18;
 
-    /* Counts, these can be counted by iterating through Locations but we store them here for reference */
+    /* If we were generated when a bulk sum quant file existed, the file name is stored here for loading */
+    string bulk_sum_quant_file=9;
+
+    /* What is the detector configuration that this file was generated for */
+    string detector_config=10;
+
+    /* Counts, these can be counted by iterating through Locations but we store them here for reference
+    *  NOTE: These will always be set!
+    */
     int32 bulk_spectra=19;
     int32 dwell_spectra=20;
     int32 max_spectra=21;
@@ -32,6 +42,37 @@ message Experiment
     */
     string main_context_image=2;
 
+    /* A long time after we had individual datasets as above, we decided to support combination of multiple scans
+    *  into one dataset. This required the ability to store meta data from each. In the Locations array, each location
+    *  has an index to define which scan source it is from. The absense of scan_sources indicates this is an individual
+    *  scan, not a combined one
+    */
+    message ScanSource
+    {
+        string instrument=1;
+
+        /* Dataset Summary meta fields are stored as JSON outside of here, a lot of those values being derived from
+        *  counts of items in this file. The rest are fields on the root of Experiment here. This way anything that
+        *  has access to an Experiment file won't need to also download the corresponding Dataset Summary.
+        */
+        string target_id=2;
+        int32 drive_id=3;
+        int32 site_id=4;
+
+        string target=5;
+        string site=6;
+        string title=7;
+
+        string sol=8;
+        string rtt=9;
+        int32 sclk=10;
+
+        string bulk_sum_quant_file=11;
+        string detector_config=12;
+    }
+
+    repeated ScanSource scan_sources=27;
+
     /* Aligned context image - describes which PMC images are defined for, and if they're trapezoid corrected. This is
     *  stored in the same order as location BeamLocation i/j coordinates, so [0] is BeamLocation.image_i/image_j and
     *  [1] is BeamLocation.context_locations[0], etc
@@ -42,6 +83,7 @@ message Experiment
         string image=1; /* image file name */
         int32 pmc=2;    /* PMC for the image */
         bool trapezoid_corrected=3; /* Is this image trapezoid corrected */
+        int32 scan_source=4; /* Not set if this is not a combined dataset */
     }
     repeated ContextImageCoordinateInfo aligned_context_images=24;
 
@@ -65,12 +107,6 @@ message Experiment
     }
     repeated MatchedContextImageInfo matched_aligned_context_images=26;
 
-    /* If we were generated when a bulk sum quant file existed, the file name is stored here for loading */
-    string bulk_sum_quant_file=9;
-
-    /* What is the detector configuration that this file was generated for */
-    string detector_config=10;
-
     /* The labels and types of metadata fields we've stored in locations. This way MetaDataItem can refer to
     *  these arrays and not need to store redundant copies of the field name strings
     */
@@ -87,6 +123,7 @@ message Experiment
     message Location
     {
         string id=1;
+        int32 scan_source=9; /* Not set if this is not a combined dataset */
 
         message MetaDataItem
         {
