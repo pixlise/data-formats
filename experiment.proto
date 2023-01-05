@@ -69,6 +69,8 @@ message Experiment
 
         string bulk_sum_quant_file=11;
         string detector_config=12;
+
+        int32 id_offset=13;
     }
 
     repeated ScanSource scan_sources=27;
