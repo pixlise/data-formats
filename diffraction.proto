@@ -27,6 +27,7 @@ message Diffraction {
             float global_difference=4;
             float difference_sigma=5;
             float peak_height=6;
+            string detector=7;
         }
         repeated Peak peaks = 2;
     }
