@@ -1,0 +1,288 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+/* How to define messages:
+- Messages sent through web socket protobuf communications are all wrapped in
+  WSMessage, so make sure to add it to the oneof clause
+- The field added to the oneof clause must have the same name as the message name, for
+  example: 
+        UserDetailsUpd userDetailsUpd = 1;
+  NOTE: the name starts with lower case though!
+- Messages where we want to associate a request and response/updates must have the suffix
+  Req, Resp and Upd and the name prefix must be the same
+- For HTTP request/responses, ensure they don't end in Req, Resp or Upd to not confuse
+  the mappings for WSMessage!
+*/
+
+////////////////////////////////////
+// HTTP requests/responses
+////////////////////////////////////
+message BeginWSConnectionResponse
+{
+    string connToken = 1;
+}
+
+message VersionResponse
+{
+    message Version
+    {
+        string component = 1;
+        string version = 2;
+    }
+
+    repeated Version versions = 1;
+}
+
+////////////////////////////////////
+// Websocket messaging
+////////////////////////////////////
+
+// Replacement for HTTP status codes
+enum ResponseStatus
+{
+    OK = 0;
+    NOT_FOUND = 1;
+    BAD_REQUEST = 2;
+    SERVER_ERROR = 3;
+}
+
+
+////////////////////////////////////
+// User details
+message UserDetailsReq
+{
+}
+
+message UserDetails
+{
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string iconURL = 4;
+
+    string dataCollectionVersion = 5;
+
+    
+    message Hints
+    {
+        bool enabled = 1;
+        repeated string dismissedHints = 2;
+    }
+
+    Hints hints = 6;
+
+    enum NotificationMethod
+    {
+        NONE = 0;
+        EMAIL = 1;
+        UI = 2;
+        BOTH = 3;
+    }
+
+    message Notifications
+    {
+        NotificationMethod userQuantComplete = 1;
+        NotificationMethod quantShared = 2;
+        NotificationMethod newDataset = 3;
+        NotificationMethod updatedDataset = 4;
+        NotificationMethod imageAddedToDataset = 5;
+        NotificationMethod majorModuleReleased = 6;
+        NotificationMethod minorModuleReleased = 7;
+    }
+
+    Notifications notifications = 7;
+
+    repeated string permissions = 8;
+}
+
+message UserDetailsResp
+{
+    ResponseStatus status = 1;
+    UserDetails details = 2;
+}
+
+message UserDetailsUpd
+{
+    UserDetails details = 1;
+}
+
+message SetUserDetailsReq
+{
+    UserDetails Details = 1;
+}
+
+message SetUserDetailsResp
+{
+    ResponseStatus status = 1;
+}
+
+////////////////////////////////////
+// Datasets
+message DatasetListReq
+{
+    string solFilter = 1;
+}
+
+message DatasetItem
+{
+    string id = 1;
+    //string group = ;
+    string driveId = 2;
+    string siteId = 3;
+    string targetId = 4;
+    string site = 5;
+    string target = 6;
+    string title = 7;
+    string sol = 8;
+    string RTT = 9;
+    string SCLK = 10;
+    string contextImage = 11;
+    int32 locationCount = 12;
+    //int32 dataSize = 13;
+    //int32 contextImages = 14;
+    //int32 tiffImages = 15;
+    int32 normalSpectra = 16;
+    int32 dwellSpectra = 17;
+    int32 bulkSpectra = 18;
+    int32 maxSpectra = 19;
+    int32 pseudoIntensities = 20;
+    string detectorConfig = 21;
+    uint64 createdUnixSec = 22;
+    //string datasetLink = ;
+    //string contextImageLink = ;
+}
+
+message DatasetListResp
+{
+    ResponseStatus status = 1;
+    repeated DatasetItem datasets = 2;
+}
+
+message DatasetReq
+{
+    string datasetID = 1;
+}
+
+message DatasetResp
+{
+    ResponseStatus status = 1;
+    DatasetItem dataset = 2;
+}
+
+////////////////////////////////////
+// Spectra
+
+
+////////////////////////////////////
+// Quantifications
+
+
+////////////////////////////////////
+// Expressions
+
+message DataExpression
+{
+    string id = 1;
+    string name = 2;
+    string sourceCode = 3;
+    string sourceLanguage = 4;
+    string comments = 5;
+    repeated string tags = 6;
+    repeated ModuleReference moduleReferences = 7;
+    Ownership owner = 8;
+    DataExpressionExecStats recentExecStats = 9;
+    //DOIMetadata doiMetadata = 10;
+}
+
+message ModuleReference
+{
+    string moduleId = 1;
+    string version = 2;
+}
+
+message DataExpressionExecStats
+{
+    repeated string dataRequired = 1;
+    float runtimeMs = 2;
+    uint64 timeStampUnixSec = 3;
+}
+
+message UserInfo
+{
+    string id = 1;
+    string name = 2;
+    string email = 3;
+}
+
+message Ownership
+{
+    UserInfo creator = 1;
+    uint64 createdUnixSec = 2;
+    uint64 modifiedUnixSec = 3;
+    bool shared = 4;
+}
+
+
+////////////////////////////////////
+// Modules
+
+message DataModule
+{
+    string id = 1;
+    string name = 2;
+    string comments = 3;
+    Ownership owner = 4;
+}
+
+message DataModuleVersion
+{
+    string version = 1;
+    repeated string tags = 2;
+    string comments = 3;
+    uint64 timeStampUnixSec = 4;
+    string sourceCode = 5;
+    //DOIMetadata doiMetadata = 6;
+}
+
+
+////////////////////////////////////
+// ROIs
+
+message ROIItem
+{
+	string name = 1;
+    repeated uint32 locationIndexes = 2;
+    string description = 3;
+    string imageName = 4;
+    
+    repeated uint32 pixelIndexes = 5;
+    //MistROIItem  MistROIItem `json:"mistROIItem"`
+    repeated string tags = 7;
+}
+
+////////////////////////////////////
+// The overall wrapper WSMessage
+message WSMessage
+{
+    // Helps associate request and response:
+    // Should be a number counting up for each request sent from client, responses should include the same number
+    // Other messages can leave this empty
+    uint32 msgId = 1;
+
+    oneof Contents
+    {
+        UserDetailsReq userDetailsReq = 2;
+        UserDetailsResp userDetailsResp = 3;
+        UserDetailsUpd userDetailsUpd = 4;
+
+        SetUserDetailsReq setUserDetailsReq = 5;
+        SetUserDetailsResp setUserDetailsResp = 6;
+
+        DatasetListReq datasetListReq = 7;
+        DatasetListResp datasetListResp = 8;
+
+        DatasetReq datasetReq = 9;
+        DatasetResp datasetResp = 10;
+    }
+}
