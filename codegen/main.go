@@ -13,9 +13,10 @@ import (
 )
 
 type msgTypes struct {
-	Req  bool
-	Resp bool
-	Upd  bool
+	Req        bool
+	Resp       bool
+	Upd        bool
+	SourceFile string
 }
 
 const protoMessagePrefix = "message "
@@ -96,6 +97,9 @@ func main() {
 	} else {
 		fmt.Println("Skipping Angular writing...")
 	}
+
+	// Check that Go handler functions are all there
+	generateGoHandlers(messages, goOutPath)
 }
 
 func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
@@ -113,7 +117,7 @@ func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
 	startRow := -1
 	msgLinesRead := []string{}
 	for c, line := range protoLines {
-		if strings.Index(line, "oneof Contents") >= 0 {
+		if strings.Contains(line, "oneof Contents") {
 			startRow = c + 2 // Assume next one is just "{"
 		}
 
@@ -170,6 +174,9 @@ func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
 		if msgType.Resp {
 			toWrite = append(toWrite, msg+"Resp")
 		}
+		if msgType.Upd {
+			toWrite = append(toWrite, msg+"Upd")
+		}
 
 		for _, msgName := range toWrite {
 			idStr := ""
@@ -220,17 +227,45 @@ func writeGo(allMsgTypes []string, msgs map[string]msgTypes, goOutPath string) {
 // GENERATED CODE! Do not hand-modify
 
 import (
-	protos "gitlab.com/pixlise/newtechprototype/generated-protos"
+	protos "github.com/pixlise/core/v3/generated-protos"
 	"github.com/olahol/melody"
 	"fmt"
+	wsHandler "github.com/pixlise/core/v3/api/ws/handlers"
 )	
+`
+	/*	goFunc += `
+		// This lost type-safety because Go compiler said:
+		// "cannot handle more than 100 union terms (implementation limitation)"
+		// So we now allow passing an any :(
+		//func MakeWSMessage[T protos.` + strings.Join(allMsgTypes, "|protos.") + `](msg *T) *protos.WSMessage {
+		func MakeWSMessage(msg any) *protos.WSMessage {
 
-func MakeWSMessage[T protos.` + strings.Join(allMsgTypes, "|protos.") + `](msg *T) *protos.WSMessage {
+			wsmsg := protos.WSMessage{}
+
+			switch any(msg).(type) {
+		`
+			for _, msgType := range allMsgTypes {
+				goFunc += "    case *protos." + msgType + ":\n        wsmsg.Contents = &protos.WSMessage_" + msgType + "{" + msgType + ": (msg.(*protos." + msgType + "))}\n"
+			}
+
+			goFunc += "    }\n    return &wsmsg\n}"
+	*/
+
+	allUpdMsgs := []string{}
+	for name, types := range msgs {
+		if types.Upd {
+			allUpdMsgs = append(allUpdMsgs, name+"Upd")
+		}
+	}
+	sort.Strings(allUpdMsgs)
+
+	goFunc += `
+func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](msg *T) *protos.WSMessage {
 	wsmsg := protos.WSMessage{}
 
 	switch any(msg).(type) {
 `
-	for _, msgType := range allMsgTypes {
+	for _, msgType := range allUpdMsgs {
 		goFunc += "    case *protos." + msgType + ":\n        wsmsg.Contents = &protos.WSMessage_" + msgType + "{" + msgType + ": (any(msg).(*protos." + msgType + "))}\n"
 	}
 
@@ -239,23 +274,126 @@ func MakeWSMessage[T protos.` + strings.Join(allMsgTypes, "|protos.") + `](msg *
 	goFunc += `
 
 func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session) (*protos.WSMessage, error) {
+	var err error
 	switch wsmsg.Contents.(type) {
 `
 	for name, types := range msgs {
 		if types.Req {
-			goFunc += "        case *protos.WSMessage_" + name + `Req:
-			return handle` + name + "Req(wsmsg.Get" + name + "Req(), s, ws.melody), nil\n"
+			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
+            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody)
+            if err == nil {
+                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}}, nil
+            }
+`, name, name, name, name, name)
 		}
 	}
 
 	goFunc += `        default:
 		    return nil, fmt.Errorf("Unhandled message type: %v", wsmsg.String())
 	}
+
+	return nil, err
 }
 `
 	err := os.WriteFile(goOutPath, []byte(goFunc), 0644)
 	if err != nil {
 		log.Fatalf("Failed to write Go file: %v", err)
+	}
+}
+
+func generateGoHandlers(msgs map[string]msgTypes, goOutPath string) {
+	type outFileInfo struct {
+		filePath         string
+		existed          bool
+		generatedContent string
+		signatures       []string
+	}
+
+	handlerPath := filepath.Join(goOutPath, "handlers")
+	err := os.MkdirAll(handlerPath, 0644)
+	if err != nil {
+		log.Fatalf("Failed to create handler path: %v. Error: %v", handlerPath, err)
+	}
+
+	// Loop through all messages, check that handler files exist, if not, generate, otherwise show what's missing
+	files := map[string]outFileInfo{}
+	for msgName, types := range msgs {
+		if types.Req {
+			if _, ok := files[types.SourceFile]; !ok {
+				// New entry...
+				suffixToReplace := ".proto"
+				if strings.HasSuffix(types.SourceFile, "-msgs.proto") {
+					suffixToReplace = "-msgs.proto"
+				}
+				outFile := types.SourceFile[0:len(types.SourceFile)-len(suffixToReplace)] + ".go"
+				outPath := filepath.Join(handlerPath, outFile)
+
+				fi, err := os.Stat(outPath)
+				exists := err == nil && !fi.IsDir()
+
+				files[types.SourceFile] = outFileInfo{
+					filePath: outPath,
+					existed:  exists,
+				}
+			}
+
+			// Now that we know the out file struct exists, generate handler
+			funcName := fmt.Sprintf("Handle%vReq", msgName)
+			signature := fmt.Sprintf("func %v(req *protos.%vReq, s *melody.Session, m *melody.Melody) (*protos.%vResp, error)", funcName, msgName, msgName)
+			handler := signature + fmt.Sprintf(` {
+    return nil, errors.New("%v not implemented yet")
+}
+`, funcName)
+			existing := files[types.SourceFile]
+
+			files[types.SourceFile] = outFileInfo{
+				filePath:         existing.filePath,
+				existed:          existing.existed,
+				generatedContent: existing.generatedContent + handler,
+				signatures:       append(existing.signatures, signature),
+			}
+		}
+	}
+
+	// Write out what we generated - if the file doesn't exist yet, create it, otherwise just write suggested content to stdout
+	for _, finfo := range files {
+		content := `package wsHandler
+
+import (
+	protos "github.com/pixlise/core/v3/generated-protos"
+	"github.com/olahol/melody"
+	"errors"
+)
+
+`
+		content += finfo.generatedContent
+
+		if !finfo.existed {
+			err := os.WriteFile(finfo.filePath, []byte(content), 0644)
+			if err != nil {
+				log.Fatalf("Failed when generating: %v. Error: %v", finfo.filePath, err)
+			}
+		} else {
+			// Show suggestion for any missing signatures
+			contents, err := os.ReadFile(finfo.filePath)
+			if err != nil {
+				log.Fatalf("Failed to open existing file: %v. Error: %v", finfo.filePath, err)
+			}
+
+			contentsStr := string(contents)
+
+			missing := ""
+			for _, sig := range finfo.signatures {
+				if !strings.Contains(contentsStr, sig) {
+					missing += sig + "\n"
+				}
+			}
+
+			if len(missing) > 0 {
+				fmt.Printf("%v should contain functions:\n", finfo.filePath)
+				fmt.Printf("%v\n", missing)
+			}
+		}
 	}
 }
 
@@ -440,7 +578,9 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 				msgName := line[len(protoMessagePrefix) : len(line)-suffixLen]
 
 				if _, ok := (*messages)[msgName]; !ok {
-					(*messages)[msgName] = msgTypes{}
+					(*messages)[msgName] = msgTypes{
+						SourceFile: filepath.Base(protoPath),
+					}
 				}
 
 				types := (*messages)[msgName]

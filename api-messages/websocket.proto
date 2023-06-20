@@ -100,6 +100,7 @@ message WSMessage
         ImageDeleteResp imageDeleteResp = 59;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
+        ImageListUpd imageListUpd = 144;
         ImageSetDefaultReq imageSetDefaultReq = 62;
         ImageSetDefaultResp imageSetDefaultResp = 63;
         ImageUploadReq imageUploadReq = 64;
@@ -136,6 +137,7 @@ message WSMessage
         ScanImageLocationsResp scanImageLocationsResp = 95;
         ScanListReq scanListReq = 96;
         ScanListResp scanListResp = 97;
+        ScanListUpd scanListUpd = 145;
         ScanLocationReq scanLocationReq = 98;
         ScanLocationResp scanLocationResp = 99;
         ScanMetaLabelsReq scanMetaLabelsReq = 100;
@@ -162,6 +164,7 @@ message WSMessage
         UserDeleteRoleResp userDeleteRoleResp = 121;
         UserDetailsReq userDetailsReq = 122;
         UserDetailsResp userDetailsResp = 123;
+        UserDetailsUpd userDetailsUpd = 146;
         UserDetailsWriteReq userDetailsWriteReq = 124;
         UserDetailsWriteResp userDetailsWriteResp = 125;
         UserDismissHintReq userDismissHintReq = 126;
@@ -170,14 +173,17 @@ message WSMessage
         UserHintsResp userHintsResp = 129;
         UserHintsToggleReq userHintsToggleReq = 130;
         UserHintsToggleResp userHintsToggleResp = 131;
+        UserHintsUpd userHintsUpd = 147;
         UserListReq userListReq = 132;
         UserListResp userListResp = 133;
         UserNotificationReq userNotificationReq = 134;
         UserNotificationResp userNotificationResp = 135;
         UserNotificationSettingsReq userNotificationSettingsReq = 136;
         UserNotificationSettingsResp userNotificationSettingsResp = 137;
+        UserNotificationSettingsUpd userNotificationSettingsUpd = 148;
         UserNotificationSettingsWriteReq userNotificationSettingsWriteReq = 138;
         UserNotificationSettingsWriteResp userNotificationSettingsWriteResp = 139;
+        UserNotificationUpd userNotificationUpd = 149;
         UserRoleListReq userRoleListReq = 140;
         UserRoleListResp userRoleListResp = 141;
         UserRolesListReq userRolesListReq = 142;
