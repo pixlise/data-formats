@@ -1,0 +1,28 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+/* Originals:
+GET    /version                                             -> public
+*/
+
+////////////////////////////////////
+// REST requests/responses
+////////////////////////////////////
+
+// This is a response to a GET so no request body
+message BeginWSConnectionResponse
+{
+    string connToken = 1;
+}
+
+// This is a response to a GET so no request body
+message VersionResponse
+{
+    message Version
+    {
+        string component = 1;
+        string version = 2;
+    }
+
+    repeated Version versions = 1;
+}

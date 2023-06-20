@@ -1,0 +1,91 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expressions.proto";
+import "response.proto";
+
+/* Original:
+-PUT    /data-expression/execution-stat/{id}                 -> write:data-analysis
+-DELETE /data-expression/{id}                                -> write:data-analysis
+-GET    /data-expression/{id}                                -> public
+-PUT    /data-expression/{id}                                -> write:data-analysis
+-GET    /data-expression                                     -> public
+-POST   /data-expression                                     -> write:data-analysis
+*/
+
+
+message ExpressionListReq
+{
+}
+
+message ExpressionListResp
+{
+    ResponseStatus status = 1;
+    map<string, DataExpression> expressions = 2;
+}
+
+message ExpressionReq
+{
+    string id = 1;
+}
+
+message ExpressionResp
+{
+    ResponseStatus status = 1;
+    string id = 2;
+    DataExpression expression = 3;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+message ExpressionWriteReq
+{
+    string id = 1;
+    DataExpression expression = 2;
+}
+
+message ExpressionWriteResp
+{
+    ResponseStatus status = 1;
+    string id = 2;
+    DataExpression expression = 3;
+}
+
+message ExpressionDeleteReq
+{
+    string id = 1;
+}
+
+message ExpressionDeleteResp
+{
+    ResponseStatus status = 1;
+}
+
+message ExpressionWriteExecStatReq
+{
+    string id = 1;
+    DataExpressionExecStats stats = 2;
+}
+
+message ExpressionWriteExecStatResp
+{
+    ResponseStatus status = 1;
+}
+
+// TODO... memoization of expression results... Not sure if we write something specific here
+// or if this becomes some part of a general caching mechanism
+message ExpressionWriteResultReq
+{
+    string expressionId = 1;
+    uint64 expressionModTimeUnixSec = 2;
+    string scanId = 3;
+    string roiId = 4;
+    uint64 roiModTimeUnixSec = 5;
+
+    repeated string resultColumns = 6;
+    repeated ExpressionResultItem resultItems = 7;
+}
+
+message ExpressionWriteResultResp
+{
+    ResponseStatus status = 1;
+}

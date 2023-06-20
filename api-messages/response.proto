@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+// This is expected to appear in all Resp messages. It is
+// basically a replacement for HTTP status codes
+enum ResponseStatus
+{
+    WS_UNDEFINED = 0;
+    WS_OK = 1;
+    WS_NOT_FOUND = 2;
+    WS_BAD_REQUEST = 3;
+    WS_NO_PERMISSION = 4;
+    WS_SERVER_ERROR = 5;
+}

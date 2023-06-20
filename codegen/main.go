@@ -1,0 +1,490 @@
+package main
+
+import (
+	"flag"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+)
+
+type msgTypes struct {
+	Req  bool
+	Resp bool
+	Upd  bool
+}
+
+const protoMessagePrefix = "message "
+
+func main() {
+	var protoPath string
+	var angularOutPath string
+	var goOutPath string
+
+	flag.StringVar(&protoPath, "protoPath", "", "Path to protobuf file")
+	flag.StringVar(&angularOutPath, "angularOutPath", "", "Path to output angular code")
+	flag.StringVar(&goOutPath, "goOutPath", "", "Path to output Go code")
+
+	flag.Parse()
+
+	w, _ := os.Getwd()
+	fmt.Println("PIXLISE protobuf messaging helper code generator")
+	fmt.Println("================================================")
+	fmt.Printf("Running in: %v\n", w)
+
+	// Delete previously output files in case we fail at some point, don't want user to think all is OK and compile and forget...
+	angularFilePath := ""
+	if len(angularOutPath) > 0 {
+		angularFilePath = filepath.Join(angularOutPath, "wsMessageHandler.ts")
+		os.Remove(angularFilePath)
+	}
+
+	goFilePath := ""
+	if len(goOutPath) > 0 {
+		goFilePath = filepath.Join(goOutPath, "wsMessage.go")
+		os.Remove(goFilePath)
+	}
+
+	// Read all files
+	files, err := ioutil.ReadDir(protoPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	messages := map[string]msgTypes{}
+	for _, file := range files {
+		filePath := filepath.Join(protoPath, file.Name())
+		if strings.HasSuffix(filePath, ".proto") {
+			protoLines := readProtoFile(filePath, &messages)
+
+			// Scan to make sure all responses have a status field
+			scanResponses(filePath, protoLines)
+		}
+	}
+
+	checkMessageConsistancy(messages)
+	checkWSMessage(filepath.Join(protoPath, "websocket.proto"), messages)
+
+	// Make a list of all msgs
+	allMsgTypes := listAllMessageTypes(messages)
+
+	// Write out the code that handles all of these
+	if len(angularOutPath) > 0 {
+		err := os.MkdirAll(angularOutPath, 0644)
+		if err != nil {
+			log.Fatalf("Failed to create angular path: %v", err)
+		}
+
+		fmt.Printf("Writing Angular file to: %v\n", angularFilePath)
+		writeAngular(allMsgTypes, messages, angularFilePath)
+	} else {
+		fmt.Println("Skipping Angular writing...")
+	}
+
+	if len(goOutPath) > 0 {
+		err := os.MkdirAll(goOutPath, 0644)
+		if err != nil {
+			log.Fatalf("Failed to create go path: %v", err)
+		}
+
+		fmt.Printf("Writing Go file to: %v\n", goFilePath)
+		writeGo(allMsgTypes, messages, goFilePath)
+	} else {
+		fmt.Println("Skipping Angular writing...")
+	}
+}
+
+func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
+	// Read the existing file...
+	proto, err := os.ReadFile(wsMsgFileName)
+
+	if err != nil {
+		log.Fatalf("Failed to read proto file containing WSMessage: %v. Error: %v", wsMsgFileName, err)
+	}
+
+	// Scan for lines that define messages
+	protoLines := strings.Split(string(proto), "\n")
+
+	msgProtoIds := map[string]int{}
+	startRow := -1
+	msgLinesRead := []string{}
+	for c, line := range protoLines {
+		if strings.Index(line, "oneof Contents") >= 0 {
+			startRow = c + 2 // Assume next one is just "{"
+		}
+
+		if startRow < 0 {
+			continue
+		}
+
+		if c == startRow-1 {
+			// Verify it's just {
+			if strings.Trim(line, "\t ") != "{" {
+				log.Fatalf("Expected only '{' in %v, on line: %v", wsMsgFileName, c+1)
+			}
+		}
+
+		if c >= startRow {
+			trimmedLine := strings.Trim(line, "\t ")
+			// We're scanning until }
+			if trimmedLine == "}" {
+				break
+			}
+
+			// Otherwise, assume we have a message def, we need its index
+			// Assume line is like this:
+			// ScanListResp scanListResp = 7;
+
+			lineParts := strings.Split(trimmedLine, " ")
+			if len(lineParts) != 4 {
+				log.Fatalf("Unexpected syntax in %v, on line: %v. Line was: \"%v\"", wsMsgFileName, c+1, line)
+			}
+
+			// First part should be msg name, last part should be a number with a ; after
+			numPart := lineParts[len(lineParts)-1]
+			if !strings.HasSuffix(numPart, ";") {
+				log.Fatalf("Expected ; at last part of line in %v, on line: %v. Line was: \"%v\"", wsMsgFileName, c+1, line)
+			}
+
+			numPart = numPart[0 : len(numPart)-1]
+			num, err := strconv.Atoi(numPart)
+			if err != nil {
+				log.Fatalf("Expected number in last part of line in %v, on line: %v. Line was: \"%v\"", wsMsgFileName, c+1, line)
+			}
+
+			msgProtoIds[lineParts[0]] = num
+			msgLinesRead = append(msgLinesRead, trimmedLine)
+		}
+	}
+
+	exampleLines := []string{}
+	for msg, msgType := range messages {
+		toWrite := []string{}
+		if msgType.Req {
+			toWrite = append(toWrite, msg+"Req")
+		}
+		if msgType.Resp {
+			toWrite = append(toWrite, msg+"Resp")
+		}
+
+		for _, msgName := range toWrite {
+			idStr := ""
+			if id, ok := msgProtoIds[msgName]; ok {
+				idStr = fmt.Sprintf("%v", id)
+			}
+			exampleLines = append(exampleLines, fmt.Sprintf("        "+msgName+" "+varName(msgName)+" = "+idStr+";"))
+		}
+	}
+
+	// Alphabetical order, so comparison is more useful!
+	sort.Strings(exampleLines)
+
+	// Print only if they differ...
+	printMsg := false
+	if len(msgLinesRead) != len(exampleLines) {
+		printMsg = true
+	} else {
+		for c, read := range msgLinesRead {
+			if read != strings.Trim(exampleLines[c], "\t ") {
+				printMsg = true
+				break
+			}
+		}
+	}
+
+	if !printMsg {
+		return
+	}
+
+	// Show a list of all messages that we'd expect to be in WSMessage's "oneof" field
+	fmt.Println("----------------------------------------------------------------------")
+	fmt.Println("WSMessage should have the following messages in its Contents field...")
+	fmt.Println("!!! Take care when updating, you don't want to redefine any of the IDs !!!")
+
+	for _, line := range exampleLines {
+		fmt.Println(line)
+	}
+
+	fmt.Println("----------------------------------------------------------------------")
+}
+
+// With help from:
+// https://appliedgo.com/blog/a-tip-and-a-trick-when-working-with-generics
+func writeGo(allMsgTypes []string, msgs map[string]msgTypes, goOutPath string) {
+	goFunc := `package ws
+	
+// GENERATED CODE! Do not hand-modify
+
+import (
+	protos "gitlab.com/pixlise/newtechprototype/generated-protos"
+	"github.com/olahol/melody"
+	"fmt"
+)	
+
+func MakeWSMessage[T protos.` + strings.Join(allMsgTypes, "|protos.") + `](msg *T) *protos.WSMessage {
+	wsmsg := protos.WSMessage{}
+
+	switch any(msg).(type) {
+`
+	for _, msgType := range allMsgTypes {
+		goFunc += "    case *protos." + msgType + ":\n        wsmsg.Contents = &protos.WSMessage_" + msgType + "{" + msgType + ": (any(msg).(*protos." + msgType + "))}\n"
+	}
+
+	goFunc += "    }\n    return &wsmsg\n}"
+
+	goFunc += `
+
+func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session) (*protos.WSMessage, error) {
+	switch wsmsg.Contents.(type) {
+`
+	for name, types := range msgs {
+		if types.Req {
+			goFunc += "        case *protos.WSMessage_" + name + `Req:
+			return handle` + name + "Req(wsmsg.Get" + name + "Req(), s, ws.melody), nil\n"
+		}
+	}
+
+	goFunc += `        default:
+		    return nil, fmt.Errorf("Unhandled message type: %v", wsmsg.String())
+	}
+}
+`
+	err := os.WriteFile(goOutPath, []byte(goFunc), 0644)
+	if err != nil {
+		log.Fatalf("Failed to write Go file: %v", err)
+	}
+}
+
+func varName(name string) string {
+	name = strings.ToLower(name[0:1]) + name[1:]
+	return name
+}
+
+func writeAngular(allMsgTypes []string, msgs map[string]msgTypes, angularOutPath string) {
+	angular := `// GENERATED CODE! Do not hand-modify
+
+import { Subject } from 'rxjs';
+import {
+	WSMessage,
+    ` + strings.Join(allMsgTypes, ",\n    ") + `
+} from "src/app/generated-protos/proto/apistructs";
+
+// Type-specific request send functions which return the right type of response
+export abstract class WSMessageHandler
+{
+    private _lastMsgId = 1;
+
+	protected abstract sendRequest(msg: WSMessage): void;
+
+`
+	for name, types := range msgs {
+		if types.Upd {
+			angular += fmt.Sprintf("    public %vUpd$ = new Subject<%vUpd>();\n", varName(name), name)
+		}
+	}
+
+	for name, types := range msgs {
+		// If there is a request and response pair, generate a function for it
+		if types.Req && types.Resp {
+			angular += fmt.Sprintf("\n    protected _%vSubjects = new Map<number, Subject<%vResp>>();\n", name, name)
+			angular += fmt.Sprintf(`    send%vRequest(req: %vReq): Subject<%vResp> {
+        let wsreq = WSMessage.create({%vReq: req});
+        wsreq.msgId = this._lastMsgId++;
+
+		let subj = new Subject<%vResp>();
+        this._%vSubjects.set(wsreq.msgId, subj);
+        this.sendRequest(wsreq);
+
+		return subj;
+    }
+`, name, name, name, varName(name), name, name)
+		}
+	}
+
+	angular += `
+    protected dispatchResponse(wsmsg: WSMessage): boolean {
+`
+	firstIf := true
+	for name, types := range msgs {
+		if types.Resp {
+			angular += "        "
+			if !firstIf {
+				angular += "else "
+			}
+			firstIf = false
+
+			angular += fmt.Sprintf(`if(wsmsg.%vResp) {
+            let subj = this._%vSubjects.get(wsmsg.msgId);
+		    if(subj) {
+			    subj.next(wsmsg.%vResp);
+			    subj.complete();
+
+			    this._%vSubjects.delete(wsmsg.msgId);
+				return true;
+		    }
+        }
+`, varName(name), name, varName(name), name)
+		}
+	}
+
+	angular += `
+        return false;
+	}
+`
+
+	angular += `
+    protected dispatchUpdate(wsmsg: WSMessage): boolean {
+`
+	firstIf = true
+	for name, types := range msgs {
+		if types.Upd {
+			angular += "        "
+			if !firstIf {
+				angular += "else "
+			}
+			firstIf = false
+
+			angular += fmt.Sprintf(`if(wsmsg.%vUpd) {
+            this.%vUpd$.next(wsmsg.%vUpd);
+			return true;
+        }
+`, varName(name), varName(name), varName(name))
+		}
+	}
+
+	angular += `
+        return false;
+	}
+}`
+
+	err := os.WriteFile(angularOutPath, []byte(angular), 0644)
+	if err != nil {
+		log.Fatalf("Failed to write angular file: %v", err)
+	}
+}
+
+func scanResponses(fileName string, protoLines []string) {
+	scanCount := 0
+
+	for lineCount, line := range protoLines {
+		if scanCount <= 0 {
+			if strings.HasPrefix(line, protoMessagePrefix) && strings.HasSuffix(line, "Resp") {
+				// We have a line like: "message UserDetailsResp"
+				// Expect following 2 lines to be:
+				// {
+				//     ResponseStatus status = 1;
+				scanCount = 1 // We scanned the first part of this...
+			}
+		} else if scanCount == 1 {
+			if strings.TrimSpace(line) != "{" {
+				log.Fatalf("Expected { in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
+			} else {
+				scanCount++
+			}
+		} else if scanCount == 2 {
+			if strings.TrimSpace(line) != "ResponseStatus status = 1;" {
+				log.Fatalf("Expected \"ResponseStatus status = 1;\" in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
+			} else {
+				scanCount = 0
+			}
+		}
+	}
+}
+
+func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
+	proto, err := os.ReadFile(protoPath)
+
+	if err != nil {
+		log.Fatalf("Failed to read proto file: %v. Error: %v", protoPath, err)
+	}
+
+	// Scan for lines that define messages
+	protoLines := strings.Split(string(proto), "\n")
+
+	blanking := false
+	for _, line := range protoLines {
+		// If we detect a /*, read them as blank lines until */
+		if !blanking {
+			idx := strings.Index(line, "/*")
+			if idx >= 0 {
+				blanking = true
+				line = line[0:idx]
+			}
+		} else {
+			idx := strings.Index(line, "*/")
+			if idx < 0 {
+				// blank out this line...
+				line = ""
+			} else {
+				// We found the end marker
+				blanking = false
+				line = line[idx+2:]
+			}
+		}
+
+		if strings.HasPrefix(line, protoMessagePrefix) {
+			// Check what kind of message
+			hasReq := strings.HasSuffix(line, "Req")
+			hasResp := strings.HasSuffix(line, "Resp")
+			hasUpd := strings.HasSuffix(line, "Upd")
+
+			if hasReq || hasResp || hasUpd {
+				suffixLen := 3
+				if hasResp {
+					suffixLen = 4
+				}
+				msgName := line[len(protoMessagePrefix) : len(line)-suffixLen]
+
+				if _, ok := (*messages)[msgName]; !ok {
+					(*messages)[msgName] = msgTypes{}
+				}
+
+				types := (*messages)[msgName]
+				types.Req = types.Req || hasReq
+				types.Resp = types.Resp || hasResp
+				types.Upd = types.Upd || hasUpd
+
+				(*messages)[msgName] = types
+			}
+		}
+	}
+
+	return protoLines
+}
+
+func listAllMessageTypes(messages map[string]msgTypes) []string {
+	allMsgTypes := []string{}
+	// Add each type we have, as all request, response and updates should be able to fit into a WSMessage
+	for msgName, msgTypes := range messages {
+		if msgTypes.Req {
+			allMsgTypes = append(allMsgTypes, msgName+"Req")
+		}
+		if msgTypes.Resp {
+			allMsgTypes = append(allMsgTypes, msgName+"Resp")
+		}
+		if msgTypes.Upd {
+			allMsgTypes = append(allMsgTypes, msgName+"Upd")
+		}
+	}
+
+	return allMsgTypes
+}
+
+func checkMessageConsistancy(messages map[string]msgTypes) {
+	// Check that where there is a message type defined, we have Req and Resp with optional Upd, but none of those exist alone
+	for msgName, msgTypes := range messages {
+		if msgTypes.Req && !msgTypes.Resp {
+			log.Fatalf("Found message %v has req but no resp", msgName)
+		}
+		if !msgTypes.Req && msgTypes.Resp {
+			log.Fatalf("Found message %v has resp but no req", msgName)
+		}
+		if msgTypes.Upd && (!msgTypes.Req || !msgTypes.Resp) {
+			log.Fatalf("Found message %v has upd but missing req or resp", msgName)
+		}
+	}
+}

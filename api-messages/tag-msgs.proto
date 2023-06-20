@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "tags.proto";
+import "response.proto";
+
+
+/* Originals:
+-DELETE /tags/{DID}/{id}                                     -> write:data-analysis
+-GET    /tags/{DID}                                          -> public
+-POST   /tags/{DID}                                          -> write:data-analysis
+*/
+
+message TagListReq
+{
+    string scanId = 1; // Is this required?
+}
+
+message TagListResp
+{
+    ResponseStatus status = 1;
+    repeated Tag tags = 2;
+}
+
+message TagCreateReq
+{
+    string scanId = 1; // Seems to be optional?
+}
+
+message TagCreateResp
+{
+    ResponseStatus status = 1;
+    Tag tag = 2;
+}
+
+message TagDeleteReq
+{
+    string scanId = 1; // Is this required?
+    string tagId = 2;
+}
+
+message TagDeleteResp
+{
+    ResponseStatus status = 1;
+}

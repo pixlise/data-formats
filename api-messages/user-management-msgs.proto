@@ -1,0 +1,86 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user.proto";
+import "response.proto";
+
+/* Originals:
+-GET    /user/all-roles                                      -> read:user-roles
+(deprecated) POST   /user/bulk-user-details                              -> write:user-roles
+-GET    /user/by-id/{id}                                     -> read:user-roles
+-GET    /user/by-role/{id}                                   -> read:user-roles
+-GET    /user/query                                          -> read:user-roles
+-DELETE /user/roles/{user_id}/{id}                           -> write:user-roles
+-POST   /user/roles/{user_id}/{id}                           -> write:user-roles
+-GET    /user/roles/{user_id}                                -> read:user-roles
+*/
+
+////////////////////////////////////
+// Get all users
+message UserListReq
+{
+    oneof QueryType {
+        string roleId = 1; // Get all users who have a role
+        string userId = 2; // Get a specific user by ID
+        string searchText = 3; // Get all users who have searchText in their name/surname
+    }
+}
+
+message UserListResp
+{
+    ResponseStatus status = 1;
+    repeated UserDetails details = 2;
+}
+
+////////////////////////////////////
+// Get all user roles
+message UserRoleListReq
+{
+}
+
+message UserRoleListResp
+{
+    ResponseStatus status = 1;
+    repeated UserRole roles = 2;
+}
+
+////////////////////////////////////
+// Get roles for a given user
+message UserRolesListReq
+{
+    string userId = 1;
+}
+
+message UserRolesListResp
+{
+    ResponseStatus status = 1;
+    repeated UserRole roles = 2;
+}
+
+////////////////////////////////////
+// Add a user role to a user
+message UserAddRoleReq
+{
+    string userId = 1;
+    string roleId = 2;
+}
+
+// Changing user roles, this should publish a UserDetailsUpd
+message UserAddRoleResp
+{
+    ResponseStatus status = 1;
+}
+
+////////////////////////////////////
+// Delete a user role for a user
+message UserDeleteRoleReq
+{
+    string userId = 1;
+    string roleId = 2;
+}
+
+// Changing user roles, this should publish a UserDetailsUpd
+message UserDeleteRoleResp
+{
+    ResponseStatus status = 1;
+}

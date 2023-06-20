@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expression-group.proto";
+import "response.proto";
+
+/* Originals:
+-DELETE /rgb-mix/{id}                                        -> write:data-analysis
+-PUT    /rgb-mix/{id}                                        -> write:data-analysis
+-GET    /rgb-mix                                             -> public
+-POST   /rgb-mix                                             -> write:data-analysis
+*/
+
+// TODO: Paginate?
+message ExpressionGroupListReq
+{
+}
+
+message ExpressionGroupListResp
+{
+    ResponseStatus status = 1;
+    map<string, ExpressionGroup> groups = 2;
+}
+
+message ExpressionGroupSetReq
+{
+    string id = 1;
+    ExpressionGroup group = 2;
+}
+
+message ExpressionGroupSetResp
+{
+    ResponseStatus status = 1;
+}
+
+message ExpressionGroupDeleteReq
+{
+    string id = 1;
+}
+
+message ExpressionGroupDeleteResp
+{
+    ResponseStatus status = 1;
+}

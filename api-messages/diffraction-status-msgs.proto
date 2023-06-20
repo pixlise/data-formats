@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "response.proto";
+
+/* Original:
+-DELETE /diffraction/status/{DID}/{id}                       -> write:diffraction-peaks
+-GET    /diffraction/status/{DID}                            -> read:diffraction-peaks
+-POST   /diffraction/status/{statusid}/{DID}/{id}            -> write:diffraction-peaks
+*/
+
+message DiffractionPeakStatusListReq
+{
+    string scanId = 1;
+}
+
+message DiffractionPeakStatusListResp
+{
+    ResponseStatus status = 1;
+    map<string, string> peakStatuses = 2; // id->peak status
+}
+
+message DiffractionPeakStatusWriteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+    string status = 3; // We let the UI define these
+}
+
+message DiffractionPeakStatusWriteResp
+{
+    ResponseStatus status = 1;
+}
+
+message DiffractionPeakStatusDeleteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+}
+
+message DiffractionPeakStatusDeleteResp
+{
+    ResponseStatus status = 1;
+}

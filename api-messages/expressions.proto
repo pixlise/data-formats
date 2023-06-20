@@ -1,0 +1,40 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+////////////////////////////////////
+// Expressions
+
+message DataExpression
+{
+    string id = 1;
+    string name = 2;
+    string sourceCode = 3;
+    string sourceLanguage = 4;
+    string comments = 5;
+    repeated string tags = 6;
+    repeated ModuleReference moduleReferences = 7;
+    Ownership owner = 8;
+    DataExpressionExecStats recentExecStats = 9;
+    //DOIMetadata doiMetadata = 10;
+}
+
+message ModuleReference
+{
+    string moduleId = 1;
+    string version = 2;
+}
+
+message DataExpressionExecStats
+{
+    repeated string dataRequired = 1;
+    float runtimeMs = 2;
+    uint64 timeStampUnixSec = 3;
+}
+
+message ExpressionResultItem
+{
+    int32 location = 1;
+    repeated float values = 2;
+}

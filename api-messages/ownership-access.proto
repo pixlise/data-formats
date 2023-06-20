@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user.proto";
+
+
+message Ownership
+{
+    UserInfo creator = 1;
+
+    // Maybe this should be in a separate structure??
+    uint64 createdUnixSec = 2;
+    uint64 modifiedUnixSec = 3;
+}
+
+// Access - who is allowed to access a given resource
+// This should contain all groups/user IDs who are allowed
+// to view or edit whatever object this field is on
+message AccessControl
+{
+    string viewers = 1;
+    string editors = 2;
+}

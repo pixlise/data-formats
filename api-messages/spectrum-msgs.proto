@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "spectrum.proto";
+import "response.proto";
+
+
+message SpectrumReq
+{
+    string scanId = 1;
+    
+    // Effectively allows pagination
+    uint32 startingLocation = 2;
+    uint32 locationCount = 3;
+}
+
+message SpectrumResp
+{
+    ResponseStatus status = 1;
+    repeated Spectra spectraPerLocation = 2; // Note a location may have 0 or more spectra
+}

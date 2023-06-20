@@ -1,0 +1,30 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+////////////////////////////////////
+// Structures for user/account data
+
+message UserInfo
+{
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string iconURL = 4;
+}
+
+message UserDetails
+{
+    UserInfo info = 1;
+
+    string dataCollectionVersion = 5;
+
+    repeated string permissions = 8;
+}
+
+message UserRole
+{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}

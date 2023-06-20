@@ -1,0 +1,56 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "element-set.proto";
+import "response.proto";
+
+
+/* Original:
+-DELETE /element-set/{id}                                    -> write:data-analysis
+-GET    /element-set/{id}                                    -> public
+-PUT    /element-set/{id}                                    -> write:data-analysis
+-GET    /element-set                                         -> public
+-POST   /element-set                                         -> write:data-analysis
+*/
+
+message ElementSetListReq
+{
+}
+
+message ElementSetListResp
+{
+    ResponseStatus status = 1;
+    map<string, ElementSetSummary> elementSets = 2;
+}
+
+message ElementSetGetReq
+{
+    string id = 1;
+}
+
+message ElementSetGetResp
+{
+    ResponseStatus status = 1;
+    ElementSet elementSet = 2;
+}
+
+message ElementSetWriteReq
+{
+    string id = 1;
+    ElementSet elementSet = 2;
+}
+
+message ElementSetWriteResp
+{
+    ResponseStatus status = 1;
+}
+
+message ElementSetDeleteReq
+{
+    string id = 1;
+}
+
+message ElementSetDeleteResp
+{
+    ResponseStatus status = 1;
+}

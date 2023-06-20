@@ -1,0 +1,48 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "modules.proto";
+import "response.proto";
+
+/* Original:
+-GET    /data-module/{id}/{version}                          -> public
+-PUT    /data-module/{id}                                    -> write:data-analysis
+-GET    /data-module                                         -> public
+-POST   /data-module                                         -> write:data-analysis
+*/
+
+message DataModuleListReq
+{
+}
+
+message DataModuleListResp
+{
+    ResponseStatus status = 1;
+    map<string, DataModule> modules = 2;
+}
+
+message DataModuleReq
+{
+    string id = 1;
+}
+
+message DataModuleResp
+{
+    ResponseStatus status = 1;
+    string id = 2;
+    DataModule module = 3;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+message DataModuleWriteReq
+{
+    string id = 1;
+    DataModule module = 2;
+}
+
+message DataModuleWriteResp
+{
+    ResponseStatus status = 1;
+    string id = 2;
+    DataModule module = 3;
+}

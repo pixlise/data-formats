@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message PiquantConfig
+{
+    string description = 1;
+    string configFile = 2;
+    string opticEfficiencyFile = 3;
+    string calibrationFile = 4;
+    string standardsFile = 5;
+}

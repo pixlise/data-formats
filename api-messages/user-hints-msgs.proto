@@ -1,0 +1,49 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-hints.proto";
+import "response.proto";
+
+
+/* Originals:
+-GET    /notification/hints                                  -> public
+-POST   /notification/hints                                  -> public
+*/
+
+
+message UserHintsReq
+{
+}
+
+message UserHintsResp
+{
+    ResponseStatus status = 1;
+    UserHints hints = 2;
+}
+
+message UserHintsUpd
+{
+    UserHints hints = 1;
+}
+
+// Dismissing a hint should publish a UserHintsUpd
+message UserDismissHintReq
+{
+    string hint = 1;
+}
+
+message UserDismissHintResp
+{
+    ResponseStatus status = 1;
+}
+
+// Re-enabling hints should publish a UserHintsUpd
+message UserHintsToggleReq
+{
+    bool enabled = 1;
+}
+
+message UserHintsToggleResp
+{
+    ResponseStatus status = 1;
+}

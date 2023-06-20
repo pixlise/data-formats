@@ -1,0 +1,38 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-notification-settings.proto";
+import "response.proto";
+
+
+/* Originals:
+-GET    /notification/subscriptions                          -> public
+-POST   /notification/subscriptions                          -> public
+*/
+
+// Retrieving a users notification settings (NOT the notifications themselves)
+message UserNotificationSettingsReq
+{
+}
+
+message UserNotificationSettingsResp
+{
+    ResponseStatus status = 1;
+    UserNotificationSettings notifications = 2;
+}
+
+message UserNotificationSettingsUpd
+{
+    UserNotificationSettings notifications = 1;
+}
+
+// Modifying notifications should publish a UserNotificationSettingsUpd
+message UserNotificationSettingsWriteReq
+{
+    UserNotificationSettings notifications = 1;
+}
+
+message UserNotificationSettingsWriteResp
+{
+    ResponseStatus status = 1;
+}

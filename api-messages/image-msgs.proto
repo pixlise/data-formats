@@ -1,0 +1,74 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "image.proto";
+import "response.proto";
+
+
+/* Originals:
+(This becomes an actual HTTP GET) GET    /dataset/download/{DID}/{id}                         -> public
+-DELETE /dataset/images/{DID}/{imgtype}/{image}              -> write:dataset
+-GET    /dataset/images/{DID}/{imgtype}/{image}              -> public
+-POST   /dataset/images/{DID}/{imgtype}/{image}              -> write:dataset
+-PUT    /dataset/images/{DID}/{imgtype}/{image}              -> write:dataset
+-GET    /dataset/images/{DID}/{imgtype}                      -> public
+*/
+
+// Listing all images for a given scan
+message ImageListReq
+{
+    string scanId = 1;
+}
+
+message ImageListResp
+{
+    ResponseStatus status = 1;
+    repeated ScanImage images = 2;
+    uint32 defaultImageIdx = 3;
+}
+
+message ImageListUpd
+{
+    repeated ScanImage images = 1;
+    uint32 defaultImageIdx = 2;
+}
+
+// Should publish a ImageListUpd
+message ImageSetDefaultReq
+{
+    string scanId = 1;
+    string defaultImageFileName = 2;
+}
+
+message ImageSetDefaultResp
+{
+    ResponseStatus status = 1;
+}
+
+// NOTE: The above lists images, but the client will need to query the image as
+// a standard HTTP GET using the url from ScanImage above. JWT needs to be included
+
+// Allows upload of a user-created image to a given scan, should publish a ImageListUpd to go out
+message ImageUploadReq
+{
+    string scanId = 1;
+    string imageName = 2;
+    bytes imageData = 3;
+}
+
+message ImageUploadResp
+{
+    ResponseStatus status = 1;
+}
+
+// Deletes ONLY user-created image, should publish a ImageListUpd to go out
+message ImageDeleteReq
+{
+    string scanId = 1;
+    string imageName = 2;
+}
+
+message ImageDeleteResp
+{
+    ResponseStatus status = 1;
+}

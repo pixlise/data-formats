@@ -1,0 +1,16 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message DetectorConfig
+{
+    int32 minElement = 1;
+    int32 maxElement = 2;
+    int32 xrfeVLowerBound = 3;
+    int32 xrfeVUpperBound = 4;
+    int32 xrfeVResolution = 5;
+    int32 windowElement = 6;
+    int32 tubeElement = 7;
+    string defaultParams = 8;
+    float mmBeamRadius = 9;
+}

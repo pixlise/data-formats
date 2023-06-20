@@ -1,0 +1,78 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "detector-config.proto";
+import "piquant-config.proto";
+import "response.proto";
+
+/* Originals:
+-GET    /piquant/config/{id}/{versions}                      -> read:piquant-config
+-GET    /piquant/config/{id}/{version}/{version}             -> read:piquant-config
+-GET    /piquant/config                                      -> read:piquant-config
+-GET    /piquant/version                                     -> read:piquant-config
+-POST   /piquant/version                                     -> write:piquant-config
+
+(not implemented for now, do we use a signed link again?) GET    /piquant/download                                    -> download:piquant
+*/
+
+// Listing all available PIQUANT configs
+message PiquantConfigListReq
+{
+    string configId = 1;
+}
+
+message PiquantConfigListResp
+{
+    ResponseStatus status = 1;
+    repeated string configNames = 2;
+}
+
+// Listing all available versions of a given PIQUANT config
+message PiquantConfigVersionsListReq
+{
+    string configId = 1;
+}
+
+message PiquantConfigVersionsListResp
+{
+    ResponseStatus status = 1;
+    repeated string versions = 2;
+}
+
+// Getting a specific PIQUANT version
+message PiquantConfigVersionReq
+{
+    string configId = 1;
+    string version = 2;
+}
+
+message PiquantConfigVersionResp
+{
+    ResponseStatus status = 1;
+    DetectorConfig detectorConfig = 2;
+    PiquantConfig piquantConfig = 3;
+}
+
+// Listing versions of PIQUANT container to run in API when quant is started
+message PiquantVersionListReq
+{
+}
+
+message PiquantVersionListResp
+{
+    ResponseStatus status = 1;
+    repeated string piquantVersions = 2;
+}
+
+// Sets the current version of PIQUANT container to run in API when quant is started
+message PiquantSetVersionReq
+{
+    string piquantVersion = 1;
+}
+
+message PiquantSetVersionResp
+{
+    ResponseStatus status = 1;
+    string piquantVersion = 2;
+}

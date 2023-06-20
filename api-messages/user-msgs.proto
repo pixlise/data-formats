@@ -1,0 +1,40 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user.proto";
+import "response.proto";
+
+/* Originals:
+-GET    /user/config                                         -> read:user-settings
+-POST   /user/config                                         -> write:user-settings
+-PUT    /user/field/{field_id}                               -> write:user-settings
+*/
+
+////////////////////////////////////
+// User messaging
+
+message UserDetailsReq
+{
+}
+
+message UserDetailsResp
+{
+    ResponseStatus status = 1;
+    UserDetails details = 2;
+}
+
+message UserDetailsUpd
+{
+    UserDetails details = 1;
+}
+
+// Changing user details, this should publish a UserDetailsUpd
+message UserDetailsWriteReq
+{
+    UserDetails Details = 1;
+}
+
+message UserDetailsWriteResp
+{
+    ResponseStatus status = 1;
+}

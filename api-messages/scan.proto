@@ -1,0 +1,100 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "ownership-access.proto";
+
+
+////////////////////////////////////
+// Scans
+// Also called datasets, these structures represent an individual scan
+// taken by an instrument
+
+enum ScanDataType
+{
+    SD_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    SD_IMAGE = 1;
+    SD_XRF = 2;
+    SD_RGBU = 3;
+}
+
+enum ScanInstrument
+{
+    UNKNOWN_INSTRUMENT = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    PIXL_FM = 1;
+    PIXL_EM = 2;
+    JPL_BREADBOARD = 3;
+    // future possibilities like BRUKER, etc...
+}
+
+message ScanItem
+{
+    string id = 1; // Unique ID for this scan
+    string title = 2; // Title to show for this scan
+    string description = 3; // Description to show
+
+    // Contains the type and how many of each
+    // For PIXL:
+    // XRF (PMC count)
+    // IMAGE (MCC count+custom image count)
+    // RGBU (0 or 2)
+    message ScanTypeCount
+    {
+        ScanDataType dataType = 1;
+        uint32 count = 2;
+    }
+    repeated ScanTypeCount dataTypes = 4; 
+
+    // The instrument that collected the scan
+    ScanInstrument instrument = 5;
+
+    // Configuration name of the instrument as text
+    // For PIXL, this is the detector config used, so we run quantifications with
+    // the correct config
+    string instrumentConfig = 6;
+
+    // Unix time stamp for this scan (just to order it, so we don't care if this is the
+    // time when the instrument did the scan, or when data was ingested into PIXLISE,
+    // just need a time!)
+    string timestampUnixSec = 7; 
+
+    // Meta-data for the scan to describe in an instrument-specific way when and where
+    // it was collected
+    //
+    // NOTE: for PIXL scans, these will contain:
+    // driveId, drive
+    // siteId, site,
+    // targetId, target
+    // sol
+    // RTT (round-trip token)
+    // SCLK
+    map<string, string> meta = 8;
+
+    // Contents for the scan - what data types it has, and how many
+    // NOTE: for PIXL scans, this will contain:
+    // normalSpectra (count)
+    // dwellSpectra (count)
+    // bulkSpectra (count)
+    // maxSpectra (count)
+    // pseudoIntensity (count)
+    // images (count)
+    map<string, int32> contentCounts = 9;
+
+    uint32 scanPoints = 10; // For PIXL this is how many PMCs
+
+    Ownership owner = 11; // Optional, but dataset may have been uploaded by a given user
+    AccessControl access = 12; // Who is allowed to access this scan
+}
+
+message ScanMetaDataItem
+{
+    // Only storing the metadata label outside of the item, here we just store its index
+    // This index refers to the strings defined in ScanMetaLabelsResp
+    int32 labelIndex = 1;
+
+    oneof Value {
+        float fvalue = 2;
+        int32 ivalue = 3;
+        string svalue = 4;
+    }
+}

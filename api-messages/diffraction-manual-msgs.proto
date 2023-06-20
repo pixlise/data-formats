@@ -1,0 +1,46 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "diffraction.proto";
+import "response.proto";
+
+
+/* Original:
+-DELETE /diffraction/manual/{DID}/{id}                       -> write:diffraction-peaks
+-GET    /diffraction/manual/{DID}                            -> read:diffraction-peaks
+-POST   /diffraction/manual/{DID}                            -> write:diffraction-peaks
+*/
+
+message DiffractionPeakManualListReq
+{
+    string scanId = 1;
+}
+
+message DiffractionPeakManualListResp
+{
+    ResponseStatus status = 1;
+    map<string, ManualDiffractionPeak> peaks = 2; // id->ManualDiffractionPeak
+}
+
+message DiffractionPeakManualWriteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+    ManualDiffractionPeak peak = 3;
+}
+
+message DiffractionPeakManualWriteResp
+{
+    ResponseStatus status = 1;
+}
+
+message DiffractionPeakManualDeleteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+}
+
+message DiffractionPeakManualDeleteResp
+{
+    ResponseStatus status = 1;
+}

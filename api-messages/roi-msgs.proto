@@ -1,0 +1,57 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "roi.proto";
+import "response.proto";
+
+/* Originals:
+-POST   /roi/{DID}/{bulk}                                    -> write:data-analysis
+-DELETE /roi/{DID}/{id}                                      -> write:data-analysis
+-PUT    /roi/{DID}/{id}                                      -> write:data-analysis
+-GET    /roi/{DID}                                           -> public
+-POST   /roi/{DID}                                           -> write:data-analysis
+*/
+
+message RegionOfInterestListReq
+{
+}
+
+message RegionOfInterestListResp
+{
+    ResponseStatus status = 1;
+    map<string, ROIItemSummary> RegionsOfInterest = 2;
+}
+
+message RegionOfInterestReq
+{
+    string id = 1;
+}
+
+message RegionOfInterestResp
+{
+    ResponseStatus status = 1;
+    ROIItem RegionOfInterest = 2;
+}
+
+message RegionOfInterestWriteReq
+{
+    // For each of these, if ID is blank, assume it's a new one (and we return the ID), otherwise
+    // assume it's an overwrite
+    repeated ROIItemWithId items = 1;
+}
+
+message RegionOfInterestWriteResp
+{
+    ResponseStatus status = 1;
+    repeated ROIItemWithId items = 2;
+}
+
+message RegionOfInterestDeleteReq
+{
+    string id = 1;
+}
+
+message RegionOfInterestDeleteResp
+{
+    ResponseStatus status = 1;
+}

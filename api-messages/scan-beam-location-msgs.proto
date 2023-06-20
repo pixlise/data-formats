@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan-beam-location.proto";
+import "response.proto";
+
+
+message ScanImageLocationsReq
+{
+    string scanId = 1;
+
+    // Effectively allows pagination
+    uint32 startingLocation = 2;
+    uint32 locationCount = 3;
+}
+
+message ScanImageLocationsResp
+{
+    ResponseStatus status = 1;
+    repeated ImageLocations beamLocations = 2;
+}

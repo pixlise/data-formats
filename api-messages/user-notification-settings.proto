@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+enum NotificationMethod
+{
+    NOTIF_NONE = 0;
+    NOTIF_EMAIL = 1;
+    NOTIF_UI = 2;
+    NOTIF_BOTH = 3;
+}
+
+message UserNotificationSettings
+{
+    NotificationMethod userQuantComplete = 1;
+    NotificationMethod quantShared = 2;
+    NotificationMethod newDataset = 3;
+    NotificationMethod updatedDataset = 4;
+    NotificationMethod imageAddedToDataset = 5;
+    NotificationMethod majorModuleReleased = 6;
+    NotificationMethod minorModuleReleased = 7;
+}
+
+message UserNotification
+{
+    string subject = 1; // The subject (shown on UI banner or email subject)
+    string contents = 2; // The contents (if user clicks on banner, or email body)
+
+    string from = 3; // Shows where the notification came from
+    uint64 timeStampUnixSec = 4;
+}

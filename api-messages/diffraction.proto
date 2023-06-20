@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message ManualDiffractionPeak
+{
+    int32 pmc = 1;
+    float energykeV = 2;
+}

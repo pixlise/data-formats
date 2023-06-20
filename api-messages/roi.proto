@@ -1,0 +1,35 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+////////////////////////////////////
+// ROIs
+
+message ROIItem
+{
+	string name = 1;
+    repeated uint32 locationIndexes = 2;
+    string description = 3;
+    string imageName = 4;
+    
+    repeated uint32 pixelIndexes = 5;
+    //MistROIItem  MistROIItem `json:"mistROIItem"`
+    repeated string tags = 7;
+    Ownership owner = 8;
+}
+
+message ROIItemSummary
+{
+	string name = 1;
+    string description = 2;
+    string imageName = 3;
+    repeated string tags = 4;
+    Ownership owner = 5;
+}
+
+message ROIItemWithId
+{
+    string id = 1;
+    ROIItem item = 2;
+}

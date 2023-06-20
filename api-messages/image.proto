@@ -1,0 +1,49 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+// Where it came from - the instrument or some other source
+enum ScanImageSource
+{
+    SI_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    SI_INSTRUMENT = 1;
+    SI_UPLOAD = 2;
+}
+
+// Image purpose - is it just for viewing, or perhaps it provides channel data to some algorithm
+enum ScanImagePurpose
+{
+    SIP_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    SIP_VIEWING = 1;
+    SIP_MULTICHANNEL = 2;
+}
+
+// Describes a single image that is associated with a scan
+message ScanImage
+{
+    string fileName = 1;
+    ScanImageSource source = 2;
+    uint32 width = 3;
+    uint32 height = 4;
+    uint32 channels = 5;
+    ScanImagePurpose purpose = 6;
+
+    string url = 7; // So client can send a HTTP GET and image gets cached by browser, etc
+
+    // If its "matched" to another image, this should be filled out
+    message ImageMatchTransform
+    {
+        string matchedImageFileName = 1;
+
+        // The location point the matched image was recorded for
+        // This allows PIXLISE to determine which beam location
+        // set to use for displaying this image
+        int32 matchedImageLocation = 2; 
+        
+        float xOffset = 3;
+        float yOffset = 4;
+        float xScale = 5;
+        float yScale = 6;
+    }
+
+    ImageMatchTransform matchInfo = 8;
+}

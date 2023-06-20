@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "pseudo-intensities.proto";
+import "response.proto";
+
+
+message PseudoIntensityReq
+{
+    string scanId = 1;
+    
+    // Effectively allows pagination
+    uint32 startingLocation = 2;
+    uint32 locationCount = 3;
+}
+
+message PseudoIntensityResp
+{
+    ResponseStatus status = 1;
+    repeated string intensityLabels = 2;
+    PseudoIntensityData data = 3;
+}

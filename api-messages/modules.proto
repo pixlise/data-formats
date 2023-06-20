@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+
+message DataModule
+{
+    string id = 1;
+    string name = 2;
+    string comments = 3;
+    Ownership owner = 4;
+}
+
+message DataModuleVersion
+{
+    string version = 1;
+    repeated string tags = 2;
+    string comments = 3;
+    uint64 timeStampUnixSec = 4;
+    string sourceCode = 5;
+    //DOIMetadata doiMetadata = 6;
+}

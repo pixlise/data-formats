@@ -1,0 +1,28 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+
+message ElementLines
+{
+    int32 Z = 1;
+    bool K = 2;
+    bool L = 3;
+    bool M = 4;
+    bool Esc = 5;
+}
+
+message ElementSet
+{
+	string name = 1;
+    repeated ElementLines lines = 2;
+    Ownership owner = 3;
+}
+
+message ElementSetSummary
+{
+	string name = 1;
+	repeated int32 atomicNumbers = 2;
+    Ownership owner = 3;
+}
