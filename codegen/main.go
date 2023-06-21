@@ -274,25 +274,23 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 	goFunc += `
 
 func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session) (*protos.WSMessage, error) {
-	var err error
 	switch wsmsg.Contents.(type) {
 `
 	for name, types := range msgs {
 		if types.Req {
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
             resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody)
-            if err == nil {
-                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}}, nil
-            }
-`, name, name, name, name, name)
+			if resp == nil || err != nil {
+                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{Status: makeRespStatus(err)}}}, nil
+			}
+			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}}, nil				
+`, name, name, name, name, name, name, name, name)
 		}
 	}
 
 	goFunc += `        default:
 		    return nil, fmt.Errorf("Unhandled message type: %v", wsmsg.String())
 	}
-
-	return nil, err
 }
 `
 	err := os.WriteFile(goOutPath, []byte(goFunc), 0644)
