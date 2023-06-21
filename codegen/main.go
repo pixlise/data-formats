@@ -406,10 +406,40 @@ func writeAngular(allMsgTypes []string, msgs map[string]msgTypes, angularOutPath
 	angular := `// GENERATED CODE! Do not hand-modify
 
 import { Subject } from 'rxjs';
-import {
-	WSMessage,
-    ` + strings.Join(allMsgTypes, ",\n    ") + `
-} from "src/app/generated-protos/proto/apistructs";
+`
+	sourceImports := map[string][]string{}
+	sourceFiles := []string{}
+
+	for name, types := range msgs {
+		if _, ok := sourceImports[types.SourceFile]; !ok {
+			sourceImports[types.SourceFile] = []string{}
+			sourceFiles = append(sourceFiles, types.SourceFile)
+		}
+
+		toAdd := []string{}
+		if types.Req {
+			toAdd = append(toAdd, name+"Req")
+		}
+		if types.Resp {
+			toAdd = append(toAdd, name+"Resp")
+		}
+		if types.Upd {
+			toAdd = append(toAdd, name+"Upd")
+		}
+
+		for _, add := range toAdd {
+			sourceImports[types.SourceFile] = append(sourceImports[types.SourceFile], add)
+		}
+	}
+
+	sort.Strings(sourceFiles)
+	for _, f := range sourceFiles {
+		is := sourceImports[f]
+		f = f[0 : len(f)-len(".proto")]
+		angular += "import {\n    " + strings.Join(is, ",\n    ") + ` } from "src/app/generated-protos/` + f + "\"\n"
+	}
+
+	angular += `import { WSMessage } from "src/app/generated-protos/websocket"
 
 // Type-specific request send functions which return the right type of response
 export abstract class WSMessageHandler
