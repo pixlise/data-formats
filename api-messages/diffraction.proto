@@ -1,9 +1,14 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
 
 message ManualDiffractionPeak
 {
-    int32 pmc = 1;
-    float energykeV = 2;
+    // ID could be composed of scanId+pmc+userId+energy (?)
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+    int32 pmc = 3;
+    float energykeV = 4;
+    Ownership owner = 5;
 }

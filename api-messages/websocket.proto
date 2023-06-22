@@ -117,10 +117,12 @@ message WSMessage
         PiquantConfigVersionResp piquantConfigVersionResp = 75;
         PiquantConfigVersionsListReq piquantConfigVersionsListReq = 76;
         PiquantConfigVersionsListResp piquantConfigVersionsListResp = 77;
-        PiquantSetVersionReq piquantSetVersionReq = 78;
-        PiquantSetVersionResp piquantSetVersionResp = 79;
+        PiquantCurrentVersionReq piquantCurrentVersionReq = 150;
+        PiquantCurrentVersionResp piquantCurrentVersionResp = 151;
         PiquantVersionListReq piquantVersionListReq = 80;
         PiquantVersionListResp piquantVersionListResp = 81;
+        PiquantWriteCurrentVersionReq piquantWriteCurrentVersionReq = 78;
+        PiquantWriteCurrentVersionResp piquantWriteCurrentVersionResp = 79;
         PseudoIntensityReq pseudoIntensityReq = 82;
         PseudoIntensityResp pseudoIntensityResp = 83;
         RegionOfInterestDeleteReq regionOfInterestDeleteReq = 84;

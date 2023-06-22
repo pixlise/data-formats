@@ -8,7 +8,7 @@ import "ownership-access.proto";
 
 message DataExpression
 {
-    string id = 1;
+    string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     string sourceCode = 3;
     string sourceLanguage = 4;

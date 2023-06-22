@@ -37,13 +37,13 @@ message RegionOfInterestWriteReq
 {
     // For each of these, if ID is blank, assume it's a new one (and we return the ID), otherwise
     // assume it's an overwrite
-    repeated ROIItemWithId items = 1;
+    repeated ROIItem items = 1;
 }
 
 message RegionOfInterestWriteResp
 {
     ResponseStatus status = 1;
-    repeated ROIItemWithId items = 2;
+    repeated ROIItem items = 2;
 }
 
 message RegionOfInterestDeleteReq

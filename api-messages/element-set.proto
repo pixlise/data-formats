@@ -4,7 +4,7 @@ option go_package = ".;protos";
 import "ownership-access.proto";
 
 
-message ElementLines
+message ElementLine
 {
     int32 Z = 1;
     bool K = 2;
@@ -15,14 +15,16 @@ message ElementLines
 
 message ElementSet
 {
-	string name = 1;
-    repeated ElementLines lines = 2;
-    Ownership owner = 3;
+    string id = 1; // @gotags: bson:"_id,omitempty"
+	string name = 2;
+    repeated ElementLine lines = 3;
+    Ownership owner = 4;
 }
 
 message ElementSetSummary
 {
-	string name = 1;
-	repeated int32 atomicNumbers = 2;
-    Ownership owner = 3;
+    string id = 1;
+	string name = 2;
+	repeated int32 atomicNumbers = 3;
+    Ownership owner = 4;
 }
