@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "diffraction.proto";
 import "response.proto";
 
 /* Original:
@@ -17,7 +18,7 @@ message DiffractionPeakStatusListReq
 message DiffractionPeakStatusListResp
 {
     ResponseStatus status = 1;
-    map<string, string> peakStatuses = 2; // id->peak status
+    DetectedDiffractionPeakStatuses peakStatuses = 2; // id->peak status
 }
 
 message DiffractionPeakStatusWriteReq

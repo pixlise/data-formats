@@ -10,5 +10,18 @@ message ManualDiffractionPeak
     string scanId = 2;
     int32 pmc = 3;
     float energykeV = 4;
-    Ownership owner = 5;
+    Ownership owner = 5; // @gotags: bson:"omitempty"
+}
+
+message DetectedDiffractionPeakStatuses
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+
+    message PeakStatus
+    {
+        string status = 1;
+        Ownership owner = 2; // @gotags: bson:"omitempty"
+    }
+    map<string, PeakStatus> statuses = 3;
 }
