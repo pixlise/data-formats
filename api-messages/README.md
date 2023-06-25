@@ -55,6 +55,17 @@ Quantification: Implement "jobs" as agnostic things, which you can ask to run a 
                 run, listing, get-log msgs... maybe delete?
                 Still need quant specific msgs for listing/get/upload/export
 
+View state: Mostly implemented, but collections+workspaces have not been:
+  DELETE /view-state/collections/{DID}/{id}                   - write:pixlise-settings
+  GET    /view-state/collections/{DID}/{id}                   - public
+  PUT    /view-state/collections/{DID}/{id}                   - write:pixlise-settings
+  GET    /view-state/collections/{DID}                        - public
+  GET    /view-state/saved/{DID}/{id}/references              - public
+  DELETE /view-state/saved/{DID}/{id}                         - write:pixlise-settings
+  GET    /view-state/saved/{DID}/{id}                         - public
+  PUT    /view-state/saved/{DID}/{id}                         - write:pixlise-settings
+  GET    /view-state/saved/{DID}                              - public
+
 Sharing needs to be re-thought:
 POST   /share/element-set/{id}                              -> write:shared-element-set
 POST   /share/rgb-mix/{id}                                  -> write:shared-expression
@@ -138,3 +149,6 @@ POST   /share/view-state/{DID}/{id}                         -> write:pixlise-set
 -POST   /dataset/images/{DID}/{imgtype}/{image}              -> write:dataset
 -PUT    /dataset/images/{DID}/{imgtype}/{image}              -> write:dataset
 -GET    /dataset/images/{DID}/{imgtype}                      -> public
+
+-PUT    /view-state/{DID}/{id}                               - write:pixlise-settings
+-GET    /view-state/{DID}                                    - public

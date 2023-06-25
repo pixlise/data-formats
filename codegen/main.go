@@ -67,11 +67,18 @@ func main() {
 		}
 	}
 
+	// Make a sorted list so we write stuff in consistant order
+	sortedMsgs := []string{}
+	for msgName := range messages {
+		sortedMsgs = append(sortedMsgs, msgName)
+	}
+	sort.Strings(sortedMsgs)
+
 	checkMessageConsistancy(messages)
-	checkWSMessage(filepath.Join(protoPath, "websocket.proto"), messages)
+	checkWSMessage(filepath.Join(protoPath, "websocket.proto"), sortedMsgs, messages)
 
 	// Make a list of all msgs
-	allMsgTypes := listAllMessageTypes(messages)
+	allMsgTypes := listAllMessageTypes(sortedMsgs, messages)
 
 	// Write out the code that handles all of these
 	if len(angularOutPath) > 0 {
@@ -81,7 +88,7 @@ func main() {
 		}
 
 		fmt.Printf("Writing Angular file to: %v\n", angularFilePath)
-		writeAngular(allMsgTypes, messages, angularFilePath)
+		writeAngular(allMsgTypes, sortedMsgs, messages, angularFilePath)
 	} else {
 		fmt.Println("Skipping Angular writing...")
 	}
@@ -93,16 +100,16 @@ func main() {
 		}
 
 		fmt.Printf("Writing Go file to: %v\n", goFilePath)
-		writeGo(allMsgTypes, messages, goFilePath)
+		writeGo(allMsgTypes, sortedMsgs, messages, goFilePath)
 	} else {
 		fmt.Println("Skipping Angular writing...")
 	}
 
 	// Check that Go handler functions are all there
-	generateGoHandlers(messages, goOutPath)
+	generateGoHandlers(sortedMsgs, messages, goOutPath)
 }
 
-func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
+func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[string]msgTypes) {
 	// Read the existing file...
 	proto, err := os.ReadFile(wsMsgFileName)
 
@@ -166,7 +173,8 @@ func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
 	}
 
 	exampleLines := []string{}
-	for msg, msgType := range messages {
+	for _, msg := range sortedMsgs {
+		msgType := messages[msg]
 		toWrite := []string{}
 		if msgType.Req {
 			toWrite = append(toWrite, msg+"Req")
@@ -221,7 +229,7 @@ func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
 
 // With help from:
 // https://appliedgo.com/blog/a-tip-and-a-trick-when-working-with-generics
-func writeGo(allMsgTypes []string, msgs map[string]msgTypes, goOutPath string) {
+func writeGo(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes, goOutPath string) {
 	goFunc := `package ws
 	
 // GENERATED CODE! Do not hand-modify
@@ -252,7 +260,8 @@ import (
 	*/
 
 	allUpdMsgs := []string{}
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if types.Upd {
 			allUpdMsgs = append(allUpdMsgs, name+"Upd")
 		}
@@ -276,7 +285,8 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session) (*protos.WSMessage, error) {
 	switch wsmsg.Contents.(type) {
 `
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if types.Req {
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
             resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody)
@@ -299,7 +309,7 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Sessio
 	}
 }
 
-func generateGoHandlers(msgs map[string]msgTypes, goOutPath string) {
+func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath string) {
 	type outFileInfo struct {
 		filePath         string
 		existed          bool
@@ -315,7 +325,8 @@ func generateGoHandlers(msgs map[string]msgTypes, goOutPath string) {
 
 	// Loop through all messages, check that handler files exist, if not, generate, otherwise show what's missing
 	files := map[string]outFileInfo{}
-	for msgName, types := range msgs {
+	for _, msgName := range sortedMsgs {
+		types := msgs[msgName]
 		if types.Req {
 			if _, ok := files[types.SourceFile]; !ok {
 				// New entry...
@@ -400,7 +411,7 @@ func varName(name string) string {
 	return name
 }
 
-func writeAngular(allMsgTypes []string, msgs map[string]msgTypes, angularOutPath string) {
+func writeAngular(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes, angularOutPath string) {
 	angular := `// GENERATED CODE! Do not hand-modify
 
 import { Subject } from 'rxjs';
@@ -408,7 +419,8 @@ import { Subject } from 'rxjs';
 	sourceImports := map[string][]string{}
 	sourceFiles := []string{}
 
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if _, ok := sourceImports[types.SourceFile]; !ok {
 			sourceImports[types.SourceFile] = []string{}
 			sourceFiles = append(sourceFiles, types.SourceFile)
@@ -447,13 +459,15 @@ export abstract class WSMessageHandler
 	protected abstract sendRequest(msg: WSMessage): void;
 
 `
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if types.Upd {
 			angular += fmt.Sprintf("    public %vUpd$ = new Subject<%vUpd>();\n", varName(name), name)
 		}
 	}
 
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		// If there is a request and response pair, generate a function for it
 		if types.Req && types.Resp {
 			angular += fmt.Sprintf("\n    protected _%vSubjects = new Map<number, Subject<%vResp>>();\n", name, name)
@@ -475,7 +489,8 @@ export abstract class WSMessageHandler
     protected dispatchResponse(wsmsg: WSMessage): boolean {
 `
 	firstIf := true
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if types.Resp {
 			angular += "        "
 			if !firstIf {
@@ -506,7 +521,8 @@ export abstract class WSMessageHandler
     protected dispatchUpdate(wsmsg: WSMessage): boolean {
 `
 	firstIf = true
-	for name, types := range msgs {
+	for _, name := range sortedMsgs {
+		types := msgs[name]
 		if types.Upd {
 			angular += "        "
 			if !firstIf {
@@ -624,18 +640,19 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 	return protoLines
 }
 
-func listAllMessageTypes(messages map[string]msgTypes) []string {
+func listAllMessageTypes(sortedMsgs []string, messages map[string]msgTypes) []string {
 	allMsgTypes := []string{}
 	// Add each type we have, as all request, response and updates should be able to fit into a WSMessage
-	for msgName, msgTypes := range messages {
-		if msgTypes.Req {
-			allMsgTypes = append(allMsgTypes, msgName+"Req")
+	for _, msg := range sortedMsgs {
+		msgType := messages[msg]
+		if msgType.Req {
+			allMsgTypes = append(allMsgTypes, msg+"Req")
 		}
-		if msgTypes.Resp {
-			allMsgTypes = append(allMsgTypes, msgName+"Resp")
+		if msgType.Resp {
+			allMsgTypes = append(allMsgTypes, msg+"Resp")
 		}
-		if msgTypes.Upd {
-			allMsgTypes = append(allMsgTypes, msgName+"Upd")
+		if msgType.Upd {
+			allMsgTypes = append(allMsgTypes, msg+"Upd")
 		}
 	}
 
