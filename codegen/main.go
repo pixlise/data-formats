@@ -290,10 +290,10 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Sessio
 		if types.Req {
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
             resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody, ws.svcs)
-			if resp == nil || err != nil {
+			if err != nil {
                 return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
-			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}}, nil				
+			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK}, nil				
 `, name, name, name, name, name, name, name, name)
 		}
 	}
