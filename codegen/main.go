@@ -451,6 +451,14 @@ import { Subject } from 'rxjs';
 	}
 
 	angular += `import { WSMessage } from "src/app/generated-protos/websocket"
+import { ResponseStatus } from "src/app/generated-protos/response"
+
+export class WSError
+{
+	constructor(public status: ResponseStatus, public errorText: string)
+	{
+	}
+}
 
 // Type-specific request send functions which return the right type of response
 export abstract class WSMessageHandler
@@ -502,7 +510,11 @@ export abstract class WSMessageHandler
 			angular += fmt.Sprintf(`if(wsmsg.%vResp) {
             let subj = this._%vSubjects.get(wsmsg.msgId);
 		    if(subj) {
-			    subj.next(wsmsg.%vResp);
+				if(wsmsg.status != ResponseStatus.WS_OK) {
+					subj.error(new WSError(wsmsg.status, wsmsg.errorText));
+				} else {
+			    	subj.next(wsmsg.%vResp);
+				}
 			    subj.complete();
 
 			    this._%vSubjects.delete(wsmsg.msgId);
