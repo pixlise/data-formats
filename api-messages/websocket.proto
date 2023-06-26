@@ -34,6 +34,8 @@ import "user-notification-msgs.proto";
 import "user-notification-setting-msgs.proto";
 import "viewstate-msgs.proto";
 
+import "response.proto";
+
 
 ////////////////////////////////////
 // Websocket messaging
@@ -42,10 +44,22 @@ import "viewstate-msgs.proto";
 // The overall wrapper WSMessage
 message WSMessage
 {
-    // Helps associate request and response:
+    // Here are some fields that can be used external to the message contents for things
+    // external to the messages being delivered
+
+    // Message ID - think of this as a request ID to help associate requests and responses.
     // Should be a number counting up for each request sent from client, responses should include the same number
     // Other messages can leave this empty
     uint32 msgId = 1;
+
+    // Response Status - only needs to be set on a response going back out of the API
+    // This replaces the HTTP status code, so we don't have to define this field
+    // in every response message (initially started doing that, but what if you need
+    // more fields, see the following one)
+    ResponseStatus status = 2;
+
+    // Error text - if the response status is not WS_OK, this can contain any error string we want to send back
+    string errorText = 3;
 
     oneof Contents
     {

@@ -289,9 +289,9 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Sessio
 		types := msgs[name]
 		if types.Req {
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
-            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody)
+            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody, ws.svcs)
 			if resp == nil || err != nil {
-                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{Status: makeRespStatus(err)}}}, nil
+                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
 			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}}, nil				
 `, name, name, name, name, name, name, name, name)
@@ -348,7 +348,7 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 
 			// Now that we know the out file struct exists, generate handler
 			funcName := fmt.Sprintf("Handle%vReq", msgName)
-			signature := fmt.Sprintf("func %v(req *protos.%vReq, s *melody.Session, m *melody.Melody) (*protos.%vResp, error)", funcName, msgName, msgName)
+			signature := fmt.Sprintf("func %v(req *protos.%vReq, s *melody.Session, m *melody.Melody, svcs *services.APIServices) (*protos.%vResp, error)", funcName, msgName, msgName)
 			handler := signature + fmt.Sprintf(` {
     return nil, errors.New("%v not implemented yet")
 }
@@ -371,6 +371,7 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 import (
 	protos "github.com/pixlise/core/v3/generated-protos"
 	"github.com/olahol/melody"
+	"github.com/pixlise/core/v3/api/services"
 	"errors"
 )
 
