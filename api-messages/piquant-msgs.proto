@@ -66,13 +66,24 @@ message PiquantVersionListResp
 }
 
 // Sets the current version of PIQUANT container to run in API when quant is started
-message PiquantSetVersionReq
+message PiquantWriteCurrentVersionReq
 {
     string piquantVersion = 1;
 }
 
-message PiquantSetVersionResp
+message PiquantWriteCurrentVersionResp
 {
     ResponseStatus status = 1;
     string piquantVersion = 2;
+}
+
+// Gets the current version of PIQUANT container that runs in API when quant is started
+message PiquantCurrentVersionReq
+{
+}
+
+message PiquantCurrentVersionResp
+{
+    ResponseStatus status = 1;
+    PiquantVersion piquantVersion = 2;
 }

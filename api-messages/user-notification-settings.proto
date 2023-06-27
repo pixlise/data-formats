@@ -12,13 +12,7 @@ enum NotificationMethod
 
 message UserNotificationSettings
 {
-    NotificationMethod userQuantComplete = 1;
-    NotificationMethod quantShared = 2;
-    NotificationMethod newDataset = 3;
-    NotificationMethod updatedDataset = 4;
-    NotificationMethod imageAddedToDataset = 5;
-    NotificationMethod majorModuleReleased = 6;
-    NotificationMethod minorModuleReleased = 7;
+    map<string, NotificationMethod> topicSettings = 1;
 }
 
 message UserNotification

@@ -32,6 +32,9 @@ import "user-management-msgs.proto";
 import "user-msgs.proto";
 import "user-notification-msgs.proto";
 import "user-notification-setting-msgs.proto";
+import "viewstate-msgs.proto";
+
+import "response.proto";
 
 
 ////////////////////////////////////
@@ -41,10 +44,22 @@ import "user-notification-setting-msgs.proto";
 // The overall wrapper WSMessage
 message WSMessage
 {
-    // Helps associate request and response:
+    // Here are some fields that can be used external to the message contents for things
+    // external to the messages being delivered
+
+    // Message ID - think of this as a request ID to help associate requests and responses.
     // Should be a number counting up for each request sent from client, responses should include the same number
     // Other messages can leave this empty
     uint32 msgId = 1;
+
+    // Response Status - only needs to be set on a response going back out of the API
+    // This replaces the HTTP status code, so we don't have to define this field
+    // in every response message (initially started doing that, but what if you need
+    // more fields, see the following one)
+    ResponseStatus status = 2;
+
+    // Error text - if the response status is not WS_OK, this can contain any error string we want to send back
+    string errorText = 3;
 
     oneof Contents
     {
@@ -100,93 +115,99 @@ message WSMessage
         ImageDeleteResp imageDeleteResp = 59;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
-        ImageListUpd imageListUpd = 144;
-        ImageSetDefaultReq imageSetDefaultReq = 62;
-        ImageSetDefaultResp imageSetDefaultResp = 63;
-        ImageUploadReq imageUploadReq = 64;
-        ImageUploadResp imageUploadResp = 65;
-        LogGetLevelReq logGetLevelReq = 66;
-        LogGetLevelResp logGetLevelResp = 67;
-        LogReadReq logReadReq = 68;
-        LogReadResp logReadResp = 69;
-        LogSetLevelReq logSetLevelReq = 70;
-        LogSetLevelResp logSetLevelResp = 71;
-        PiquantConfigListReq piquantConfigListReq = 72;
-        PiquantConfigListResp piquantConfigListResp = 73;
-        PiquantConfigVersionReq piquantConfigVersionReq = 74;
-        PiquantConfigVersionResp piquantConfigVersionResp = 75;
-        PiquantConfigVersionsListReq piquantConfigVersionsListReq = 76;
-        PiquantConfigVersionsListResp piquantConfigVersionsListResp = 77;
-        PiquantSetVersionReq piquantSetVersionReq = 78;
-        PiquantSetVersionResp piquantSetVersionResp = 79;
-        PiquantVersionListReq piquantVersionListReq = 80;
-        PiquantVersionListResp piquantVersionListResp = 81;
-        PseudoIntensityReq pseudoIntensityReq = 82;
-        PseudoIntensityResp pseudoIntensityResp = 83;
-        RegionOfInterestDeleteReq regionOfInterestDeleteReq = 84;
-        RegionOfInterestDeleteResp regionOfInterestDeleteResp = 85;
-        RegionOfInterestListReq regionOfInterestListReq = 86;
-        RegionOfInterestListResp regionOfInterestListResp = 87;
-        RegionOfInterestReq regionOfInterestReq = 88;
-        RegionOfInterestResp regionOfInterestResp = 89;
-        RegionOfInterestWriteReq regionOfInterestWriteReq = 90;
-        RegionOfInterestWriteResp regionOfInterestWriteResp = 91;
-        RunTestReq runTestReq = 92;
-        RunTestResp runTestResp = 93;
-        ScanImageLocationsReq scanImageLocationsReq = 94;
-        ScanImageLocationsResp scanImageLocationsResp = 95;
-        ScanListReq scanListReq = 96;
-        ScanListResp scanListResp = 97;
-        ScanListUpd scanListUpd = 145;
-        ScanLocationReq scanLocationReq = 98;
-        ScanLocationResp scanLocationResp = 99;
-        ScanMetaLabelsReq scanMetaLabelsReq = 100;
-        ScanMetaLabelsResp scanMetaLabelsResp = 101;
-        ScanMetaWriteReq scanMetaWriteReq = 102;
-        ScanMetaWriteResp scanMetaWriteResp = 103;
-        ScanTriggerReImportReq scanTriggerReImportReq = 104;
-        ScanTriggerReImportResp scanTriggerReImportResp = 105;
-        ScanUploadReq scanUploadReq = 106;
-        ScanUploadResp scanUploadResp = 107;
-        SendUserNotificationReq sendUserNotificationReq = 108;
-        SendUserNotificationResp sendUserNotificationResp = 109;
-        SpectrumReq spectrumReq = 110;
-        SpectrumResp spectrumResp = 111;
-        TagCreateReq tagCreateReq = 112;
-        TagCreateResp tagCreateResp = 113;
-        TagDeleteReq tagDeleteReq = 114;
-        TagDeleteResp tagDeleteResp = 115;
-        TagListReq tagListReq = 116;
-        TagListResp tagListResp = 117;
-        UserAddRoleReq userAddRoleReq = 118;
-        UserAddRoleResp userAddRoleResp = 119;
-        UserDeleteRoleReq userDeleteRoleReq = 120;
-        UserDeleteRoleResp userDeleteRoleResp = 121;
-        UserDetailsReq userDetailsReq = 122;
-        UserDetailsResp userDetailsResp = 123;
-        UserDetailsUpd userDetailsUpd = 146;
-        UserDetailsWriteReq userDetailsWriteReq = 124;
-        UserDetailsWriteResp userDetailsWriteResp = 125;
-        UserDismissHintReq userDismissHintReq = 126;
-        UserDismissHintResp userDismissHintResp = 127;
-        UserHintsReq userHintsReq = 128;
-        UserHintsResp userHintsResp = 129;
-        UserHintsToggleReq userHintsToggleReq = 130;
-        UserHintsToggleResp userHintsToggleResp = 131;
-        UserHintsUpd userHintsUpd = 147;
-        UserListReq userListReq = 132;
-        UserListResp userListResp = 133;
-        UserNotificationReq userNotificationReq = 134;
-        UserNotificationResp userNotificationResp = 135;
-        UserNotificationSettingsReq userNotificationSettingsReq = 136;
-        UserNotificationSettingsResp userNotificationSettingsResp = 137;
-        UserNotificationSettingsUpd userNotificationSettingsUpd = 148;
-        UserNotificationSettingsWriteReq userNotificationSettingsWriteReq = 138;
-        UserNotificationSettingsWriteResp userNotificationSettingsWriteResp = 139;
-        UserNotificationUpd userNotificationUpd = 149;
-        UserRoleListReq userRoleListReq = 140;
-        UserRoleListResp userRoleListResp = 141;
-        UserRolesListReq userRolesListReq = 142;
-        UserRolesListResp userRolesListResp = 143;
+        ImageListUpd imageListUpd = 62;
+        ImageSetDefaultReq imageSetDefaultReq = 63;
+        ImageSetDefaultResp imageSetDefaultResp = 64;
+        ImageUploadReq imageUploadReq = 65;
+        ImageUploadResp imageUploadResp = 66;
+        LogGetLevelReq logGetLevelReq = 67;
+        LogGetLevelResp logGetLevelResp = 68;
+        LogReadReq logReadReq = 69;
+        LogReadResp logReadResp = 70;
+        LogSetLevelReq logSetLevelReq = 71;
+        LogSetLevelResp logSetLevelResp = 72;
+        PiquantConfigListReq piquantConfigListReq = 73;
+        PiquantConfigListResp piquantConfigListResp = 74;
+        PiquantConfigVersionReq piquantConfigVersionReq = 75;
+        PiquantConfigVersionResp piquantConfigVersionResp = 76;
+        PiquantConfigVersionsListReq piquantConfigVersionsListReq = 77;
+        PiquantConfigVersionsListResp piquantConfigVersionsListResp = 78;
+        PiquantCurrentVersionReq piquantCurrentVersionReq = 79;
+        PiquantCurrentVersionResp piquantCurrentVersionResp = 80;
+        PiquantVersionListReq piquantVersionListReq = 81;
+        PiquantVersionListResp piquantVersionListResp = 82;
+        PiquantWriteCurrentVersionReq piquantWriteCurrentVersionReq = 83;
+        PiquantWriteCurrentVersionResp piquantWriteCurrentVersionResp = 84;
+        PseudoIntensityReq pseudoIntensityReq = 85;
+        PseudoIntensityResp pseudoIntensityResp = 86;
+        RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
+        RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
+        RegionOfInterestListReq regionOfInterestListReq = 89;
+        RegionOfInterestListResp regionOfInterestListResp = 90;
+        RegionOfInterestReq regionOfInterestReq = 91;
+        RegionOfInterestResp regionOfInterestResp = 92;
+        RegionOfInterestWriteReq regionOfInterestWriteReq = 93;
+        RegionOfInterestWriteResp regionOfInterestWriteResp = 94;
+        RunTestReq runTestReq = 95;
+        RunTestResp runTestResp = 96;
+        ScanImageLocationsReq scanImageLocationsReq = 97;
+        ScanImageLocationsResp scanImageLocationsResp = 98;
+        ScanListReq scanListReq = 99;
+        ScanListResp scanListResp = 100;
+        ScanListUpd scanListUpd = 101;
+        ScanLocationReq scanLocationReq = 102;
+        ScanLocationResp scanLocationResp = 103;
+        ScanMetaLabelsReq scanMetaLabelsReq = 104;
+        ScanMetaLabelsResp scanMetaLabelsResp = 105;
+        ScanMetaWriteReq scanMetaWriteReq = 106;
+        ScanMetaWriteResp scanMetaWriteResp = 107;
+        ScanTriggerReImportReq scanTriggerReImportReq = 108;
+        ScanTriggerReImportResp scanTriggerReImportResp = 109;
+        ScanUploadReq scanUploadReq = 110;
+        ScanUploadResp scanUploadResp = 111;
+        SendUserNotificationReq sendUserNotificationReq = 112;
+        SendUserNotificationResp sendUserNotificationResp = 113;
+        SpectrumReq spectrumReq = 114;
+        SpectrumResp spectrumResp = 115;
+        TagCreateReq tagCreateReq = 116;
+        TagCreateResp tagCreateResp = 117;
+        TagDeleteReq tagDeleteReq = 118;
+        TagDeleteResp tagDeleteResp = 119;
+        TagListReq tagListReq = 120;
+        TagListResp tagListResp = 121;
+        UserAddRoleReq userAddRoleReq = 122;
+        UserAddRoleResp userAddRoleResp = 123;
+        UserDeleteRoleReq userDeleteRoleReq = 124;
+        UserDeleteRoleResp userDeleteRoleResp = 125;
+        UserDetailsReq userDetailsReq = 126;
+        UserDetailsResp userDetailsResp = 127;
+        UserDetailsUpd userDetailsUpd = 128;
+        UserDetailsWriteReq userDetailsWriteReq = 129;
+        UserDetailsWriteResp userDetailsWriteResp = 130;
+        UserDismissHintReq userDismissHintReq = 131;
+        UserDismissHintResp userDismissHintResp = 132;
+        UserHintsReq userHintsReq = 133;
+        UserHintsResp userHintsResp = 134;
+        UserHintsToggleReq userHintsToggleReq = 135;
+        UserHintsToggleResp userHintsToggleResp = 136;
+        UserHintsUpd userHintsUpd = 137;
+        UserListReq userListReq = 138;
+        UserListResp userListResp = 139;
+        UserNotificationReq userNotificationReq = 140;
+        UserNotificationResp userNotificationResp = 141;
+        UserNotificationSettingsReq userNotificationSettingsReq = 142;
+        UserNotificationSettingsResp userNotificationSettingsResp = 143;
+        UserNotificationSettingsUpd userNotificationSettingsUpd = 144;
+        UserNotificationSettingsWriteReq userNotificationSettingsWriteReq = 145;
+        UserNotificationSettingsWriteResp userNotificationSettingsWriteResp = 146;
+        UserNotificationUpd userNotificationUpd = 147;
+        UserRoleListReq userRoleListReq = 148;
+        UserRoleListResp userRoleListResp = 149;
+        UserRolesListReq userRolesListReq = 150;
+        UserRolesListResp userRolesListResp = 151;
+        ViewStateItemWriteReq viewStateItemWriteReq = 152;
+        ViewStateItemWriteResp viewStateItemWriteResp = 153;
+        ViewStateReq viewStateReq = 154;
+        ViewStateResp viewStateResp = 155;
     }
 }

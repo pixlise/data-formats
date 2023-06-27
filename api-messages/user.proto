@@ -8,9 +8,9 @@ option go_package = ".;protos";
 message UserInfo
 {
     string id = 1;
-    string name = 2;
-    string email = 3;
-    string iconURL = 4;
+    string name = 2; // @gotags: bson:"name,omitempty"
+    string email = 3; // @gotags: bson:"email,omitempty"
+    string iconURL = 4; // @gotags: bson:"iconURL,omitempty"
 }
 
 message UserDetails

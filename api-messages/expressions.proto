@@ -8,15 +8,15 @@ import "ownership-access.proto";
 
 message DataExpression
 {
-    string id = 1;
+    string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     string sourceCode = 3;
     string sourceLanguage = 4;
     string comments = 5;
     repeated string tags = 6;
-    repeated ModuleReference moduleReferences = 7;
+    repeated ModuleReference moduleReferences = 7; // @gotags: bson:"omitempty"
     Ownership owner = 8;
-    DataExpressionExecStats recentExecStats = 9;
+    DataExpressionExecStats recentExecStats = 9; // @gotags: bson:"omitempty"
     //DOIMetadata doiMetadata = 10;
 }
 

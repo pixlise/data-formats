@@ -17,8 +17,9 @@ message ExpressionGroupItem
 
 message ExpressionGroup
 {
-	string name = 1;
-    repeated ExpressionGroupItem groupItems = 2;
-	repeated string tags = 3;
-    Ownership owner = 4;
+    string id = 1; // @gotags: bson:"_id,omitempty"
+	string name = 2;
+    repeated ExpressionGroupItem groupItems = 3;
+	repeated string tags = 4;
+    Ownership owner = 5;
 }

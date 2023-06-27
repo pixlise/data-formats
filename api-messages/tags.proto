@@ -6,10 +6,9 @@ import "ownership-access.proto";
 
 message Tag
 {
-	string id = 1;
+	string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     Ownership owner = 3;
-    uint64 createTimeUnixSec = 4;
-    string type = 5;
-    string datasetID = 6;
+    string type = 4;
+    string datasetID = 5;
 }

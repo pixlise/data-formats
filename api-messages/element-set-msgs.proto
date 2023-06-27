@@ -36,13 +36,15 @@ message ElementSetGetResp
 
 message ElementSetWriteReq
 {
-    string id = 1;
-    ElementSet elementSet = 2;
+    // If id is empty, it's assumed to be an insert and a new id will be returned
+    ElementSet elementSet = 1;
 }
 
 message ElementSetWriteResp
 {
     ResponseStatus status = 1;
+    // The written item
+    ElementSet elementSet = 2;
 }
 
 message ElementSetDeleteReq

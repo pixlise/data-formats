@@ -4,6 +4,6 @@ option go_package = ".;protos";
 
 message UserHints
 {
-    bool enabled = 1;
-    repeated string dismissedHints = 2;
+    repeated string dismissedHints = 1;
+    //bool enabled = 2;
 }
