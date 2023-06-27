@@ -94,12 +94,12 @@ func main() {
 
 		fmt.Printf("Writing Go file to: %v\n", goFilePath)
 		writeGo(allMsgTypes, messages, goFilePath)
-	} else {
-		fmt.Println("Skipping Angular writing...")
-	}
 
-	// Check that Go handler functions are all there
-	generateGoHandlers(messages, goOutPath)
+		// Check that Go handler functions are all there
+		generateGoHandlers(messages, goOutPath)
+	} else {
+		fmt.Println("Skipping Go writing...")
+	}
 }
 
 func checkWSMessage(wsMsgFileName string, messages map[string]msgTypes) {
