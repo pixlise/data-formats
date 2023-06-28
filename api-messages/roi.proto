@@ -1,10 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "ownership-access.proto";
 
-////////////////////////////////////
-// ROIs
 
 message ROIItem
 {
@@ -18,7 +15,7 @@ message ROIItem
     repeated uint32 pixelIndexes = 7;
     //MistROIItem  MistROIItem `json:"mistROIItem"`
     repeated string tags = 9;
-    Ownership owner = 10;
+    string ownerEntryId = 10;
 }
 
 message ROIItemSummary
@@ -28,5 +25,4 @@ message ROIItemSummary
 	string name = 3;
     string imageName = 5;
     repeated string tags = 6;
-    Ownership owner = 7;
 }

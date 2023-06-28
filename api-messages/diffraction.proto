@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "ownership-access.proto";
+
 
 message ManualDiffractionPeak
 {
@@ -10,7 +10,8 @@ message ManualDiffractionPeak
     string scanId = 2;
     int32 pmc = 3;
     float energykeV = 4;
-    Ownership owner = 5; // @gotags: bson:"omitempty"
+    uint64 createdUnixSec = 5;
+    string creatorUserId = 6;
 }
 
 message DetectedDiffractionPeakStatuses
@@ -21,7 +22,8 @@ message DetectedDiffractionPeakStatuses
     message PeakStatus
     {
         string status = 1;
-        Ownership owner = 2; // @gotags: bson:"omitempty"
+        uint64 createdUnixSec = 2;
+        string creatorUserId = 3;
     }
     map<string, PeakStatus> statuses = 3;
 }

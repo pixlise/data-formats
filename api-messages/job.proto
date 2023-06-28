@@ -1,8 +1,6 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "ownership-access.proto";
-
 
 
 // TODO: Quants likely need to change to accommodate quantifying spectra from multiple
@@ -20,7 +18,7 @@ message JobStartingParameters
 	uint32 runTimeSec = 9;
 	uint32 coresPerNode = 10;
 	uint64 startUnixTimeSec = 11;
-    Ownership owner = 12;
+    string requestorUserId = 12;
     string roiID = 13;
 	string elementSetID = 14;
 	string PIQUANTVersion = 15;
@@ -75,7 +73,7 @@ message JobCreateParams
 	string roiID = 8; // There is now a list of ROI IDs that can be provided too. More relevant with the QuantMode *Bulk options
 	string elementSetID = 9;
 	string dataset_id = 10;
-	Ownership owner = 11; // Probably not correct for existing containers...
+	string requestorUserId = 11; // Probably not correct for existing containers...
 	string quantMode = 12;
 	repeated string roiIDs = 13; // If QuantMode = *Bulk, this is used, pmcs is ignored.
 	bool includeDwells = 14;

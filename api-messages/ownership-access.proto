@@ -1,23 +1,49 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "user.proto";
 
 
-message Ownership
+message UserGroupList
 {
-    UserInfo creator = 1;
-
-    // Maybe this should be in a separate structure??
-    uint64 createdUnixSec = 2;
-    uint64 modifiedUnixSec = 3;
+    repeated string userIds = 1;
+    repeated string groupIds = 2;
 }
 
-// Access - who is allowed to access a given resource
-// This should contain all groups/user IDs who are allowed
-// to view or edit whatever object this field is on
-message AccessControl
+enum ObjectType
 {
-    string viewers = 1;
-    string editors = 2;
+    OT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    OT_ROI = 1;
+    OT_ELEMENT_SET = 2;
+    OT_EXPRESSION = 3;
+    OT_EXPRESSION_GROUP = 4;
+    OT_DATA_MODULE = 5;
+    OT_TAG = 6;
+}
+
+message OwnershipItem
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string objectId = 2; // Back-reference to the ID of the object that's pointing to this item
+    ObjectType objectType = 3; // What kind of object it is
+
+    // Creation info
+    string creatorUserId = 4;
+    uint64 createdUnixSec = 5;
+
+    // Who has view or edit access
+    UserGroupList viewers = 6;
+    UserGroupList editors = 7;
+
+    // Maybe this should be in a separate structure??
+    //uint64 modifiedUnixSec = 8;
+}
+
+message UserGroup
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    uint64 createdUnixSec = 7;
+
+    UserGroupList members = 3;
+    repeated string adminUserIds = 4;
 }

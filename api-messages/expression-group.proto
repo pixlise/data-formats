@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "ownership-access.proto";
+
 
 message ExpressionGroupItem
 {
@@ -21,5 +21,5 @@ message ExpressionGroup
 	string name = 2;
     repeated ExpressionGroupItem groupItems = 3;
 	repeated string tags = 4;
-    Ownership owner = 5;
+    string ownerEntryId = 5;
 }
