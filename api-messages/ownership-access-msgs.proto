@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "response.proto";
+
+
+////////////////////////////////////////////////////////////////
+// Getting the current ownership state of an object
+
+message GetOwnershipReq
+{
+    string objectId = 1;
+    // Do we need this?
+    ObjectType objectType = 2;
+}
+
+message GetOwnershipResp
+{
+    ResponseStatus status = 1;
+    OwnershipItem ownership = 2;
+}
+
+////////////////////////////////////////////////////////////////
+// Adding viewers to an object (sharing/unsharing)
+
+message ObjectEditAccessReq
+{
+    string objectId = 1;
+    // Do we need this?
+    ObjectType objectType = 2;
+
+    UserGroupList addViewers = 3;
+    UserGroupList deleteViewers = 4;
+    
+    UserGroupList addEditors = 5;
+    UserGroupList deleteEditors = 6;
+}
+
+message ObjectEditAccessResp
+{
+    ResponseStatus status = 1;
+    OwnershipItem ownership = 2;
+}

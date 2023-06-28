@@ -1,0 +1,122 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "response.proto";
+
+
+////////////////////////////////////////////////////////////////
+// Creating, deleting and renaming entire groups
+// Should only be accessible to group and sys admins
+
+message UserGroupListReq
+{
+}
+
+message UserGroupListResp
+{
+    ResponseStatus status = 1;
+    repeated UserGroup groups = 2;
+}
+
+
+////////////////////////////////////////////////////////////////
+// Creating, deleting and renaming entire groups
+// Should only be accessible to sys admins
+message UserGroupCreateReq
+{
+    string name = 1;
+}
+
+message UserGroupCreateResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
+
+message UserGroupDeleteReq
+{
+    string name = 1;
+}
+
+message UserGroupDeleteResp
+{
+    ResponseStatus status = 1;
+}
+
+message UserGroupSetNameReq
+{
+    string groupId = 1;
+    string name = 2;
+}
+
+message UserGroupSetNameResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
+
+////////////////////////////////////////////////////////////////
+// Adding and deleting members from the group
+// Should only be accessible to group admins and sys admins
+message UserGroupAddMemberReq
+{
+    string groupId = 1;
+
+    // Can add a group or a user id to this
+    oneof Member {
+        string groupMemberId = 2;
+        string userMemberId = 3;
+    }
+}
+
+message UserGroupAddMemberResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
+
+message UserGroupDeleteMemberReq
+{
+    string groupId = 1;
+    
+    // Can delete a group or a user id from this
+    oneof Member {
+        string groupMemberId = 2;
+        string userMemberId = 3;
+    }
+}
+
+message UserGroupDeleteMemberResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
+
+
+////////////////////////////////////////////////////////////////
+// Adding and deleting admins from the group
+// Should only be accessible to group admins and sys admins
+message UserGroupAddAdminReq
+{
+    string groupId = 1;
+    string adminUserId = 2;
+}
+
+message UserGroupAddAdminResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
+
+message UserGroupDeleteAdminReq
+{
+    string groupId = 1;
+    string adminUserId = 2;
+}
+
+message UserGroupDeleteAdminResp
+{
+    ResponseStatus status = 1;
+    UserGroup group = 2;
+}
