@@ -14,9 +14,9 @@ message DataExpression
     string sourceLanguage = 4;
     string comments = 5;
     repeated string tags = 6;
-    repeated ModuleReference moduleReferences = 7; // @gotags: bson:"omitempty"
+    repeated ModuleReference moduleReferences = 7; // @gotags: bson:"moduleReferences,omitempty"
     string ownerEntryId = 8;
-    DataExpressionExecStats recentExecStats = 9; // @gotags: bson:"omitempty"
+    DataExpressionExecStats recentExecStats = 9; // @gotags: bson:"recentExecStats,omitempty"
     //DOIMetadata doiMetadata = 10;
 }
 
