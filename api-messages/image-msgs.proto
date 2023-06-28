@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "image.proto";
-import "response.proto";
+
 
 
 /* Originals:
@@ -22,9 +22,8 @@ message ImageListReq
 
 message ImageListResp
 {
-    ResponseStatus status = 1;
-    repeated ScanImage images = 2;
-    uint32 defaultImageIdx = 3;
+    repeated ScanImage images = 1;
+    uint32 defaultImageIdx = 2;
 }
 
 message ImageListUpd
@@ -42,7 +41,6 @@ message ImageSetDefaultReq
 
 message ImageSetDefaultResp
 {
-    ResponseStatus status = 1;
 }
 
 // NOTE: The above lists images, but the client will need to query the image as
@@ -58,7 +56,6 @@ message ImageUploadReq
 
 message ImageUploadResp
 {
-    ResponseStatus status = 1;
 }
 
 // Deletes ONLY user-created image, should publish a ImageListUpd to go out
@@ -70,5 +67,4 @@ message ImageDeleteReq
 
 message ImageDeleteResp
 {
-    ResponseStatus status = 1;
 }

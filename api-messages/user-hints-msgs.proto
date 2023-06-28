@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "user-hints.proto";
-import "response.proto";
+
 
 
 /* Originals:
@@ -17,8 +17,7 @@ message UserHintsReq
 
 message UserHintsResp
 {
-    ResponseStatus status = 1;
-    UserHints hints = 2;
+    UserHints hints = 1;
 }
 
 message UserHintsUpd
@@ -34,7 +33,6 @@ message UserDismissHintReq
 
 message UserDismissHintResp
 {
-    ResponseStatus status = 1;
 }
 
 // Re-enabling hints should publish a UserHintsUpd
@@ -45,5 +43,4 @@ message UserHintsToggleReq
 
 message UserHintsToggleResp
 {
-    ResponseStatus status = 1;
 }

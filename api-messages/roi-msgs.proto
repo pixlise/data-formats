@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "roi.proto";
-import "response.proto";
+
 
 /* Originals:
 -POST   /roi/{DID}/{bulk}                                    -> write:data-analysis
@@ -18,8 +18,7 @@ message RegionOfInterestListReq
 
 message RegionOfInterestListResp
 {
-    ResponseStatus status = 1;
-    map<string, ROIItemSummary> RegionsOfInterest = 2;
+    map<string, ROIItemSummary> RegionsOfInterest = 1;
 }
 
 message RegionOfInterestReq
@@ -29,8 +28,7 @@ message RegionOfInterestReq
 
 message RegionOfInterestResp
 {
-    ResponseStatus status = 1;
-    ROIItem RegionOfInterest = 2;
+    ROIItem RegionOfInterest = 1;
 }
 
 message RegionOfInterestWriteReq
@@ -42,8 +40,7 @@ message RegionOfInterestWriteReq
 
 message RegionOfInterestWriteResp
 {
-    ResponseStatus status = 1;
-    repeated ROIItem items = 2;
+    repeated ROIItem items = 1;
 }
 
 message RegionOfInterestDeleteReq
@@ -53,5 +50,4 @@ message RegionOfInterestDeleteReq
 
 message RegionOfInterestDeleteResp
 {
-    ResponseStatus status = 1;
 }

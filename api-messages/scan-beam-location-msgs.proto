@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan-beam-location.proto";
-import "response.proto";
+
 
 
 message ScanImageLocationsReq
@@ -16,6 +16,5 @@ message ScanImageLocationsReq
 
 message ScanImageLocationsResp
 {
-    ResponseStatus status = 1;
-    repeated ImageLocations beamLocations = 2;
+    repeated ImageLocations beamLocations = 1;
 }

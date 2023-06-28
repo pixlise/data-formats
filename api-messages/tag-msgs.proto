@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "tags.proto";
-import "response.proto";
+
 
 
 /* Originals:
@@ -18,8 +18,7 @@ message TagListReq
 
 message TagListResp
 {
-    ResponseStatus status = 1;
-    repeated Tag tags = 2;
+    repeated Tag tags = 1;
 }
 
 message TagCreateReq
@@ -29,8 +28,7 @@ message TagCreateReq
 
 message TagCreateResp
 {
-    ResponseStatus status = 1;
-    Tag tag = 2;
+    Tag tag = 1;
 }
 
 message TagDeleteReq
@@ -41,5 +39,4 @@ message TagDeleteReq
 
 message TagDeleteResp
 {
-    ResponseStatus status = 1;
 }

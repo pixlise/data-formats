@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "expression-group.proto";
-import "response.proto";
+
 
 /* Originals:
 -DELETE /rgb-mix/{id}                                        -> write:data-analysis
@@ -18,8 +18,7 @@ message ExpressionGroupListReq
 
 message ExpressionGroupListResp
 {
-    ResponseStatus status = 1;
-    map<string, ExpressionGroup> groups = 2;
+    map<string, ExpressionGroup> groups = 1;
 }
 
 message ExpressionGroupSetReq
@@ -30,7 +29,6 @@ message ExpressionGroupSetReq
 
 message ExpressionGroupSetResp
 {
-    ResponseStatus status = 1;
 }
 
 message ExpressionGroupDeleteReq
@@ -40,5 +38,4 @@ message ExpressionGroupDeleteReq
 
 message ExpressionGroupDeleteResp
 {
-    ResponseStatus status = 1;
 }

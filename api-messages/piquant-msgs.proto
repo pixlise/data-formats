@@ -4,7 +4,7 @@ option go_package = ".;protos";
 
 import "detector-config.proto";
 import "piquant-config.proto";
-import "response.proto";
+
 
 /* Originals:
 -GET    /piquant/config/{id}/{versions}                      -> read:piquant-config
@@ -24,8 +24,7 @@ message PiquantConfigListReq
 
 message PiquantConfigListResp
 {
-    ResponseStatus status = 1;
-    repeated string configNames = 2;
+    repeated string configNames = 1;
 }
 
 // Listing all available versions of a given PIQUANT config
@@ -36,8 +35,7 @@ message PiquantConfigVersionsListReq
 
 message PiquantConfigVersionsListResp
 {
-    ResponseStatus status = 1;
-    repeated string versions = 2;
+    repeated string versions = 1;
 }
 
 // Getting a specific PIQUANT version
@@ -49,9 +47,8 @@ message PiquantConfigVersionReq
 
 message PiquantConfigVersionResp
 {
-    ResponseStatus status = 1;
-    DetectorConfig detectorConfig = 2;
-    PiquantConfig piquantConfig = 3;
+    DetectorConfig detectorConfig = 1;
+    PiquantConfig piquantConfig = 2;
 }
 
 // Listing versions of PIQUANT container to run in API when quant is started
@@ -61,8 +58,7 @@ message PiquantVersionListReq
 
 message PiquantVersionListResp
 {
-    ResponseStatus status = 1;
-    repeated string piquantVersions = 2;
+    repeated string piquantVersions = 1;
 }
 
 // Sets the current version of PIQUANT container to run in API when quant is started
@@ -73,8 +69,7 @@ message PiquantWriteCurrentVersionReq
 
 message PiquantWriteCurrentVersionResp
 {
-    ResponseStatus status = 1;
-    string piquantVersion = 2;
+    string piquantVersion = 1;
 }
 
 // Gets the current version of PIQUANT container that runs in API when quant is started
@@ -84,6 +79,5 @@ message PiquantCurrentVersionReq
 
 message PiquantCurrentVersionResp
 {
-    ResponseStatus status = 1;
-    PiquantVersion piquantVersion = 2;
+    PiquantVersion piquantVersion = 1;
 }

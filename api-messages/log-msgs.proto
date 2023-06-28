@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "log.proto";
-import "response.proto";
+
 
 /* Originals:
 -GET    /logger/fetch/{logStream}                            -> read:logs
@@ -18,8 +18,7 @@ message LogReadReq
 
 message LogReadResp
 {
-    ResponseStatus status = 1;
-    repeated LogLine entries = 2;
+    repeated LogLine entries = 1;
 }
 
 // Admin messages for setting API log level
@@ -32,8 +31,7 @@ message LogSetLevelReq
 
 message LogSetLevelResp
 {
-    ResponseStatus status = 1;
-    string logLevelId = 2;
+    string logLevelId = 1;
 }
 
 message LogGetLevelReq
@@ -42,6 +40,5 @@ message LogGetLevelReq
 
 message LogGetLevelResp
 {
-    ResponseStatus status = 1;
-    string logLevelId = 2;
+    string logLevelId = 1;
 }

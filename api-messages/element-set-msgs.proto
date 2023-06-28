@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "element-set.proto";
-import "response.proto";
+
 
 
 /* Original:
@@ -19,8 +19,7 @@ message ElementSetListReq
 
 message ElementSetListResp
 {
-    ResponseStatus status = 1;
-    map<string, ElementSetSummary> elementSets = 2;
+    map<string, ElementSetSummary> elementSets = 1;
 }
 
 message ElementSetGetReq
@@ -30,8 +29,7 @@ message ElementSetGetReq
 
 message ElementSetGetResp
 {
-    ResponseStatus status = 1;
-    ElementSet elementSet = 2;
+    ElementSet elementSet = 1;
 }
 
 message ElementSetWriteReq
@@ -42,9 +40,8 @@ message ElementSetWriteReq
 
 message ElementSetWriteResp
 {
-    ResponseStatus status = 1;
     // The written item
-    ElementSet elementSet = 2;
+    ElementSet elementSet = 1;
 }
 
 message ElementSetDeleteReq
@@ -54,5 +51,4 @@ message ElementSetDeleteReq
 
 message ElementSetDeleteResp
 {
-    ResponseStatus status = 1;
 }

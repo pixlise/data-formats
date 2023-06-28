@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "ownership-access.proto";
-import "response.proto";
+
 
 
 ////////////////////////////////////////////////////////////////
@@ -17,8 +17,7 @@ message GetOwnershipReq
 
 message GetOwnershipResp
 {
-    ResponseStatus status = 1;
-    OwnershipItem ownership = 2;
+    OwnershipItem ownership = 1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -39,6 +38,5 @@ message ObjectEditAccessReq
 
 message ObjectEditAccessResp
 {
-    ResponseStatus status = 1;
-    OwnershipItem ownership = 2;
+    OwnershipItem ownership = 1;
 }

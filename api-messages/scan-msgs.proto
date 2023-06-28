@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan.proto";
-import "response.proto";
+
 
 
 /* Originals:
@@ -54,8 +54,7 @@ message ScanListReq
 
 message ScanListResp
 {
-    ResponseStatus status = 1;
-    repeated ScanItem scans = 2;
+    repeated ScanItem scans = 1;
 }
 
 message ScanListUpd
@@ -76,7 +75,6 @@ message ScanUploadReq
 
 message ScanUploadResp
 {
-    ResponseStatus status = 1;
 }
 
 // This should trigger a ScanListUpd to go out
@@ -90,7 +88,6 @@ message ScanMetaWriteReq
 
 message ScanMetaWriteResp
 {
-    ResponseStatus status = 1;
 }
 
 // Triggering a re-import, should publish a ScanListUpd to go out
@@ -103,7 +100,6 @@ message ScanTriggerReImportReq
 
 message ScanTriggerReImportResp
 {
-    ResponseStatus status = 1;
 }
 
 // Scan meta data:
@@ -119,6 +115,5 @@ message ScanMetaLabelsReq
 
 message ScanMetaLabelsResp
 {
-    ResponseStatus status = 1;
-    repeated string metaLabels = 2;
+    repeated string metaLabels = 1;
 }

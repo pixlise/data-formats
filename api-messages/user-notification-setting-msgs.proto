@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "user-notification-settings.proto";
-import "response.proto";
+
 
 
 /* Originals:
@@ -17,8 +17,7 @@ message UserNotificationSettingsReq
 
 message UserNotificationSettingsResp
 {
-    ResponseStatus status = 1;
-    UserNotificationSettings notifications = 2;
+    UserNotificationSettings notifications = 1;
 }
 
 message UserNotificationSettingsUpd
@@ -34,5 +33,4 @@ message UserNotificationSettingsWriteReq
 
 message UserNotificationSettingsWriteResp
 {
-    ResponseStatus status = 1;
 }

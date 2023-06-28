@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 
-import "response.proto";
+
 import "viewstate.proto";
 
 /* Originals:
@@ -21,8 +21,7 @@ message ViewStateReq
 
 message ViewStateResp
 {
-    ResponseStatus status = 1;
-    ViewState viewState = 2;
+    ViewState viewState = 1;
 }
 
 // Writes a part of the view state to state stored for the given id
@@ -55,5 +54,4 @@ message ViewStateItemWriteReq
 
 message ViewStateItemWriteResp
 {
-    ResponseStatus status = 1;
 }

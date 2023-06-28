@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "response.proto";
+
 import "user-notification-settings.proto";
 
 /* Originals:
@@ -19,8 +19,7 @@ message UserNotificationReq
 
 message UserNotificationResp
 {
-    ResponseStatus status = 1;
-    repeated UserNotification notifications = 2;
+    repeated UserNotification notifications = 1;
 }
 
 message UserNotificationUpd
@@ -37,5 +36,4 @@ message SendUserNotificationReq
 
 message SendUserNotificationResp
 {
-    ResponseStatus status = 1;
 }

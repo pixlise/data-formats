@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "response.proto";
+
 
 
 /* Originals:
@@ -19,8 +19,6 @@ message ExportFilesReq
 
 message ExportFilesResp
 {
-    ResponseStatus status = 1;
-
-    string zipFileName = 2;
-    bytes zipData = 3;
+    string zipFileName = 1;
+    bytes zipData = 2;
 }

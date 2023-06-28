@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan-locations.proto";
-import "response.proto";
+
 
 
 message ScanLocationReq
@@ -16,6 +16,5 @@ message ScanLocationReq
 
 message ScanLocationResp
 {
-    ResponseStatus status = 1;
-    repeated Location locations = 2;
+    repeated Location locations = 1;
 }

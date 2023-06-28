@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "user.proto";
-import "response.proto";
+
 
 /* Originals:
 -GET    /user/config                                         -> read:user-settings
@@ -19,8 +19,7 @@ message UserDetailsReq
 
 message UserDetailsResp
 {
-    ResponseStatus status = 1;
-    UserDetails details = 2;
+    UserDetails details = 1;
 }
 
 message UserDetailsUpd
@@ -36,5 +35,4 @@ message UserDetailsWriteReq
 
 message UserDetailsWriteResp
 {
-    ResponseStatus status = 1;
 }

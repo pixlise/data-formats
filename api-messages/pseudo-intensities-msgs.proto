@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "pseudo-intensities.proto";
-import "response.proto";
+
 
 
 message PseudoIntensityReq
@@ -16,7 +16,6 @@ message PseudoIntensityReq
 
 message PseudoIntensityResp
 {
-    ResponseStatus status = 1;
-    repeated string intensityLabels = 2;
-    PseudoIntensityData data = 3;
+    repeated string intensityLabels = 1;
+    PseudoIntensityData data = 2;
 }

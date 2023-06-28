@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "diffraction.proto";
-import "response.proto";
+
 
 /* Original:
 -DELETE /diffraction/status/{DID}/{id}                       -> write:diffraction-peaks
@@ -17,8 +17,7 @@ message DiffractionPeakStatusListReq
 
 message DiffractionPeakStatusListResp
 {
-    ResponseStatus status = 1;
-    DetectedDiffractionPeakStatuses peakStatuses = 2; // id->peak status
+    DetectedDiffractionPeakStatuses peakStatuses = 1; // id->peak status
 }
 
 message DiffractionPeakStatusWriteReq
@@ -30,7 +29,6 @@ message DiffractionPeakStatusWriteReq
 
 message DiffractionPeakStatusWriteResp
 {
-    ResponseStatus status = 1;
 }
 
 message DiffractionPeakStatusDeleteReq
@@ -41,5 +39,4 @@ message DiffractionPeakStatusDeleteReq
 
 message DiffractionPeakStatusDeleteResp
 {
-    ResponseStatus status = 1;
 }

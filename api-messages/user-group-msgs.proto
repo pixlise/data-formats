@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "ownership-access.proto";
-import "response.proto";
+
 
 
 ////////////////////////////////////////////////////////////////
@@ -15,8 +15,7 @@ message UserGroupListReq
 
 message UserGroupListResp
 {
-    ResponseStatus status = 1;
-    repeated UserGroup groups = 2;
+    repeated UserGroup groups = 1;
 }
 
 
@@ -30,8 +29,7 @@ message UserGroupCreateReq
 
 message UserGroupCreateResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }
 
 message UserGroupDeleteReq
@@ -41,7 +39,6 @@ message UserGroupDeleteReq
 
 message UserGroupDeleteResp
 {
-    ResponseStatus status = 1;
 }
 
 message UserGroupSetNameReq
@@ -52,8 +49,7 @@ message UserGroupSetNameReq
 
 message UserGroupSetNameResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -72,8 +68,7 @@ message UserGroupAddMemberReq
 
 message UserGroupAddMemberResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }
 
 message UserGroupDeleteMemberReq
@@ -89,8 +84,7 @@ message UserGroupDeleteMemberReq
 
 message UserGroupDeleteMemberResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }
 
 
@@ -105,8 +99,7 @@ message UserGroupAddAdminReq
 
 message UserGroupAddAdminResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }
 
 message UserGroupDeleteAdminReq
@@ -117,6 +110,5 @@ message UserGroupDeleteAdminReq
 
 message UserGroupDeleteAdminResp
 {
-    ResponseStatus status = 1;
-    UserGroup group = 2;
+    UserGroup group = 1;
 }

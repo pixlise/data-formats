@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "diffraction.proto";
-import "response.proto";
+
 
 
 /* Original:
@@ -18,8 +18,7 @@ message DiffractionPeakManualListReq
 
 message DiffractionPeakManualListResp
 {
-    ResponseStatus status = 1;
-    map<string, ManualDiffractionPeak> peaks = 2; // id->ManualDiffractionPeak
+    map<string, ManualDiffractionPeak> peaks = 1; // id->ManualDiffractionPeak
 }
 
 message DiffractionPeakManualWriteReq
@@ -31,7 +30,6 @@ message DiffractionPeakManualWriteReq
 
 message DiffractionPeakManualWriteResp
 {
-    ResponseStatus status = 1;
 }
 
 message DiffractionPeakManualDeleteReq
@@ -42,5 +40,4 @@ message DiffractionPeakManualDeleteReq
 
 message DiffractionPeakManualDeleteResp
 {
-    ResponseStatus status = 1;
 }

@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "response.proto";
+
 import "detector-config.proto";
 
 /* Original:
@@ -14,7 +14,6 @@ message DetectorConfigReq
 
 message DetectorConfigResp
 {
-    ResponseStatus status = 1;
-    DetectorConfig config = 2;
-    repeated string piquantConfigVersions = 3;
+    DetectorConfig config = 1;
+    repeated string piquantConfigVersions = 2;
 }

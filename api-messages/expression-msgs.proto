@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "expressions.proto";
-import "response.proto";
+
 
 /* Original:
 -PUT    /data-expression/execution-stat/{id}                 -> write:data-analysis
@@ -20,8 +20,7 @@ message ExpressionListReq
 
 message ExpressionListResp
 {
-    ResponseStatus status = 1;
-    map<string, DataExpression> expressions = 2;
+    map<string, DataExpression> expressions = 1;
 }
 
 message ExpressionReq
@@ -31,9 +30,8 @@ message ExpressionReq
 
 message ExpressionResp
 {
-    ResponseStatus status = 1;
-    string id = 2;
-    DataExpression expression = 3;
+    string id = 1;
+    DataExpression expression = 2;
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
@@ -45,9 +43,8 @@ message ExpressionWriteReq
 
 message ExpressionWriteResp
 {
-    ResponseStatus status = 1;
-    string id = 2;
-    DataExpression expression = 3;
+    string id = 1;
+    DataExpression expression = 2;
 }
 
 message ExpressionDeleteReq
@@ -57,7 +54,6 @@ message ExpressionDeleteReq
 
 message ExpressionDeleteResp
 {
-    ResponseStatus status = 1;
 }
 
 message ExpressionWriteExecStatReq
@@ -68,7 +64,6 @@ message ExpressionWriteExecStatReq
 
 message ExpressionWriteExecStatResp
 {
-    ResponseStatus status = 1;
 }
 
 // TODO... memoization of expression results... Not sure if we write something specific here
@@ -87,5 +82,4 @@ message ExpressionWriteResultReq
 
 message ExpressionWriteResultResp
 {
-    ResponseStatus status = 1;
 }

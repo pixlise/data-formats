@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "user.proto";
-import "response.proto";
+
 
 /* Originals:
 -GET    /user/all-roles                                      -> read:user-roles
@@ -28,8 +28,7 @@ message UserListReq
 
 message UserListResp
 {
-    ResponseStatus status = 1;
-    repeated UserDetails details = 2;
+    repeated UserDetails details = 1;
 }
 
 ////////////////////////////////////
@@ -40,8 +39,7 @@ message UserRoleListReq
 
 message UserRoleListResp
 {
-    ResponseStatus status = 1;
-    repeated UserRole roles = 2;
+    repeated UserRole roles = 1;
 }
 
 ////////////////////////////////////
@@ -53,8 +51,7 @@ message UserRolesListReq
 
 message UserRolesListResp
 {
-    ResponseStatus status = 1;
-    repeated UserRole roles = 2;
+    repeated UserRole roles = 1;
 }
 
 ////////////////////////////////////
@@ -68,7 +65,6 @@ message UserAddRoleReq
 // Changing user roles, this should publish a UserDetailsUpd
 message UserAddRoleResp
 {
-    ResponseStatus status = 1;
 }
 
 ////////////////////////////////////
@@ -82,5 +78,4 @@ message UserDeleteRoleReq
 // Changing user roles, this should publish a UserDetailsUpd
 message UserDeleteRoleResp
 {
-    ResponseStatus status = 1;
 }

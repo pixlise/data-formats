@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "spectrum.proto";
-import "response.proto";
+
 
 
 message SpectrumReq
@@ -16,6 +16,5 @@ message SpectrumReq
 
 message SpectrumResp
 {
-    ResponseStatus status = 1;
-    repeated Spectra spectraPerLocation = 2; // Note a location may have 0 or more spectra
+    repeated Spectra spectraPerLocation = 1; // Note a location may have 0 or more spectra
 }
