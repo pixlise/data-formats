@@ -60,10 +60,10 @@ func main() {
 	for _, file := range files {
 		filePath := filepath.Join(protoPath, file.Name())
 		if strings.HasSuffix(filePath, ".proto") {
-			protoLines := readProtoFile(filePath, &messages)
+			/*protoLines :=*/ readProtoFile(filePath, &messages)
 
 			// Scan to make sure all responses have a status field
-			scanResponses(filePath, protoLines)
+			//scanResponses(filePath, protoLines)
 		}
 	}
 
@@ -293,7 +293,7 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Sessio
 			if err != nil {
                 return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
-			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK}, nil				
+			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK}, nil
 `, name, name, name, name, name, name, name, name)
 		}
 	}
@@ -562,6 +562,7 @@ export abstract class WSMessageHandler
 	}
 }
 
+/*
 func scanResponses(fileName string, protoLines []string) {
 	scanCount := 0
 
@@ -589,6 +590,7 @@ func scanResponses(fileName string, protoLines []string) {
 		}
 	}
 }
+*/
 
 func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 	proto, err := os.ReadFile(protoPath)
