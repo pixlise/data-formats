@@ -61,27 +61,24 @@ message ScanItem
     // it was collected
     //
     // NOTE: for PIXL scans, these will contain:
-    // driveId, drive
-    // siteId, site,
-    // targetId, target
-    // sol
+    // DriveId
+    // SiteId, Site,
+    // TargetId, Target
+    // Sol
     // RTT (round-trip token)
     // SCLK
     map<string, string> meta = 8;
 
     // Contents for the scan - what data types it has, and how many
     // NOTE: for PIXL scans, this will contain:
-    // normalSpectra (count)
-    // dwellSpectra (count)
-    // bulkSpectra (count)
-    // maxSpectra (count)
-    // pseudoIntensity (count)
-    // images (count)
+    // NormalSpectra (count)
+    // DwellSpectra (count)
+    // BulkSpectra (count)
+    // MaxSpectra (count)
+    // PseudoIntensities (count)
     map<string, int32> contentCounts = 9;
 
     string creatorUserId = 10; // Optional, but dataset may have been uploaded by a given user
-
-    //uint32 scanPoints = 11; // For PIXL this is how many PMCs
 
     //AccessControl access = 12; // Who is allowed to access this scan <-- NOTE, this should be handled separately of dataset struct
     // and not returned to client!
