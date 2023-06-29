@@ -24,9 +24,14 @@ message ElementSet
     OwnershipSummary owner = 5;  // @gotags: bson:"-"
 }
 
+// This is a view of ElementSet, only to be used when viewing
+// a list of element sets, not intended to be in DB
 message ElementSetSummary
 {
     string id = 1;
 	string name = 2;
 	repeated int32 atomicNumbers = 3;
+    uint64 modifedUnixSec = 4;
+
+    OwnershipSummary owner = 5;
 }
