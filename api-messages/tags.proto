@@ -1,13 +1,17 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
+
 
 
 message Tag
 {
 	string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
-    string ownerEntryId = 3;
-    string type = 4;
-    string datasetID = 5;
+    string type = 3;
+    string datasetID = 4; // Optional, might not be used
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 5;  // @gotags: bson:"-"
 }

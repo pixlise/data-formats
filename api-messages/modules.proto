@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
 
 
 message DataModule
@@ -8,7 +9,10 @@ message DataModule
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     string comments = 3;
-    string ownerEntryId = 4;
+    uint64 modifedUnixSec = 4;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 5;  // @gotags: bson:"-"
 }
 
 message SemanticVersion

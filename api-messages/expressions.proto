@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
 
 
 ////////////////////////////////////
@@ -15,9 +16,13 @@ message DataExpression
     string comments = 5;
     repeated string tags = 6;
     repeated ModuleReference moduleReferences = 7; // @gotags: bson:"moduleReferences,omitempty"
-    string ownerEntryId = 8;
-    DataExpressionExecStats recentExecStats = 9; // @gotags: bson:"recentExecStats,omitempty"
-    //DOIMetadata doiMetadata = 10;
+    DataExpressionExecStats recentExecStats = 8; // @gotags: bson:"recentExecStats,omitempty"
+    //DOIMetadata doiMetadata = 9;
+
+    uint64 modifedUnixSec = 10;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 11;  // @gotags: bson:"-"
 }
 
 message ModuleReference

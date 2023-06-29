@@ -1,6 +1,8 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
+
 
 
 message ROIItem
@@ -15,7 +17,11 @@ message ROIItem
     repeated uint32 pixelIndexes = 7;
     //MistROIItem  MistROIItem `json:"mistROIItem"`
     repeated string tags = 9;
-    string ownerEntryId = 10;
+
+    uint64 modifedUnixSec = 10;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 11;  // @gotags: bson:"-"
 }
 
 message ROIItemSummary

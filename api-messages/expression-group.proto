@@ -1,6 +1,8 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "ownership-access.proto";
+
 
 
 message ExpressionGroupItem
@@ -21,5 +23,8 @@ message ExpressionGroup
 	string name = 2;
     repeated ExpressionGroupItem groupItems = 3;
 	repeated string tags = 4;
-    string ownerEntryId = 5;
+    uint64 modifedUnixSec = 5;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 6;  // @gotags: bson:"-"
 }

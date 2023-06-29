@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+
+message UserGroup
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    uint64 createdUnixSec = 7;
+
+    UserGroupList members = 3;
+    repeated string adminUserIds = 4;
+}

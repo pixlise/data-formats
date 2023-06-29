@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "ownership-access.proto";
+import "user-group.proto";
 
 
 
