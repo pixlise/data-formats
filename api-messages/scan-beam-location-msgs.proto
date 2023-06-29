@@ -4,7 +4,7 @@ option go_package = ".;protos";
 import "scan-beam-location.proto";
 
 
-
+// requires(NONE)
 message ScanImageLocationsReq
 {
     string scanId = 1;

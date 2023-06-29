@@ -13,6 +13,7 @@ import "user.proto";
 ////////////////////////////////////
 // User messaging
 
+// requires(NONE)
 message UserDetailsReq
 {
 }
@@ -28,6 +29,7 @@ message UserDetailsUpd
 }
 
 // Changing user details, this should publish a UserDetailsUpd
+// requires(EDIT_OWN_USER)
 message UserDetailsWriteReq
 {
     UserDetails Details = 1;

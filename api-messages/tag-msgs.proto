@@ -11,6 +11,7 @@ import "tags.proto";
 -POST   /tags/{DID}                                          -> write:data-analysis
 */
 
+// requires(NONE)
 message TagListReq
 {
     string scanId = 1; // Is this required?
@@ -21,6 +22,7 @@ message TagListResp
     repeated Tag tags = 1;
 }
 
+// requires(EDIT_TAGS)
 message TagCreateReq
 {
     string scanId = 1; // Seems to be optional?
@@ -31,6 +33,7 @@ message TagCreateResp
     Tag tag = 1;
 }
 
+// requires(EDIT_TAGS)
 message TagDeleteReq
 {
     string scanId = 1; // Is this required?

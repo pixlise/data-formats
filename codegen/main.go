@@ -13,13 +13,16 @@ import (
 )
 
 type msgTypes struct {
-	Req        bool
-	Resp       bool
-	Upd        bool
-	SourceFile string
+	Req                bool
+	Resp               bool
+	Upd                bool
+	SourceFile         string
+	RequiredPermission string // To be able to send in this Req msg to API
 }
 
 const protoMessagePrefix = "message "
+
+var permissionUsed = map[string]bool{}
 
 func main() {
 	var protoPath string
@@ -56,14 +59,39 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// First, find the permissions file
+	const permissionsFileName = "permissions.proto"
+	permissions := map[string]bool{}
+	for _, file := range files {
+		if file.Name() == permissionsFileName {
+			filePath := filepath.Join(protoPath, file.Name())
+			permissions = readPermissionProtoFile(filePath)
+			break
+		}
+	}
+
+	// If we don't have any permissions, bail
+	if len(permissions) <= 0 {
+		log.Fatal("Failed to read permissions proto file")
+	}
+
 	messages := map[string]msgTypes{}
 	for _, file := range files {
-		filePath := filepath.Join(protoPath, file.Name())
-		if strings.HasSuffix(filePath, ".proto") {
-			/*protoLines :=*/ readProtoFile(filePath, &messages)
+		if file.Name() != permissionsFileName {
+			filePath := filepath.Join(protoPath, file.Name())
+			if strings.HasSuffix(filePath, ".proto") {
+				/*protoLines :=*/ readProtoFile(filePath, &messages, permissions)
 
-			// Scan to make sure all responses have a status field
-			//scanResponses(filePath, protoLines)
+				// Scan to make sure all responses have a status field
+				//scanResponses(filePath, protoLines)
+			}
+		}
+	}
+
+	// Show a list of unused permissions
+	for perm := range permissions {
+		if !permissionUsed[perm] {
+			fmt.Printf(" WARNING: Permission %v was NOT USED\n", perm)
 		}
 	}
 
@@ -282,19 +310,30 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 
 	goFunc += `
 
-func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session) (*protos.WSMessage, error) {
+func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session, userPermissions map[string]bool) (*protos.WSMessage, error) {
 	switch wsmsg.Contents.(type) {
 `
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Req {
-			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:
+
+			// If this requires a permission to exist, add the check here
+			permCheck := ""
+			if types.RequiredPermission != "NONE" {
+				permCheck = fmt.Sprintf(`
+            if !userPermissions["%v"] {
+			    return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}, nil
+			}
+`, types.RequiredPermission, name, name, name, name)
+			}
+
+			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:%v
             resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody, ws.svcs)
 			if err != nil {
                 return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
 			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK}, nil
-`, name, name, name, name, name, name, name, name)
+`, name, permCheck, name, name, name, name, name, name, name)
 		}
 	}
 
@@ -563,36 +602,84 @@ export abstract class WSMessageHandler
 }
 
 /*
-func scanResponses(fileName string, protoLines []string) {
-	scanCount := 0
+	func scanResponses(fileName string, protoLines []string) {
+		scanCount := 0
 
-	for lineCount, line := range protoLines {
-		if scanCount <= 0 {
-			if strings.HasPrefix(line, protoMessagePrefix) && strings.HasSuffix(line, "Resp") {
-				// We have a line like: "message UserDetailsResp"
-				// Expect following 2 lines to be:
-				// {
-				//     ResponseStatus status = 1;
-				scanCount = 1 // We scanned the first part of this...
-			}
-		} else if scanCount == 1 {
-			if strings.TrimSpace(line) != "{" {
-				log.Fatalf("Expected { in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
-			} else {
-				scanCount++
-			}
-		} else if scanCount == 2 {
-			if strings.TrimSpace(line) != "ResponseStatus status = 1;" {
-				log.Fatalf("Expected \"ResponseStatus status = 1;\" in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
-			} else {
-				scanCount = 0
+		for lineCount, line := range protoLines {
+			if scanCount <= 0 {
+				if strings.HasPrefix(line, protoMessagePrefix) && strings.HasSuffix(line, "Resp") {
+					// We have a line like: "message UserDetailsResp"
+					// Expect following 2 lines to be:
+					// {
+					//     ResponseStatus status = 1;
+					scanCount = 1 // We scanned the first part of this...
+				}
+			} else if scanCount == 1 {
+				if strings.TrimSpace(line) != "{" {
+					log.Fatalf("Expected { in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
+				} else {
+					scanCount++
+				}
+			} else if scanCount == 2 {
+				if strings.TrimSpace(line) != "ResponseStatus status = 1;" {
+					log.Fatalf("Expected \"ResponseStatus status = 1;\" in %v, line: %v for message definition: %v\n", fileName, lineCount+1, protoLines[lineCount-scanCount])
+				} else {
+					scanCount = 0
+				}
 			}
 		}
 	}
-}
 */
+func readPermissionProtoFile(protoPath string) map[string]bool {
+	proto, err := os.ReadFile(protoPath)
 
-func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
+	if err != nil {
+		log.Fatalf("Failed to read proto file: %v. Error: %v", protoPath, err)
+	}
+
+	// Scan for lines that define messages
+	protoLines := strings.Split(string(proto), "\n")
+
+	permissions := map[string]bool{}
+
+	blanking := false
+	for _, line := range protoLines {
+		// If we detect a /*, read them as blank lines until */
+		if !blanking {
+			idx := strings.Index(line, "/*")
+			if idx >= 0 {
+				blanking = true
+				line = line[0:idx]
+			}
+		} else {
+			idx := strings.Index(line, "*/")
+			if idx < 0 {
+				// blank out this line...
+				line = ""
+			} else {
+				// We found the end marker
+				blanking = false
+				line = line[idx+2:]
+			}
+		}
+
+		trimLine := strings.Trim(line, "\t ")
+		const prefix = "PERM_"
+		if strings.HasPrefix(trimLine, prefix) {
+			// Find the end of it
+			endPos := strings.Index(trimLine, " ")
+			endPos2 := strings.Index(trimLine, "=")
+			if endPos2 < endPos {
+				endPos = endPos2
+			}
+
+			permissions[trimLine[len(prefix):endPos]] = true
+		}
+	}
+	return permissions
+}
+
+func readProtoFile(protoPath string, messages *map[string]msgTypes, permissions map[string]bool) []string {
 	proto, err := os.ReadFile(protoPath)
 
 	if err != nil {
@@ -603,7 +690,7 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 	protoLines := strings.Split(string(proto), "\n")
 
 	blanking := false
-	for _, line := range protoLines {
+	for c, line := range protoLines {
 		// If we detect a /*, read them as blank lines until */
 		if !blanking {
 			idx := strings.Index(line, "/*")
@@ -628,6 +715,25 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 			hasReq := strings.HasSuffix(line, "Req")
 			hasResp := strings.HasSuffix(line, "Resp")
 			hasUpd := strings.HasSuffix(line, "Upd")
+			reqPermission := ""
+
+			// Check what permission is required
+			if hasReq {
+				// The preceeding line should be a comment with the permission
+				// in it:
+				const requiresStart = "// requires("
+				if c == 0 || !strings.HasPrefix(protoLines[c-1], requiresStart) {
+					log.Fatalf("Missing Req permission for \"%v\" in %v on line: %v", line, protoPath, c+1)
+				}
+
+				// Read the rest of the permission
+				reqPermission = protoLines[c-1][len(requiresStart) : len(protoLines[c-1])-1]
+
+				// It must be one of our known permissions
+				if !permissions[reqPermission] {
+					log.Fatalf("Unknown permission: \"%v\" in %v on line: %v", reqPermission, protoPath, c)
+				}
+			}
 
 			if hasReq || hasResp || hasUpd {
 				suffixLen := 3
@@ -646,6 +752,11 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes) []string {
 				types.Req = types.Req || hasReq
 				types.Resp = types.Resp || hasResp
 				types.Upd = types.Upd || hasUpd
+
+				if hasReq {
+					types.RequiredPermission = reqPermission
+					permissionUsed[reqPermission] = true
+				}
 
 				(*messages)[msgName] = types
 			}

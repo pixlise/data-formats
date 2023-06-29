@@ -15,6 +15,7 @@ import "scan.proto";
 
 // Allows listing scans. Contains search fields. If these are all blank
 // all scans are returned
+// requires(NONE)
 message ScanListReq
 {
     // Allows flexible fields, because scans have flexible metadata
@@ -66,6 +67,7 @@ message ScanListUpd
 }
 
 // This should trigger a ScanListUpd to go out
+// requires(SCAN_EDIT)
 message ScanUploadReq
 {
     string id = 1;
@@ -78,6 +80,7 @@ message ScanUploadResp
 }
 
 // This should trigger a ScanListUpd to go out
+// requires(SCAN_EDIT)
 message ScanMetaWriteReq
 {
     string scanId = 1;
@@ -93,6 +96,7 @@ message ScanMetaWriteResp
 // Triggering a re-import, should publish a ScanListUpd to go out
 // Useful really only if there is a pipeline hooked up for this kind of data that we
 // can re-trigger for. If it's a user-uploaded scan, we can't do anything really...
+// requires(SCAN_EDIT)
 message ScanTriggerReImportReq
 {
     string scanId = 1;
@@ -108,6 +112,7 @@ message ScanTriggerReImportResp
 // we store it once here and refer to it by index
 // Therefore, this is an early required download for a scans data to be interpretable
 
+// requires(NONE)
 message ScanMetaLabelsReq
 {
     string scanId = 1;

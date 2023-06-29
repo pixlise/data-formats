@@ -9,6 +9,7 @@ import "user-group.proto";
 // Creating, deleting and renaming entire groups
 // Should only be accessible to group and sys admins
 
+// requires(PIXLISE_ADMIN)
 message UserGroupListReq
 {
 }
@@ -22,6 +23,7 @@ message UserGroupListResp
 ////////////////////////////////////////////////////////////////
 // Creating, deleting and renaming entire groups
 // Should only be accessible to sys admins
+// requires(PIXLISE_ADMIN)
 message UserGroupCreateReq
 {
     string name = 1;
@@ -32,6 +34,7 @@ message UserGroupCreateResp
     UserGroup group = 1;
 }
 
+// requires(PIXLISE_ADMIN)
 message UserGroupDeleteReq
 {
     string name = 1;
@@ -41,12 +44,14 @@ message UserGroupDeleteResp
 {
 }
 
+// requires(PIXLISE_ADMIN)
 message UserGroupSetNameReq
 {
     string groupId = 1;
     string name = 2;
 }
 
+// requires(PIXLISE_ADMIN)
 message UserGroupSetNameResp
 {
     UserGroup group = 1;
@@ -55,6 +60,7 @@ message UserGroupSetNameResp
 ////////////////////////////////////////////////////////////////
 // Adding and deleting members from the group
 // Should only be accessible to group admins and sys admins
+// requires(NONE)
 message UserGroupAddMemberReq
 {
     string groupId = 1;
@@ -71,6 +77,7 @@ message UserGroupAddMemberResp
     UserGroup group = 1;
 }
 
+// requires(NONE)
 message UserGroupDeleteMemberReq
 {
     string groupId = 1;
@@ -91,6 +98,7 @@ message UserGroupDeleteMemberResp
 ////////////////////////////////////////////////////////////////
 // Adding and deleting admins from the group
 // Should only be accessible to group admins and sys admins
+// requires(NONE)
 message UserGroupAddAdminReq
 {
     string groupId = 1;
@@ -102,6 +110,7 @@ message UserGroupAddAdminResp
     UserGroup group = 1;
 }
 
+// requires(NONE)
 message UserGroupDeleteAdminReq
 {
     string groupId = 1;

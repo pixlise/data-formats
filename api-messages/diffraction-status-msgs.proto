@@ -10,6 +10,7 @@ import "diffraction.proto";
 -POST   /diffraction/status/{statusid}/{DID}/{id}            -> write:diffraction-peaks
 */
 
+// requires(NONE)
 message DiffractionPeakStatusListReq
 {
     string scanId = 1;
@@ -20,6 +21,7 @@ message DiffractionPeakStatusListResp
     DetectedDiffractionPeakStatuses peakStatuses = 1; // id->peak status
 }
 
+// requires(DIFFRACTION_EDIT)
 message DiffractionPeakStatusWriteReq
 {
     string scanId = 1;
@@ -31,6 +33,7 @@ message DiffractionPeakStatusWriteResp
 {
 }
 
+// requires(DIFFRACTION_EDIT)
 message DiffractionPeakStatusDeleteReq
 {
     string scanId = 1;

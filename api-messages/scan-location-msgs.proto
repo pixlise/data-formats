@@ -4,7 +4,7 @@ option go_package = ".;protos";
 import "scan-locations.proto";
 
 
-
+// requires(NONE)
 message ScanLocationReq
 {
     string scanId = 1;

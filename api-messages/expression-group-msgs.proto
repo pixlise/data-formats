@@ -12,6 +12,7 @@ import "expression-group.proto";
 */
 
 // TODO: Paginate?
+// requires(NONE)
 message ExpressionGroupListReq
 {
 }
@@ -21,6 +22,7 @@ message ExpressionGroupListResp
     map<string, ExpressionGroup> groups = 1;
 }
 
+// requires(EXPRESSION_EDIT)
 message ExpressionGroupSetReq
 {
     string id = 1;
@@ -31,6 +33,7 @@ message ExpressionGroupSetResp
 {
 }
 
+// requires(EXPRESSION_EDIT)
 message ExpressionGroupDeleteReq
 {
     string id = 1;

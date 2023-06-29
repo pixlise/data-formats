@@ -17,6 +17,7 @@ import "piquant-config.proto";
 */
 
 // Listing all available PIQUANT configs
+// requires(READ_PIQUANT_SETTINGS)
 message PiquantConfigListReq
 {
     string configId = 1;
@@ -28,6 +29,7 @@ message PiquantConfigListResp
 }
 
 // Listing all available versions of a given PIQUANT config
+// requires(READ_PIQUANT_SETTINGS)
 message PiquantConfigVersionsListReq
 {
     string configId = 1;
@@ -39,6 +41,7 @@ message PiquantConfigVersionsListResp
 }
 
 // Getting a specific PIQUANT version
+// requires(READ_PIQUANT_SETTINGS)
 message PiquantConfigVersionReq
 {
     string configId = 1;
@@ -52,6 +55,7 @@ message PiquantConfigVersionResp
 }
 
 // Listing versions of PIQUANT container to run in API when quant is started
+// requires(READ_PIQUANT_SETTINGS)
 message PiquantVersionListReq
 {
 }
@@ -62,6 +66,7 @@ message PiquantVersionListResp
 }
 
 // Sets the current version of PIQUANT container to run in API when quant is started
+// requires(EDIT_PIQUANT_SETTINGS)
 message PiquantWriteCurrentVersionReq
 {
     string piquantVersion = 1;
@@ -73,6 +78,7 @@ message PiquantWriteCurrentVersionResp
 }
 
 // Gets the current version of PIQUANT container that runs in API when quant is started
+// requires(READ_PIQUANT_SETTINGS)
 message PiquantCurrentVersionReq
 {
 }

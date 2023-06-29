@@ -11,6 +11,7 @@ import "modules.proto";
 -POST   /data-module                                         -> write:data-analysis
 */
 
+// requires(NONE)
 message DataModuleListReq
 {
 }
@@ -20,6 +21,7 @@ message DataModuleListResp
     map<string, DataModule> modules = 1;
 }
 
+// requires(NONE)
 message DataModuleReq
 {
     string id = 1;
@@ -32,6 +34,7 @@ message DataModuleResp
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EXPRESSION_EDIT)
 message DataModuleWriteReq
 {
     string id = 1;

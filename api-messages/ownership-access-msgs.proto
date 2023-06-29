@@ -8,6 +8,7 @@ import "ownership-access.proto";
 ////////////////////////////////////////////////////////////////
 // Getting the current ownership state of an object
 
+// requires(SHARE)
 message GetOwnershipReq
 {
     string objectId = 1;
@@ -23,6 +24,7 @@ message GetOwnershipResp
 ////////////////////////////////////////////////////////////////
 // Adding viewers to an object (sharing/unsharing)
 
+// requires(SHARE)
 message ObjectEditAccessReq
 {
     string objectId = 1;

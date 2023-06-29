@@ -13,6 +13,7 @@ import "element-set.proto";
 -POST   /element-set                                         -> write:data-analysis
 */
 
+// requires(NONE)
 message ElementSetListReq
 {
 }
@@ -22,6 +23,7 @@ message ElementSetListResp
     map<string, ElementSetSummary> elementSets = 1;
 }
 
+// requires(NONE)
 message ElementSetGetReq
 {
     string id = 1;
@@ -32,6 +34,7 @@ message ElementSetGetResp
     ElementSet elementSet = 1;
 }
 
+// requires(NONE)
 message ElementSetWriteReq
 {
     // If id is empty, it's assumed to be an insert and a new id will be returned
@@ -44,6 +47,7 @@ message ElementSetWriteResp
     ElementSet elementSet = 1;
 }
 
+// requires(NONE)
 message ElementSetDeleteReq
 {
     string id = 1;

@@ -13,7 +13,7 @@ import "expressions.proto";
 -POST   /data-expression                                     -> write:data-analysis
 */
 
-
+// requires(NONE)
 message ExpressionListReq
 {
 }
@@ -23,6 +23,7 @@ message ExpressionListResp
     map<string, DataExpression> expressions = 1;
 }
 
+// requires(NONE)
 message ExpressionReq
 {
     string id = 1;
@@ -35,6 +36,7 @@ message ExpressionResp
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EXPRESSION_EDIT)
 message ExpressionWriteReq
 {
     string id = 1;
@@ -47,6 +49,7 @@ message ExpressionWriteResp
     DataExpression expression = 2;
 }
 
+// requires(EXPRESSION_EDIT)
 message ExpressionDeleteReq
 {
     string id = 1;
@@ -56,6 +59,7 @@ message ExpressionDeleteResp
 {
 }
 
+// requires(NONE)
 message ExpressionWriteExecStatReq
 {
     string id = 1;
@@ -68,6 +72,8 @@ message ExpressionWriteExecStatResp
 
 // TODO... memoization of expression results... Not sure if we write something specific here
 // or if this becomes some part of a general caching mechanism
+
+// requires(NONE)
 message ExpressionWriteResultReq
 {
     string expressionId = 1;

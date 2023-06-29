@@ -17,6 +17,8 @@ import "user.proto";
 
 ////////////////////////////////////
 // Get all users
+
+// requires(USER_ADMIN)
 message UserListReq
 {
     oneof QueryType {
@@ -33,6 +35,7 @@ message UserListResp
 
 ////////////////////////////////////
 // Get all user roles
+// requires(USER_ADMIN)
 message UserRoleListReq
 {
 }
@@ -44,6 +47,7 @@ message UserRoleListResp
 
 ////////////////////////////////////
 // Get roles for a given user
+// requires(USER_ADMIN)
 message UserRolesListReq
 {
     string userId = 1;
@@ -56,6 +60,7 @@ message UserRolesListResp
 
 ////////////////////////////////////
 // Add a user role to a user
+// requires(USER_ADMIN)
 message UserAddRoleReq
 {
     string userId = 1;
@@ -69,6 +74,7 @@ message UserAddRoleResp
 
 ////////////////////////////////////
 // Delete a user role for a user
+// requires(USER_ADMIN)
 message UserDeleteRoleReq
 {
     string userId = 1;

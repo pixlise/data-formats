@@ -11,6 +11,7 @@ import "diffraction.proto";
 -POST   /diffraction/manual/{DID}                            -> write:diffraction-peaks
 */
 
+// requires(NONE)
 message DiffractionPeakManualListReq
 {
     string scanId = 1;
@@ -21,6 +22,7 @@ message DiffractionPeakManualListResp
     map<string, ManualDiffractionPeak> peaks = 1; // id->ManualDiffractionPeak
 }
 
+// requires(DIFFRACTION_EDIT)
 message DiffractionPeakManualWriteReq
 {
     string scanId = 1;
@@ -32,6 +34,7 @@ message DiffractionPeakManualWriteResp
 {
 }
 
+// requires(DIFFRACTION_EDIT)
 message DiffractionPeakManualDeleteReq
 {
     string scanId = 1;

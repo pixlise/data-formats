@@ -13,6 +13,7 @@ import "user-notification-settings.proto";
 // Querying notification once connected - NOTE this also
 // effectively sets up client to receive updates
 
+// requires(NONE)
 message UserNotificationReq
 {
 }
@@ -28,6 +29,7 @@ message UserNotificationUpd
 }
 
 // Admin-only feature, to send out a notification to all users
+// requires(PIXLISE_ADMIN)
 message SendUserNotificationReq
 {
     repeated string users = 1; // Who to send to - user IDs or group IDs

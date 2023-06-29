@@ -14,6 +14,8 @@ option go_package = ".;protos";
 // allowing us to see if they are logged/reported as expected, to compare
 // to runtime user activity. Also allow implementation of notification test msgs
 // to be sent out so we can verify they are showing up as expected
+
+// requires(PIXLISE_ADMIN)
 message RunTestReq
 {
     string testType = 1; // Free-form, API may interpret this however

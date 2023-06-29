@@ -11,6 +11,7 @@ import "user-hints.proto";
 */
 
 
+// requires(NONE)
 message UserHintsReq
 {
 }
@@ -26,6 +27,7 @@ message UserHintsUpd
 }
 
 // Dismissing a hint should publish a UserHintsUpd
+// requires(NONE)
 message UserDismissHintReq
 {
     string hint = 1;
@@ -36,6 +38,7 @@ message UserDismissHintResp
 }
 
 // Re-enabling hints should publish a UserHintsUpd
+// requires(NONE)
 message UserHintsToggleReq
 {
     bool enabled = 1;

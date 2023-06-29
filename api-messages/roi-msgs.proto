@@ -12,6 +12,7 @@ import "roi.proto";
 -POST   /roi/{DID}                                           -> write:data-analysis
 */
 
+// requires(NONE)
 message RegionOfInterestListReq
 {
 }
@@ -21,6 +22,7 @@ message RegionOfInterestListResp
     map<string, ROIItemSummary> RegionsOfInterest = 1;
 }
 
+// requires(NONE)
 message RegionOfInterestReq
 {
     string id = 1;
@@ -31,6 +33,7 @@ message RegionOfInterestResp
     ROIItem RegionOfInterest = 1;
 }
 
+// requires(EDIT_ROI)
 message RegionOfInterestWriteReq
 {
     // For each of these, if ID is blank, assume it's a new one (and we return the ID), otherwise
@@ -43,6 +46,7 @@ message RegionOfInterestWriteResp
     repeated ROIItem items = 1;
 }
 
+// requires(EDIT_ROI)
 message RegionOfInterestDeleteReq
 {
     string id = 1;

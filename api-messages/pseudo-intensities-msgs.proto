@@ -4,7 +4,7 @@ option go_package = ".;protos";
 import "pseudo-intensities.proto";
 
 
-
+// requires(NONE)
 message PseudoIntensityReq
 {
     string scanId = 1;

@@ -15,6 +15,8 @@ import "image.proto";
 */
 
 // Listing all images for a given scan
+
+// requires(NONE)
 message ImageListReq
 {
     string scanId = 1;
@@ -33,6 +35,8 @@ message ImageListUpd
 }
 
 // Should publish a ImageListUpd
+
+// requires(SCAN_EDIT)
 message ImageSetDefaultReq
 {
     string scanId = 1;
@@ -47,6 +51,8 @@ message ImageSetDefaultResp
 // a standard HTTP GET using the url from ScanImage above. JWT needs to be included
 
 // Allows upload of a user-created image to a given scan, should publish a ImageListUpd to go out
+
+// requires(SCAN_EDIT)
 message ImageUploadReq
 {
     string scanId = 1;
@@ -59,6 +65,8 @@ message ImageUploadResp
 }
 
 // Deletes ONLY user-created image, should publish a ImageListUpd to go out
+
+// requires(SCAN_EDIT)
 message ImageDeleteReq
 {
     string scanId = 1;

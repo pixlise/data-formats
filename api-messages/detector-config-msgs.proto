@@ -8,6 +8,7 @@ import "detector-config.proto";
 -GET    /detector-config/{id}                                -> read:piquant-config
 */
 
+// requires(NONE)
 message DetectorConfigReq
 {
 }

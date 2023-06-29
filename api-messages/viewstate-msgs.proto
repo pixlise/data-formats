@@ -14,6 +14,7 @@ import "viewstate.proto";
 // so this allows us to implement different views, for example
 // scanId_analysis would do what old API allowed... Multi-scan
 // views can have some other scheme
+// requires(NONE)
 message ViewStateReq
 {
     string id = 1;
@@ -25,6 +26,7 @@ message ViewStateResp
 }
 
 // Writes a part of the view state to state stored for the given id
+// requires(EDIT_VIEW_STATE)
 message ViewStateItemWriteReq
 {
     string id = 1;
