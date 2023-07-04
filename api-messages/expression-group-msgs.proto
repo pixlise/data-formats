@@ -22,7 +22,7 @@ message ExpressionGroupListResp
     map<string, ExpressionGroup> groups = 1;
 }
 
-// requires(EXPRESSION_EDIT)
+// requires(EDIT_EXPRESSION)
 message ExpressionGroupSetReq
 {
     string id = 1;
@@ -33,7 +33,7 @@ message ExpressionGroupSetResp
 {
 }
 
-// requires(EXPRESSION_EDIT)
+// requires(EDIT_EXPRESSION)
 message ExpressionGroupDeleteReq
 {
     string id = 1;

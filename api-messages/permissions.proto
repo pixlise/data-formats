@@ -19,9 +19,9 @@ enum Permission
     //PERM_BLESS_QUANT = 6; // Can mark a quant as "blessed"
     PERM_PIXLISE_ADMIN = 7; 
     PERM_SHARE = 8; // Can share data
-    PERM_DIFFRACTION_EDIT = 9; // Can edit detected diffraction peak status AND add user defined peaks
+    PERM_EDIT_DIFFRACTION = 9; // Can edit detected diffraction peak status AND add user defined peaks
     PERM_EXPORT = 10; // Can export data
-    PERM_EXPRESSION_EDIT = 11; // Can edit/delete expressions, expression groups and data modules
+    PERM_EDIT_EXPRESSION = 11; // Can edit/delete expressions, expression groups and data modules
     PERM_EDIT_API_SETTINGS = 12; // Can change system settings eg log level
     PERM_READ_PIQUANT_SETTINGS = 13; // Can read PIQUANT settings
     PERM_EDIT_PIQUANT_SETTINGS = 14; // Can write PIQUANT settings, eg current version to run
@@ -29,6 +29,7 @@ enum Permission
     PERM_EDIT_TAGS = 16; // Can create+edit tags
     PERM_EDIT_OWN_USER = 17; // Can edit own user account, eg hints, notifications, name, email etc
     PERM_EDIT_VIEW_STATE = 18; // Can save view state
+    PERM_EDIT_ELEMENT_SET = 19; // Can create/edit/delete Element Sets
 }
 
 /*

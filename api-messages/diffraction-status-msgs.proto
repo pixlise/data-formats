@@ -21,7 +21,7 @@ message DiffractionPeakStatusListResp
     DetectedDiffractionPeakStatuses peakStatuses = 1; // id->peak status
 }
 
-// requires(DIFFRACTION_EDIT)
+// requires(EDIT_DIFFRACTION)
 message DiffractionPeakStatusWriteReq
 {
     string scanId = 1;
@@ -33,7 +33,7 @@ message DiffractionPeakStatusWriteResp
 {
 }
 
-// requires(DIFFRACTION_EDIT)
+// requires(EDIT_DIFFRACTION)
 message DiffractionPeakStatusDeleteReq
 {
     string scanId = 1;

@@ -34,7 +34,7 @@ message ElementSetGetResp
     ElementSet elementSet = 1;
 }
 
-// requires(NONE)
+// requires(EDIT_ELEMENT_SET)
 message ElementSetWriteReq
 {
     // If id is empty, it's assumed to be an insert and a new id will be returned
@@ -47,7 +47,7 @@ message ElementSetWriteResp
     ElementSet elementSet = 1;
 }
 
-// requires(NONE)
+// requires(EDIT_ELEMENT_SET)
 message ElementSetDeleteReq
 {
     string id = 1;

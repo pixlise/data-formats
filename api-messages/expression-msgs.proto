@@ -36,7 +36,7 @@ message ExpressionResp
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
-// requires(EXPRESSION_EDIT)
+// requires(EDIT_EXPRESSION)
 message ExpressionWriteReq
 {
     string id = 1;
@@ -49,7 +49,7 @@ message ExpressionWriteResp
     DataExpression expression = 2;
 }
 
-// requires(EXPRESSION_EDIT)
+// requires(EDIT_EXPRESSION)
 message ExpressionDeleteReq
 {
     string id = 1;

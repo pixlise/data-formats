@@ -22,7 +22,7 @@ message DiffractionPeakManualListResp
     map<string, ManualDiffractionPeak> peaks = 1; // id->ManualDiffractionPeak
 }
 
-// requires(DIFFRACTION_EDIT)
+// requires(EDIT_DIFFRACTION)
 message DiffractionPeakManualWriteReq
 {
     string scanId = 1;
@@ -34,7 +34,7 @@ message DiffractionPeakManualWriteResp
 {
 }
 
-// requires(DIFFRACTION_EDIT)
+// requires(EDIT_DIFFRACTION)
 message DiffractionPeakManualDeleteReq
 {
     string scanId = 1;

@@ -34,7 +34,7 @@ message DataModuleResp
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
-// requires(EXPRESSION_EDIT)
+// requires(EDIT_EXPRESSION)
 message DataModuleWriteReq
 {
     string id = 1;
