@@ -22,18 +22,29 @@ message ExpressionGroupListResp
     map<string, ExpressionGroup> groups = 1;
 }
 
-// requires(EDIT_EXPRESSION)
-message ExpressionGroupSetReq
+// requires(NONE)
+message ExpressionGroupGetReq
+{
+    string id = 1;
+}
+
+message ExpressionGroupGetResp
+{
+    ExpressionGroup group = 1;
+}
+
+// requires(EDIT_EXPRESSION_GROUP)
+message ExpressionGroupWriteReq
 {
     string id = 1;
     ExpressionGroup group = 2;
 }
 
-message ExpressionGroupSetResp
+message ExpressionGroupWriteResp
 {
 }
 
-// requires(EDIT_EXPRESSION)
+// requires(EDIT_EXPRESSION_GROUP)
 message ExpressionGroupDeleteReq
 {
     string id = 1;

@@ -75,10 +75,10 @@ message WSMessage
 
     oneof Contents
     {
+        DataModuleGetReq dataModuleGetReq = 12;
+        DataModuleGetResp dataModuleGetResp = 13;
         DataModuleListReq dataModuleListReq = 10;
         DataModuleListResp dataModuleListResp = 11;
-        DataModuleReq dataModuleReq = 12;
-        DataModuleResp dataModuleResp = 13;
         DataModuleWriteReq dataModuleWriteReq = 14;
         DataModuleWriteResp dataModuleWriteResp = 15;
         DetectorConfigReq detectorConfigReq = 16;
@@ -107,16 +107,18 @@ message WSMessage
         ExportFilesResp exportFilesResp = 39;
         ExpressionDeleteReq expressionDeleteReq = 40;
         ExpressionDeleteResp expressionDeleteResp = 41;
+        ExpressionGetReq expressionGetReq = 50;
+        ExpressionGetResp expressionGetResp = 51;
         ExpressionGroupDeleteReq expressionGroupDeleteReq = 42;
         ExpressionGroupDeleteResp expressionGroupDeleteResp = 43;
+        ExpressionGroupGetReq expressionGroupGetReq = 176;
+        ExpressionGroupGetResp expressionGroupGetResp = 177;
         ExpressionGroupListReq expressionGroupListReq = 44;
         ExpressionGroupListResp expressionGroupListResp = 45;
-        ExpressionGroupSetReq expressionGroupSetReq = 46;
-        ExpressionGroupSetResp expressionGroupSetResp = 47;
+        ExpressionGroupWriteReq expressionGroupWriteReq = 46;
+        ExpressionGroupWriteResp expressionGroupWriteResp = 47;
         ExpressionListReq expressionListReq = 48;
         ExpressionListResp expressionListResp = 49;
-        ExpressionReq expressionReq = 50;
-        ExpressionResp expressionResp = 51;
         ExpressionWriteExecStatReq expressionWriteExecStatReq = 52;
         ExpressionWriteExecStatResp expressionWriteExecStatResp = 53;
         ExpressionWriteReq expressionWriteReq = 54;
@@ -158,10 +160,10 @@ message WSMessage
         PseudoIntensityResp pseudoIntensityResp = 86;
         RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
         RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
+        RegionOfInterestGetReq regionOfInterestGetReq = 91;
+        RegionOfInterestGetResp regionOfInterestGetResp = 92;
         RegionOfInterestListReq regionOfInterestListReq = 89;
         RegionOfInterestListResp regionOfInterestListResp = 90;
-        RegionOfInterestReq regionOfInterestReq = 91;
-        RegionOfInterestResp regionOfInterestResp = 92;
         RegionOfInterestWriteReq regionOfInterestWriteReq = 93;
         RegionOfInterestWriteResp regionOfInterestWriteResp = 94;
         RunTestReq runTestReq = 95;

@@ -22,12 +22,12 @@ message DataModuleListResp
 }
 
 // requires(NONE)
-message DataModuleReq
+message DataModuleGetReq
 {
     string id = 1;
 }
 
-message DataModuleResp
+message DataModuleGetResp
 {
     string id = 1;
     DataModule module = 2;

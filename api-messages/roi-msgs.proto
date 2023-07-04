@@ -23,12 +23,12 @@ message RegionOfInterestListResp
 }
 
 // requires(NONE)
-message RegionOfInterestReq
+message RegionOfInterestGetReq
 {
     string id = 1;
 }
 
-message RegionOfInterestResp
+message RegionOfInterestGetResp
 {
     ROIItem RegionOfInterest = 1;
 }

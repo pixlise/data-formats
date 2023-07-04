@@ -24,15 +24,14 @@ message ExpressionListResp
 }
 
 // requires(NONE)
-message ExpressionReq
+message ExpressionGetReq
 {
     string id = 1;
 }
 
-message ExpressionResp
+message ExpressionGetResp
 {
-    string id = 1;
-    DataExpression expression = 2;
+    DataExpression expression = 1;
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
@@ -45,8 +44,7 @@ message ExpressionWriteReq
 
 message ExpressionWriteResp
 {
-    string id = 1;
-    DataExpression expression = 2;
+    DataExpression expression = 1;
 }
 
 // requires(EDIT_EXPRESSION)
