@@ -263,11 +263,11 @@ func writeGo(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes
 // GENERATED CODE! Do not hand-modify
 
 import (
-	protos "github.com/pixlise/core/v3/generated-protos"
-	"github.com/olahol/melody"
 	"fmt"
+	protos "github.com/pixlise/core/v3/generated-protos"
+	"github.com/pixlise/core/v3/api/ws/wsHelpers"
 	wsHandler "github.com/pixlise/core/v3/api/ws/handlers"
-)	
+)
 `
 	/*	goFunc += `
 		// This lost type-safety because Go compiler said:
@@ -310,7 +310,7 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 
 	goFunc += `
 
-func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Session, userPermissions map[string]bool) (*protos.WSMessage, error) {
+func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.HandlerContext) (*protos.WSMessage, error) {
 	switch wsmsg.Contents.(type) {
 `
 	for _, name := range sortedMsgs {
@@ -321,14 +321,14 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, s *melody.Sessio
 			permCheck := ""
 			if types.RequiredPermission != "NONE" {
 				permCheck = fmt.Sprintf(`
-            if !userPermissions["%v"] {
+            if !hctx.SessUser.Permissions["%v"] {
 			    return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}, nil
 			}
 `, types.RequiredPermission, name, name, name, name)
 			}
 
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:%v
-            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), s, ws.melody, ws.svcs)
+            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), hctx)
 			if err != nil {
                 return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
@@ -387,7 +387,7 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 
 			// Now that we know the out file struct exists, generate handler
 			funcName := fmt.Sprintf("Handle%vReq", msgName)
-			signature := fmt.Sprintf("func %v(req *protos.%vReq, s *melody.Session, m *melody.Melody, svcs *services.APIServices) (*protos.%vResp, error)", funcName, msgName, msgName)
+			signature := fmt.Sprintf("func %v(req *protos.%vReq, hctx wsHelpers.HandlerContext) (*protos.%vResp, error)", funcName, msgName, msgName)
 			handler := signature + fmt.Sprintf(` {
     return nil, errors.New("%v not implemented yet")
 }
@@ -408,10 +408,9 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 		content := `package wsHandler
 
 import (
-	protos "github.com/pixlise/core/v3/generated-protos"
-	"github.com/olahol/melody"
-	"github.com/pixlise/core/v3/api/services"
 	"errors"
+	protos "github.com/pixlise/core/v3/generated-protos"
+	"github.com/pixlise/core/v3/api/ws/wsHelpers"
 )
 
 `
