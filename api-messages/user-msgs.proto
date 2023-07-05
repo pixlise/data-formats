@@ -32,7 +32,10 @@ message UserDetailsUpd
 // requires(EDIT_OWN_USER)
 message UserDetailsWriteReq
 {
-    UserDetails Details = 1;
+    optional string name = 1;
+    optional string email = 2;
+    optional string iconURL = 3;
+    optional string dataCollectionVersion = 4;
 }
 
 message UserDetailsWriteResp
