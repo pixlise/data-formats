@@ -30,7 +30,7 @@ message UserListReq
 
 message UserListResp
 {
-    repeated UserDetails details = 1;
+    repeated Auth0UserDetails details = 1;
 }
 
 ////////////////////////////////////
@@ -42,7 +42,7 @@ message UserRoleListReq
 
 message UserRoleListResp
 {
-    repeated UserRole roles = 1;
+    repeated Auth0UserRole roles = 1;
 }
 
 ////////////////////////////////////
@@ -55,7 +55,7 @@ message UserRolesListReq
 
 message UserRolesListResp
 {
-    repeated UserRole roles = 1;
+    repeated Auth0UserRole roles = 1;
 }
 
 ////////////////////////////////////

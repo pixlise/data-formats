@@ -22,9 +22,17 @@ message UserDetails
     repeated string permissions = 8;
 }
 
-message UserRole
+message Auth0UserRole
 {
     string id = 1;
     string name = 2;
     string description = 3;
+}
+
+message Auth0UserDetails
+{
+    UserInfo auth0User = 1;
+    UserInfo pixliseUser = 2;
+    uint64 createdUnixSec = 3;
+    uint64 lastLoginUnixSec = 4;
 }

@@ -18,7 +18,6 @@ enum ObjectType
     OT_EXPRESSION = 3;
     OT_EXPRESSION_GROUP = 4;
     OT_DATA_MODULE = 5;
-    OT_TAG = 6;
 }
 
 message OwnershipItem
