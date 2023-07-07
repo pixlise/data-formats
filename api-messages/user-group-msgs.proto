@@ -37,7 +37,7 @@ message UserGroupCreateResp
 // requires(PIXLISE_ADMIN)
 message UserGroupDeleteReq
 {
-    string name = 1;
+    string groupId = 1;
 }
 
 message UserGroupDeleteResp
