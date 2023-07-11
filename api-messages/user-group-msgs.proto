@@ -7,9 +7,10 @@ import "user-group.proto";
 
 ////////////////////////////////////////////////////////////////
 // Creating, deleting and renaming entire groups
-// Should only be accessible to group and sys admins
+// Anyone can try listing but only PIXLISE_ADMIN and users who
+// have been added as admins to a group are able to see anything
 
-// requires(PIXLISE_ADMIN)
+// requires(NONE)
 message UserGroupListReq
 {
 }
