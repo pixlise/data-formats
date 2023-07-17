@@ -10,6 +10,8 @@ message UserGroup
     string name = 2;
     uint64 createdUnixSec = 7;
 
+    UserGroupList viewers = 5;
     UserGroupList members = 3;
+    
     repeated string adminUserIds = 4;
 }

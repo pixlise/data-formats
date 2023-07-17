@@ -17,8 +17,7 @@ enum Permission
     PERM_USER_ADMIN = 3; // Can edit users, roles, create/delete user-groups
     PERM_SCAN_EDIT = 5; // Can upload datasets, rename them, add images
     //PERM_BLESS_QUANT = 6; // Can mark a quant as "blessed"
-    PERM_PIXLISE_ADMIN = 7; 
-    PERM_SHARE = 8; // Can share data
+    PERM_PIXLISE_ADMIN = 7;
     PERM_EDIT_DIFFRACTION = 9; // Can edit detected diffraction peak status AND add user defined peaks
     PERM_EXPORT = 10; // Can export data
     PERM_EDIT_EXPRESSION = 11; // Can edit/delete expressions, expression groups and data modules

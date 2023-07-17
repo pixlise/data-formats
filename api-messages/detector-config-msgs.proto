@@ -11,6 +11,7 @@ import "detector-config.proto";
 // requires(NONE)
 message DetectorConfigReq
 {
+    string id = 1;
 }
 
 message DetectorConfigResp

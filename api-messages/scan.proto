@@ -86,13 +86,13 @@ message ScanItem
 
 message ScanMetaDataItem
 {
-    // Only storing the metadata label outside of the item, here we just store its index
-    // This index refers to the strings defined in ScanMetaLabelsResp
-    int32 labelIndex = 1;
-
+    // NOTE: we store the meta label outside, so these are expected to sit
+    // in a: map<int32, ScanMetaDataItem>
+    // Where the map key is the meta label which references the strings
+    // returned by ScanMetaLabelsResp
     oneof Value {
-        float fvalue = 2;
-        int32 ivalue = 3;
-        string svalue = 4;
+        float fvalue = 1;
+        int32 ivalue = 2;
+        string svalue = 3;
     }
 }

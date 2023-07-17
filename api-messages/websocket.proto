@@ -199,7 +199,6 @@ message WSMessage
         UserDeleteRoleResp userDeleteRoleResp = 125;
         UserDetailsReq userDetailsReq = 126;
         UserDetailsResp userDetailsResp = 127;
-        UserDetailsUpd userDetailsUpd = 128;
         UserDetailsWriteReq userDetailsWriteReq = 129;
         UserDetailsWriteResp userDetailsWriteResp = 130;
         UserDismissHintReq userDismissHintReq = 131;
@@ -208,6 +207,8 @@ message WSMessage
         UserGroupAddAdminResp userGroupAddAdminResp = 157;
         UserGroupAddMemberReq userGroupAddMemberReq = 158;
         UserGroupAddMemberResp userGroupAddMemberResp = 159;
+        UserGroupAddViewerReq userGroupAddViewerReq = 180;
+        UserGroupAddViewerResp userGroupAddViewerResp = 181;
         UserGroupCreateReq userGroupCreateReq = 160;
         UserGroupCreateResp userGroupCreateResp = 161;
         UserGroupDeleteAdminReq userGroupDeleteAdminReq = 162;
@@ -216,6 +217,8 @@ message WSMessage
         UserGroupDeleteMemberResp userGroupDeleteMemberResp = 165;
         UserGroupDeleteReq userGroupDeleteReq = 166;
         UserGroupDeleteResp userGroupDeleteResp = 167;
+        UserGroupDeleteViewerReq userGroupDeleteViewerReq = 178;
+        UserGroupDeleteViewerResp userGroupDeleteViewerResp = 179;
         UserGroupListReq userGroupListReq = 168;
         UserGroupListResp userGroupListResp = 169;
         UserGroupSetNameReq userGroupSetNameReq = 170;

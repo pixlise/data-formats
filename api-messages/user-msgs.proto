@@ -23,11 +23,6 @@ message UserDetailsResp
     UserDetails details = 1;
 }
 
-message UserDetailsUpd
-{
-    UserDetails details = 1;
-}
-
 // Changing user details, this should publish a UserDetailsUpd
 // requires(EDIT_OWN_USER)
 message UserDetailsWriteReq
@@ -40,4 +35,5 @@ message UserDetailsWriteReq
 
 message UserDetailsWriteResp
 {
+    UserDetails details = 1;
 }

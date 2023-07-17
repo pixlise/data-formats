@@ -17,5 +17,6 @@ message PseudoIntensityReq
 message PseudoIntensityResp
 {
     repeated string intensityLabels = 1;
-    PseudoIntensityData data = 2;
+    // One per location
+    repeated PseudoIntensityData data = 2;
 }
