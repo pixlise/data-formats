@@ -2,9 +2,11 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "ownership-access.proto";
+import "user.proto";
 
 
-message UserGroup
+// The UserGroup we store in DB
+message UserGroupDB
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
@@ -14,4 +16,30 @@ message UserGroup
     UserGroupList members = 3;
     
     repeated string adminUserIds = 4;
+}
+
+// User Group Info, just the basics...
+message UserGroupInfo
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    uint64 createdUnixSec = 3;
+}
+
+message UserGroupInfoList
+{
+    repeated UserInfo users = 1;
+    repeated UserGroupInfo groups = 2;
+}
+
+// The user group sent out of API, contains "info" items of each user/user-group
+// that's attached to it
+message UserGroup
+{
+    UserGroupInfo info = 1;
+
+    UserGroupInfoList viewers = 5;
+    UserGroupInfoList members = 3;
+    
+    repeated UserInfo adminUsers = 4;
 }
