@@ -24,5 +24,8 @@ message UserNotification
     uint64 timeStampUnixSec = 4;
 
     //string scanId = 3;
-    //string link = 3;
+    string actionLink = 5;
+
+    // Type-specific values
+    map<string, string> meta = 6;
 }

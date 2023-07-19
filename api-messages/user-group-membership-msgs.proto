@@ -4,60 +4,6 @@ option go_package = ".;protos";
 import "user-group.proto";
 
 
-
-////////////////////////////////////////////////////////////////
-// Creating, deleting and renaming entire groups
-// Anyone can try listing but only PIXLISE_ADMIN and users who
-// have been added as admins to a group are able to see anything
-
-// requires(NONE)
-message UserGroupListReq
-{
-}
-
-message UserGroupListResp
-{
-    repeated UserGroup groups = 1;
-}
-
-
-////////////////////////////////////////////////////////////////
-// Creating, deleting and renaming entire groups
-// Should only be accessible to sys admins
-// requires(PIXLISE_ADMIN)
-message UserGroupCreateReq
-{
-    string name = 1;
-}
-
-message UserGroupCreateResp
-{
-    UserGroup group = 1;
-}
-
-// requires(PIXLISE_ADMIN)
-message UserGroupDeleteReq
-{
-    string groupId = 1;
-}
-
-message UserGroupDeleteResp
-{
-}
-
-// requires(PIXLISE_ADMIN)
-message UserGroupSetNameReq
-{
-    string groupId = 1;
-    string name = 2;
-}
-
-// requires(PIXLISE_ADMIN)
-message UserGroupSetNameResp
-{
-    UserGroup group = 1;
-}
-
 ////////////////////////////////////////////////////////////////
 // Adding and deleting members from the group
 // Should only be accessible to group admins and sys admins
@@ -95,6 +41,7 @@ message UserGroupDeleteMemberResp
     UserGroup group = 1;
 }
 
+
 ////////////////////////////////////////////////////////////////
 // Adding and deleting viewers from the group
 // Should only be accessible to group admins and sys admins
@@ -128,33 +75,6 @@ message UserGroupDeleteViewerReq
 }
 
 message UserGroupDeleteViewerResp
-{
-    UserGroup group = 1;
-}
-
-////////////////////////////////////////////////////////////////
-// Adding and deleting admins from the group
-// Should only be accessible to group admins and sys admins
-// requires(NONE)
-message UserGroupAddAdminReq
-{
-    string groupId = 1;
-    string adminUserId = 2;
-}
-
-message UserGroupAddAdminResp
-{
-    UserGroup group = 1;
-}
-
-// requires(NONE)
-message UserGroupDeleteAdminReq
-{
-    string groupId = 1;
-    string adminUserId = 2;
-}
-
-message UserGroupDeleteAdminResp
 {
     UserGroup group = 1;
 }

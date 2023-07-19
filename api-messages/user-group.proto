@@ -18,12 +18,23 @@ message UserGroupDB
     repeated string adminUserIds = 4;
 }
 
+enum UserGroupRelationship
+{
+    UGR_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    UGR_VIEWER = 1;
+    UGR_MEMBER = 2;
+    UGR_ADMIN = 3;
+}
+
 // User Group Info, just the basics...
 message UserGroupInfo
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     uint64 createdUnixSec = 3;
+
+    // OPTIONAL (only returned in UserGroupListResp)
+    UserGroupRelationship relationshipToUser = 4;
 }
 
 message UserGroupInfoList
@@ -42,4 +53,14 @@ message UserGroup
     UserGroupInfoList members = 3;
     
     repeated UserInfo adminUsers = 4;
+}
+
+// A request to join a user group - stored in DB
+message UserGroupJoinRequestDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string userId = 2; // Who sent it
+    string joinGroupId = 3; // What they want to join
+    bool asMember = 4; // If false, join request is to join as a viewer only
+    uint64 createdUnixSec = 5;
 }

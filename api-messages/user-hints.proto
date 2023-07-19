@@ -1,9 +1,0 @@
-syntax = "proto3";
-option go_package = ".;protos";
-
-
-message UserHints
-{
-    repeated string dismissedHints = 1;
-    bool enabled = 2;
-}

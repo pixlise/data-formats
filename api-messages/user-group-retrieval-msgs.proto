@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-group.proto";
+
+
+
+////////////////////////////////////////////////////////////////
+// Creating, deleting and renaming entire groups
+// Anyone can try listing but only PIXLISE_ADMIN and users who
+// have been added as admins to a group are able to see anything
+
+// requires(NONE)
+message UserGroupListReq
+{
+}
+
+message UserGroupListResp
+{
+    repeated UserGroupInfo groupInfos = 1;
+}
+
+// requires(NONE)
+message UserGroupReq
+{
+    string groupId = 1;
+}
+
+message UserGroupResp
+{
+    UserGroup group = 1;
+}

@@ -28,6 +28,9 @@ Route Permissions:
 (deprecated) POST   /annotation/{DID}                                    -> write:data-analysis
 (deprecated) POST   /share/annotation/{DID}/{id}                         -> write:shared-annotation
 
+(deprecated) GET    /notification/hints                                  -> public
+(deprecated) POST   /notification/hints                                  -> public
+
 (deprecated) POST   /metrics/{id}                                        -> write:metrics
 
 (deprecated, was only for fixing user names...) POST   /user/bulk-user-details                              -> write:user-roles
@@ -39,7 +42,7 @@ Route Permissions:
 Tags: is dataset ID required in all msgs?
 Datasets: renamed to scans, trying to make this a side-thing, data is requested separately
 RGB Mix: renamed to expression group, not limited to "R", "G", "B" but has an array of expressions to run
-Users: Broke this up - separate user-hints-msgs.proto, user-nofications-msgs.proto, user-msgs.proto and user-management-msgs.proto
+Users: Broke this up - separate user-nofications-msgs.proto, user-msgs.proto and user-management-msgs.proto
        User config (name, email, data collection) all done via UserDetailsWriteReq
        Managment stuff like roles, listing users, changing user roles is handled in user-management-msgs.proto
 ROI: Combined put, post and bulk-upload into a single request

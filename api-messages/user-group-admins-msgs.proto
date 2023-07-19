@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-group.proto";
+
+
+////////////////////////////////////////////////////////////////
+// Adding and deleting admins from the group
+// Should only be accessible to group admins and sys admins
+// requires(NONE)
+message UserGroupAddAdminReq
+{
+    string groupId = 1;
+    string adminUserId = 2;
+}
+
+message UserGroupAddAdminResp
+{
+    UserGroup group = 1;
+}
+
+// requires(NONE)
+message UserGroupDeleteAdminReq
+{
+    string groupId = 1;
+    string adminUserId = 2;
+}
+
+message UserGroupDeleteAdminResp
+{
+    UserGroup group = 1;
+}

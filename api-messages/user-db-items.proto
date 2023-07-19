@@ -2,7 +2,6 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "user.proto";
-import "user-hints.proto";
 import "user-notification-settings.proto";
 
 
@@ -15,6 +14,5 @@ message UserDBItem
     UserInfo info = 2;
 
     string dataCollectionVersion = 3;
-    UserHints hints = 4;
     UserNotificationSettings notificationSettings = 5;
 }
