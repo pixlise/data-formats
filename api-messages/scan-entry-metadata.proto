@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan.proto";
+
+
+message ScanEntryMetadata
+{
+    // Any meta-data for the entry is stored here. For PIXL these are housekeeping values
+    map<int32, ScanMetaDataItem> meta = 1;
+}

@@ -96,3 +96,10 @@ message ScanMetaDataItem
         string svalue = 3;
     }
 }
+
+message ScanEntryRange
+{
+    // Effectively allows pagination
+    uint32 firstEntryIndex = 1;
+    uint32 entryCount = 2;
+}

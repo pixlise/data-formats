@@ -2,16 +2,14 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "pseudo-intensities.proto";
+import "scan.proto";
 
 
 // requires(NONE)
 message PseudoIntensityReq
 {
     string scanId = 1;
-    
-    // Effectively allows pagination
-    uint32 startingLocation = 2;
-    uint32 locationCount = 3;
+    ScanEntryRange entries = 2;
 }
 
 message PseudoIntensityResp

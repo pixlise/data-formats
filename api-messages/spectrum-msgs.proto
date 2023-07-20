@@ -2,19 +2,22 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "spectrum.proto";
+import "scan.proto";
 
 
 // requires(NONE)
 message SpectrumReq
 {
     string scanId = 1;
-    
-    // Effectively allows pagination
-    uint32 startingLocation = 2;
-    uint32 locationCount = 3;
+
+    ScanEntryRange entries = 2;
+    bool bulkSum = 3;
+    bool maxValue = 4;
 }
 
 message SpectrumResp
 {
     repeated Spectra spectraPerLocation = 1; // Note a location may have 0 or more spectra
+    repeated Spectrum bulkSpectra = 2; // One per detector
+    repeated Spectrum maxSpectra = 3; // One per detector
 }

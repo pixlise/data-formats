@@ -2,19 +2,30 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan-beam-location.proto";
+import "scan.proto";
 
 
 // requires(NONE)
-message ScanImageLocationsReq
+message ScanBeamLocationsReq
 {
     string scanId = 1;
-
-    // Effectively allows pagination
-    uint32 startingLocation = 2;
-    uint32 locationCount = 3;
+    ScanEntryRange entries = 2;
 }
 
-message ScanImageLocationsResp
+message ScanBeamLocationsResp
 {
-    repeated ImageLocations beamLocations = 1;
+    repeated Coordinate3D beamLocations = 1;
+}
+
+// requires(NONE)
+message ScanBeamImageLocationsReq
+{
+    string scanId = 1;
+    ScanEntryRange entries = 2;
+    string image = 3;
+}
+
+message ScanBeamImageLocationsResp
+{
+    repeated ImageLocations beamImageLocations = 1;
 }

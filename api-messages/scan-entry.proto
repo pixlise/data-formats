@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// Defines a single data entry in a scan. This is scan-type agnostic, only storing the id/timestamp
+// for this entry along with counts of what other information is available for this entry, which
+// is intended to be downloaded by other messages
+
+message ScanEntry
+{
+    // An ID for the entry. In PIXL, this is the "PMC" aka "PIXL motor count" value
+    int32 id = 1;
+
+    // Type agnostic timestamp, depends on the scan taken. In PIXL's case, it's SCLK
+    int32 timestamp = 2;
+
+    // What else is available for this entry
+    uint32 images = 3;
+    uint32 spectra = 4;
+    bool meta = 5;
+    bool location = 6;
+    bool pseudoIntensities = 7;
+}
