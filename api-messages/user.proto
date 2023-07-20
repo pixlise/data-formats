@@ -11,7 +11,7 @@ message UserInfo
     string name = 2; // @gotags: bson:"name,omitempty"
     string email = 3; // @gotags: bson:"email,omitempty"
     // NOTE: this can be a link or a data://<base64 image>
-    string iconURL = 4; // @gotags: bson:"iconURL,omitempty"
+    string iconURL = 4; // @gotags: bson:"iconurl,omitempty"
 }
 
 message UserDetails
