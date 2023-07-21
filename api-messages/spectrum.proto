@@ -20,8 +20,8 @@ message Spectrum
     SpectrumType type = 2; // We store some "special" spectra in a dataset, such as the bulk-sum of all spectra, so
                            // it doesn't need to be calculated on the fly. It's also calculated on-board by the PIXL
                            // instrument
-    repeated int64 counts = 3; // Counts in each channel, encoded so that runs of 0s are run-length tagged
-    int64 maxCount = 4; // The maximum count found in the entire spectrum
+    repeated uint32 counts = 3; // Counts in each channel, encoded so that runs of 0s are run-length tagged
+    uint32 maxCount = 4; // The maximum count found in the entire spectrum
     map<int32, ScanMetaDataItem> meta = 5; // Any meta-data for a spectrum is stored here. Examples are values in
                                            // MSA headers, such as energy calibrations, etc
 }
