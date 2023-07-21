@@ -27,5 +27,5 @@ message ScanBeamImageLocationsReq
 
 message ScanBeamImageLocationsResp
 {
-    repeated ImageLocations beamImageLocations = 1;
+    ImageLocations beamImageLocations = 1;
 }

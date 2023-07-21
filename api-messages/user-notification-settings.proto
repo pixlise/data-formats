@@ -29,3 +29,9 @@ message UserNotification
     // Type-specific values
     map<string, string> meta = 6;
 }
+
+message UserNotificationDB
+{
+    string destUserId = 1; // The user this notification is destined for
+    UserNotification notification = 2;
+}
