@@ -5,45 +5,55 @@ option go_package = ".;protos";
 enum ScanImageSource
 {
     SI_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-    SI_INSTRUMENT = 1;
-    SI_UPLOAD = 2;
+    SI_INSTRUMENT = 1; // Instrument provided image, eg in PIXL case, it's an MCC image
+    SI_UPLOAD = 2; // Any uploaded image that's not sourced from the instrument
 }
 
 // Image purpose - is it just for viewing, or perhaps it provides channel data to some algorithm
 enum ScanImagePurpose
 {
     SIP_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-    SIP_VIEWING = 1;
-    SIP_MULTICHANNEL = 2;
+    SIP_VIEWING = 1; // Just for viewing, as a background to scan points/other data
+    SIP_MULTICHANNEL = 2; // For multi-channel analysis, so as source for binary plots, etc
 }
 
 // Describes a single image that is associated with a scan
 message ScanImage
 {
-    string fileName = 1;
+    string name = 1; // @gotags: bson:"_id,omitempty"
     ScanImageSource source = 2;
     uint32 width = 3;
     uint32 height = 4;
-    uint32 channels = 5;
+    uint32 fileSize = 5;
     ScanImagePurpose purpose = 6;
 
-    string url = 7; // So client can send a HTTP GET and image gets cached by browser, etc
+    // All scans associated with this image
+    repeated string associatedScanIds = 7;
+    
+    // The scan the image originates from (in case of images taken by the
+    // XRF instruments own camera, eg with PIXL, images taken by MCC)
+    // If this is empty, this image came from another source
+    string originScanId = 8;
+
+    // Link to the original image - for PIXL this will be a link to Mars Viewer
+    // but other devices/imports could define a link to some original image location
+    string originImageURL = 9;
+
+    // So client can send a HTTP GET and image gets cached by browser, etc
+    string url = 10;
 
     // If its "matched" to another image, this should be filled out
-    message ImageMatchTransform
-    {
-        string matchedImageFileName = 1;
+    ImageMatchTransform matchInfo = 11;
+}
 
-        // The location point the matched image was recorded for
-        // This allows PIXLISE to determine which beam location
-        // set to use for displaying this image
-        int32 matchedImageLocation = 2; 
-        
-        float xOffset = 3;
-        float yOffset = 4;
-        float xScale = 5;
-        float yScale = 6;
-    }
+message ImageMatchTransform
+{
+    // Name of the image file whose beam locations this image has been "matched" (aka warped) to
+    string beamImageFileName = 1;
 
-    ImageMatchTransform matchInfo = 8;
+    // The transform to allow rendering the image relative to the existing beam locations
+    float xOffset = 2;
+    float yOffset = 3;
+    float xScale = 4;
+    float yScale = 5;
 }

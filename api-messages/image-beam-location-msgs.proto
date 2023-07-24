@@ -1,0 +1,16 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "image-beam-location.proto";
+
+
+// requires(NONE)
+message ImageBeamLocationsReq
+{
+    string imageName = 1;
+}
+
+message ImageBeamLocationsResp
+{
+    ImageLocations locations = 1;
+}

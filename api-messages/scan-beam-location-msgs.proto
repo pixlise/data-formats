@@ -16,16 +16,3 @@ message ScanBeamLocationsResp
 {
     repeated Coordinate3D beamLocations = 1;
 }
-
-// requires(NONE)
-message ScanBeamImageLocationsReq
-{
-    string scanId = 1;
-    ScanEntryRange entries = 2;
-    string image = 3;
-}
-
-message ScanBeamImageLocationsResp
-{
-    ImageLocations beamImageLocations = 1;
-}

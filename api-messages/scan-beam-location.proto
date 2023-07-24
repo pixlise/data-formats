@@ -2,20 +2,6 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 
-// Defines beam locations of an individual location
-message Coordinate2D
-{
-    float i = 1;
-    float j = 2;
-}
-
-// Locations relative to the image
-message ImageLocations
-{
-    string imageFileName = 1;
-    repeated Coordinate2D locations = 2;
-}
-
 // We store physical location in these
 message Coordinate3D
 {
