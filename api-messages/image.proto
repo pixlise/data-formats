@@ -40,7 +40,7 @@ message ScanImage
     string originImageURL = 9;
 
     // So client can send a HTTP GET and image gets cached by browser, etc
-    string url = 10;
+    string path = 10;
 
     // If its "matched" to another image, this should be filled out
     ImageMatchTransform matchInfo = 11;
