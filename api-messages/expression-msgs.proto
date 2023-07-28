@@ -75,10 +75,10 @@ message ExpressionWriteExecStatResp
 message ExpressionWriteResultReq
 {
     string expressionId = 1;
-    uint64 expressionModTimeUnixSec = 2;
+    uint32 expressionModTimeUnixSec = 2;
     string scanId = 3;
     string roiId = 4;
-    uint64 roiModTimeUnixSec = 5;
+    uint32 roiModTimeUnixSec = 5;
 
     repeated string resultColumns = 6;
     repeated ExpressionResultItem resultItems = 7;

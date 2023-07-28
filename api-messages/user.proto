@@ -34,6 +34,6 @@ message Auth0UserDetails
 {
     UserInfo auth0User = 1;
     UserInfo pixliseUser = 2;
-    uint64 createdUnixSec = 3;
-    uint64 lastLoginUnixSec = 4;
+    uint32 createdUnixSec = 3;
+    uint32 lastLoginUnixSec = 4;
 }

@@ -9,7 +9,7 @@ message DataModule
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
     string comments = 3;
-    uint64 modifedUnixSec = 4;
+    uint32 modifiedUnixSec = 4;
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 5;  // @gotags: bson:"-"
@@ -29,7 +29,7 @@ message DataModuleVersion
     SemanticVersion version = 3;
     repeated string tags = 4;
     string comments = 5;
-    uint64 timeStampUnixSec = 6;
+    uint32 timeStampUnixSec = 6;
     string sourceCode = 7;
     //DOIMetadata doiMetadata = 8;
 }

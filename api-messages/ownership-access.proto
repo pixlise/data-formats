@@ -28,7 +28,7 @@ message OwnershipItem
 
     // Creation info
     string creatorUserId = 3;
-    uint64 createdUnixSec = 4;
+    uint32 createdUnixSec = 4;
 
     // Who has view or edit access
     UserGroupList viewers = 5;
@@ -36,11 +36,11 @@ message OwnershipItem
 
     // So we don't have to update this every time the object changes, we
     // allow this to be defined in the object on an as-needed basis
-    //uint64 modifiedUnixSec = 7;
+    //uint32 modifiedUnixSec = 7;
 }
 
 message OwnershipSummary
 {
     UserInfo creatorUser = 1;
-    uint64 createdUnixSec = 2;
+    uint32 createdUnixSec = 2;
 }

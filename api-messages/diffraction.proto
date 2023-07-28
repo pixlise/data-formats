@@ -10,7 +10,7 @@ message ManualDiffractionPeak
     string scanId = 2;
     int32 pmc = 3;
     float energykeV = 4;
-    uint64 createdUnixSec = 5;
+    uint32 createdUnixSec = 5;
     string creatorUserId = 6;
 }
 
@@ -22,7 +22,7 @@ message DetectedDiffractionPeakStatuses
     message PeakStatus
     {
         string status = 1;
-        uint64 createdUnixSec = 2;
+        uint32 createdUnixSec = 2;
         string creatorUserId = 3;
     }
     map<string, PeakStatus> statuses = 3;

@@ -17,7 +17,7 @@ message JobStartingParameters
 	string parameters = 8;
 	uint32 runTimeSec = 9;
 	uint32 coresPerNode = 10;
-	uint64 startUnixTimeSec = 11;
+	uint32 startUnixTimeSec = 11;
     string requestorUserId = 12;
     string roiID = 13;
 	string elementSetID = 14;
@@ -56,7 +56,7 @@ message JobStatus
     string jobID = 1;
     Status status = 2;
     string message = 3;
-    uint64 endUnixTimeSec = 4;
+    uint32 endUnixTimeSec = 4;
     string outputFilePath = 5;
     repeated string piquantLogs = 6;
 }

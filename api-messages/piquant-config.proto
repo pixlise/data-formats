@@ -16,6 +16,6 @@ message PiquantVersion
     // NOTE: ID here is only for DB really...
     string id = 1; // @gotags: bson:"_id,omitempty"
     string version = 2;
-    uint64 modifiedUnixSec = 3;
+    uint32 modifiedUnixSec = 3;
     string modifierUserId = 4;
 }

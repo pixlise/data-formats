@@ -21,7 +21,7 @@ message UserNotification
     string contents = 2; // The contents (if user clicks on banner, or email body)
 
     string from = 3; // Shows where the notification came from
-    uint64 timeStampUnixSec = 4;
+    uint32 timeStampUnixSec = 4;
 
     //string scanId = 3;
     string actionLink = 5;

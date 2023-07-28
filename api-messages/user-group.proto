@@ -10,7 +10,7 @@ message UserGroupDB
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
-    uint64 createdUnixSec = 7;
+    uint32 createdUnixSec = 7;
 
     UserGroupList viewers = 5;
     UserGroupList members = 3;
@@ -31,7 +31,7 @@ message UserGroupInfo
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
-    uint64 createdUnixSec = 3;
+    uint32 createdUnixSec = 3;
 
     // OPTIONAL (only returned in UserGroupListResp)
     UserGroupRelationship relationshipToUser = 4;
@@ -62,5 +62,5 @@ message UserGroupJoinRequestDB
     string userId = 2; // Who sent it
     string joinGroupId = 3; // What they want to join
     bool asMember = 4; // If false, join request is to join as a viewer only
-    uint64 createdUnixSec = 5;
+    uint32 createdUnixSec = 5;
 }

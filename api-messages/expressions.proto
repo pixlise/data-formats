@@ -19,7 +19,7 @@ message DataExpression
     DataExpressionExecStats recentExecStats = 8; // @gotags: bson:"recentExecStats,omitempty"
     //DOIMetadata doiMetadata = 9;
 
-    uint64 modifedUnixSec = 10;
+    uint32 modifiedUnixSec = 10;
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 11;  // @gotags: bson:"-"
@@ -35,7 +35,7 @@ message DataExpressionExecStats
 {
     repeated string dataRequired = 1;
     float runtimeMs = 2;
-    uint64 timeStampUnixSec = 3;
+    uint32 timeStampUnixSec = 3;
 }
 
 message ExpressionResultItem

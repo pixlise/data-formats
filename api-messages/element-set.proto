@@ -18,7 +18,7 @@ message ElementSet
     string id = 1; // @gotags: bson:"_id,omitempty"
 	string name = 2;
     repeated ElementLine lines = 3;
-    uint64 modifedUnixSec = 4;
+    uint32 modifiedUnixSec = 4;
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 5;  // @gotags: bson:"-"
@@ -31,7 +31,7 @@ message ElementSetSummary
     string id = 1;
 	string name = 2;
 	repeated int32 atomicNumbers = 3;
-    uint64 modifedUnixSec = 4;
+    uint32 modifiedUnixSec = 4;
 
     OwnershipSummary owner = 5;
 }
