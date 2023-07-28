@@ -19,7 +19,7 @@ message RegionOfInterestListReq
 
 message RegionOfInterestListResp
 {
-    map<string, ROIItemSummary> RegionsOfInterest = 1;
+    map<string, ROIItemSummary> regionsOfInterest = 1;
 }
 
 // requires(NONE)
@@ -30,7 +30,7 @@ message RegionOfInterestGetReq
 
 message RegionOfInterestGetResp
 {
-    ROIItem RegionOfInterest = 1;
+    ROIItem regionOfInterest = 1;
 }
 
 // requires(EDIT_ROI)
@@ -38,12 +38,12 @@ message RegionOfInterestWriteReq
 {
     // For each of these, if ID is blank, assume it's a new one (and we return the ID), otherwise
     // assume it's an overwrite
-    repeated ROIItem items = 1;
+    ROIItem regionOfInterest = 1;
 }
 
 message RegionOfInterestWriteResp
 {
-    repeated ROIItem items = 1;
+    ROIItem regionOfInterest = 1;
 }
 
 // requires(EDIT_ROI)

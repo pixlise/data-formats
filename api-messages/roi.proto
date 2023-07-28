@@ -11,17 +11,17 @@ message ROIItem
     string scanId = 2;
 	string name = 3;
     string description = 4;
-    repeated uint32 locationIndexes = 5;
+    repeated int32 locationIndexesEncoded = 5;
     string imageName = 6;
     
-    repeated uint32 pixelIndexes = 7;
+    repeated int32 pixelIndexesEncoded = 7;
     //MistROIItem  MistROIItem `json:"mistROIItem"`
     repeated string tags = 9;
 
-    uint64 modifedUnixSec = 10;
+    uint32 modifiedUnixSec = 10;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 11;  // @gotags: bson:"-"
+    OwnershipSummary owner = 11; // @gotags: bson:"-"
 }
 
 message ROIItemSummary
@@ -29,6 +29,12 @@ message ROIItemSummary
     string id = 1; // @gotags: bson:"_id,omitempty"
     string scanId = 2;
 	string name = 3;
+    string description = 4;
     string imageName = 5;
     repeated string tags = 6;
+    
+    uint32 modifiedUnixSec = 7;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 8; // @gotags: bson:"-"
 }
