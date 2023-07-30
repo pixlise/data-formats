@@ -11,7 +11,7 @@ message ROIItem
     string scanId = 2;
 	string name = 3;
     string description = 4;
-    repeated int32 locationIndexesEncoded = 5;
+    repeated int32 scanEntryIndexesEncoded = 5;
     string imageName = 6;
     
     repeated int32 pixelIndexesEncoded = 7;
