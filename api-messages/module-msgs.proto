@@ -29,20 +29,17 @@ message DataModuleGetReq
 
 message DataModuleGetResp
 {
-    string id = 1;
-    DataModule module = 2;
+    DataModule module = 1;
 }
 
 // If id is blank, assume its new and generate an ID to return, otherwise update & return same one
 // requires(EDIT_EXPRESSION)
 message DataModuleWriteReq
 {
-    string id = 1;
-    DataModule module = 2;
+    DataModule module = 1;
 }
 
 message DataModuleWriteResp
 {
-    string id = 1;
-    DataModule module = 2;
+    DataModule module = 1;
 }

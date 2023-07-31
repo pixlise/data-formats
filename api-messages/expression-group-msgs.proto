@@ -42,6 +42,7 @@ message ExpressionGroupWriteReq
 
 message ExpressionGroupWriteResp
 {
+    ExpressionGroup group = 1;
 }
 
 // requires(EDIT_EXPRESSION_GROUP)
