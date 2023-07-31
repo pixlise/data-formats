@@ -38,8 +38,7 @@ message ExpressionGetResp
 // requires(EDIT_EXPRESSION)
 message ExpressionWriteReq
 {
-    string id = 1;
-    DataExpression expression = 2;
+    DataExpression expression = 1;
 }
 
 message ExpressionWriteResp

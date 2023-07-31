@@ -33,11 +33,11 @@ message ExpressionGroupGetResp
     ExpressionGroup group = 1;
 }
 
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
 // requires(EDIT_EXPRESSION_GROUP)
 message ExpressionGroupWriteReq
 {
-    string id = 1;
-    ExpressionGroup group = 2;
+    ExpressionGroup group = 1;
 }
 
 message ExpressionGroupWriteResp

@@ -33,11 +33,10 @@ message RegionOfInterestGetResp
     ROIItem regionOfInterest = 1;
 }
 
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
 // requires(EDIT_ROI)
 message RegionOfInterestWriteReq
 {
-    // For each of these, if ID is blank, assume it's a new one (and we return the ID), otherwise
-    // assume it's an overwrite
     ROIItem regionOfInterest = 1;
 }
 

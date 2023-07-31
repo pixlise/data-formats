@@ -34,10 +34,10 @@ message ElementSetGetResp
     ElementSet elementSet = 1;
 }
 
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
 // requires(EDIT_ELEMENT_SET)
 message ElementSetWriteReq
 {
-    // If id is empty, it's assumed to be an insert and a new id will be returned
     ElementSet elementSet = 1;
 }
 
