@@ -7,7 +7,7 @@ import "ownership-access.proto";
 
 message ExpressionGroupItem
 {
-	string  expressionID = 1;
+	string expressionId = 1;
 	float rangeMin = 2;
 	float rangeMax = 3;
 
@@ -24,6 +24,7 @@ message ExpressionGroup
     repeated ExpressionGroupItem groupItems = 3;
 	repeated string tags = 4;
     uint32 modifiedUnixSec = 5;
+	string description = 7;
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 6;  // @gotags: bson:"-"
