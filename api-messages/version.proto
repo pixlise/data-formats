@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+enum VersionField
+{
+    MV_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    MV_MAJOR = 1;
+    MV_MINOR = 2;
+    MV_PATCH = 3;
+}
+
+message SemanticVersion
+{
+    int32 major = 1;
+    int32 minor = 2;
+    int32 patch = 3;
+}

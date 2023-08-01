@@ -80,6 +80,8 @@ message WSMessage
 
     oneof Contents
     {
+        DataModuleAddVersionReq dataModuleAddVersionReq = 198;
+        DataModuleAddVersionResp dataModuleAddVersionResp = 199;
         DataModuleGetReq dataModuleGetReq = 12;
         DataModuleGetResp dataModuleGetResp = 13;
         DataModuleListReq dataModuleListReq = 10;
