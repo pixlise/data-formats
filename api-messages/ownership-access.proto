@@ -43,4 +43,11 @@ message OwnershipSummary
 {
     UserInfo creatorUser = 1;
     uint32 createdUnixSec = 2;
+
+    uint32 sharedViewerUserCount = 3;
+    uint32 sharedViewerGroupCount = 4;
+    uint32 sharedEditorUserCount = 5;
+    uint32 sharedEditorGroupCount = 6;
+
+    bool sharedWithOthers = 7;
 }

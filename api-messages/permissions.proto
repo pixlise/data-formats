@@ -29,7 +29,7 @@ enum Permission
     PERM_EDIT_OWN_USER = 17; // Can edit own user account, eg notifications, name, email etc
     PERM_EDIT_VIEW_STATE = 18; // Can save view state
     PERM_EDIT_ELEMENT_SET = 19; // Can create/edit/delete Element Sets
-    PERM_EDIT_EXPRESSION_GROUP = 20; // Can create/edit/delete Element Sets
+    PERM_EDIT_EXPRESSION_GROUP = 20; // Can create/edit/delete Expression Groups (formerly known as RGB Mixes)
 }
 
 /*
