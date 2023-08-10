@@ -1,0 +1,42 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message QuantCombineItem
+{
+	string roiId = 1;
+	string quantificationId = 2;
+}
+
+message QuantCombineItemList
+{
+    repeated QuantCombineItem roiZStack = 1;
+}
+
+message QuantCombineItemListDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string userId = 2;
+    string scanId = 3;
+    QuantCombineItemList list = 4;
+}
+
+message QuantCombineSummaryRow
+{
+	repeated float values = 1;
+	repeated string roiIds = 2;
+	repeated string roiNames = 3;
+}
+
+message QuantCombineSummary
+{
+    repeated string detectors = 1;
+    map<string, QuantCombineSummaryRow> weightPercents = 2;
+}
+
+message QuantComparisonTable
+{
+	string quantId = 1;
+	string quantName = 2;
+	map<string, float> elementWeights = 3;
+}

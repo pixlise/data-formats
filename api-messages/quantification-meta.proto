@@ -1,0 +1,76 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "job.proto";
+
+// Quant Parameters and summary info (metadata about a quant)
+
+// TODO: Quants likely need to change to accommodate quantifying spectra from multiple
+// datasets together??
+message QuantStartingParameters
+{
+	string name = 1;
+	string dataBucket = 2;
+	string datasetPath = 3;
+	string datasetID = 4;
+	string piquantJobsBucket = 5;
+	string detectorConfig = 6;
+	repeated string elements = 7;
+	string parameters = 8;
+	uint32 runTimeSec = 9;
+	uint32 coresPerNode = 10;
+	uint32 startUnixTimeSec = 11;
+    string requestorUserId = 12;
+    string roiID = 13;
+	string elementSetID = 14;
+	string PIQUANTVersion = 15;
+	string quantMode = 16;
+	string comments = 17;
+	repeated string roiIDs = 18;
+	bool includeDwells = 19;
+	string command = 20;
+}
+
+message QuantStartingParametersWithPMCCount
+{
+    QuantStartingParameters params = 1;
+    uint32 PMCCount = 2;
+}
+
+message QuantStartingParametersWithPMCs
+{
+    QuantStartingParameters params = 1;
+    repeated uint32 PMCs = 2;
+}
+
+message QuantCreateParams
+{
+	string name = 1;
+	string datasetPath = 2;
+	repeated string pmcs = 3;
+	repeated string elements = 4;
+	string detectorconfig = 5;
+	string parameters = 6;
+	uint32 runtimesec = 7;
+	string roiID = 8; // There is now a list of ROI IDs that can be provided too. More relevant with the QuantMode *Bulk options
+	string elementSetID = 9;
+	string dataset_id = 10;
+	string requestorUserId = 11; // Probably not correct for existing containers...
+	string quantMode = 12;
+	repeated string roiIDs = 13; // If QuantMode = *Bulk, this is used, pmcs is ignored.
+	bool includeDwells = 14;
+	string command = 15;
+}
+
+message QuantificationSummary
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+	QuantStartingParametersWithPMCCount params = 2;
+	repeated string elements = 3;
+	JobStatus status = 4;
+	// TODO: Make this also contain *APIObjectItem and remove its own Shared field...
+}
+
+
+// Quant Data storage
+// For now we supply the same format as the quant files

@@ -37,3 +37,22 @@ message UserDetailsWriteResp
 {
     UserDetails details = 1;
 }
+
+// Allows searching for users, not to be confused with UserListReq
+// which is an admin-only request that reaches out to Auth0. This allows
+// any user to query other users, but we want to limit it based on what
+// groups you are members of?
+
+// requires(NONE)
+message UserSearchReq
+{
+    // Searches names and the part of email before @
+    string searchString = 1;
+    string firstResultIdx = 2;
+    string resultCount = 3;
+}
+
+message UserSearchResp
+{
+    repeated UserInfo users = 1;
+}

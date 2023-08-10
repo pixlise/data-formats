@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+/* Originals:
+-POST /quantification/upload/<datasetID>
+*/
+
+// Uploading quantified data as a CSV
+
+// requires(QUANTIFY)
+message QuantUploadReq
+{
+    string scanId = 1;
+    string csv = 2;
+}
+
+message QuantUploadResp
+{
+}

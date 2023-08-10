@@ -1,7 +1,6 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-
 message Quantification {
 
   repeated string labels=1;

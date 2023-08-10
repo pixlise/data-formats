@@ -1,0 +1,55 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "quantification-meta.proto";
+import "quantification.proto";
+import "search-params.proto";
+
+
+/* Originals:
+-GET  /quantification -> job admins
+-GET  /quantification/<datasetID> -> anyone
+
+-GET  /quantification/<datasetID>/<quantID> -> anyone
+
+*/
+
+// NOTE: Admin view of all quant jobs should be implemented under generic "job" messaging
+
+// requires(NONE)
+message QuantListReq
+{
+    SearchParams searchParams = 1;
+}
+
+message QuantListResp
+{
+    repeated QuantificationSummary quants = 1;
+}
+
+// Can query quantification summary OR both summary and quant data
+
+// requires(NONE)
+message QuantGetReq
+{
+    string quantId = 1;
+    bool summaryOnly = 2;
+}
+
+message QuantGetResp
+{
+    QuantificationSummary summary = 1;
+    Quantification data = 2;
+}
+
+// For FIT command, retrieves last quant output
+
+// requires(NONE)
+message QuantLastOutputGetReq
+{
+}
+
+message QuantLastOutputGetResp
+{
+    // ???
+}
