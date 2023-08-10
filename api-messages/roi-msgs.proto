@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "roi.proto";
+import "search-params.proto";
 
 
 /* Originals:
@@ -15,13 +16,7 @@ import "roi.proto";
 // requires(NONE)
 message RegionOfInterestListReq
 {
-    string nameSearch = 1;
-    string tagId = 2;
-    string creatorUserId = 3;
-    string scanId = 4;
-    
-    string firstResultIdx = 5;
-    string resultCount = 6;
+    SearchParams searchParams = 1;
 }
 
 message RegionOfInterestListResp
