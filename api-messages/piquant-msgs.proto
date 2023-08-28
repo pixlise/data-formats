@@ -2,7 +2,6 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 
-import "detector-config.proto";
 import "piquant-config.proto";
 
 
@@ -20,7 +19,6 @@ import "piquant-config.proto";
 // requires(READ_PIQUANT_SETTINGS)
 message PiquantConfigListReq
 {
-    string configId = 1;
 }
 
 message PiquantConfigListResp
@@ -50,8 +48,7 @@ message PiquantConfigVersionReq
 
 message PiquantConfigVersionResp
 {
-    DetectorConfig detectorConfig = 1;
-    PiquantConfig piquantConfig = 2;
+    PiquantConfig piquantConfig = 1;
 }
 
 // Listing versions of PIQUANT container to run in API when quant is started
