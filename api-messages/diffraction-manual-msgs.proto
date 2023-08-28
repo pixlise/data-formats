@@ -22,23 +22,25 @@ message DiffractionPeakManualListResp
     map<string, ManualDiffractionPeak> peaks = 1; // id->ManualDiffractionPeak
 }
 
+// Only allows insert, no updating!
+
 // requires(EDIT_DIFFRACTION)
-message DiffractionPeakManualWriteReq
+message DiffractionPeakManualInsertReq
 {
     string scanId = 1;
-    string diffractionPeakId = 2;
-    ManualDiffractionPeak peak = 3;
+    int32 pmc = 2;
+    float energykeV = 3;
 }
 
-message DiffractionPeakManualWriteResp
+message DiffractionPeakManualInsertResp
 {
+    string createdId = 1;
 }
 
 // requires(EDIT_DIFFRACTION)
 message DiffractionPeakManualDeleteReq
 {
-    string scanId = 1;
-    string diffractionPeakId = 2;
+    string id = 1;
 }
 
 message DiffractionPeakManualDeleteResp

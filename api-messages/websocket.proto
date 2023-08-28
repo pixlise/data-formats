@@ -96,10 +96,10 @@ message WSMessage
         DetectorConfigResp detectorConfigResp = 17;
         DiffractionPeakManualDeleteReq diffractionPeakManualDeleteReq = 18;
         DiffractionPeakManualDeleteResp diffractionPeakManualDeleteResp = 19;
+        DiffractionPeakManualInsertReq diffractionPeakManualInsertReq = 22;
+        DiffractionPeakManualInsertResp diffractionPeakManualInsertResp = 23;
         DiffractionPeakManualListReq diffractionPeakManualListReq = 20;
         DiffractionPeakManualListResp diffractionPeakManualListResp = 21;
-        DiffractionPeakManualWriteReq diffractionPeakManualWriteReq = 22;
-        DiffractionPeakManualWriteResp diffractionPeakManualWriteResp = 23;
         DiffractionPeakStatusDeleteReq diffractionPeakStatusDeleteReq = 24;
         DiffractionPeakStatusDeleteResp diffractionPeakStatusDeleteResp = 25;
         DiffractionPeakStatusListReq diffractionPeakStatusListReq = 26;
