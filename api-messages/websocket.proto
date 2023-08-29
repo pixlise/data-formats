@@ -9,6 +9,7 @@ import "quant-msgs.proto";
 */
 
 import "detector-config-msgs.proto";
+import "diffraction-detected-peak-msgs.proto";
 import "diffraction-manual-msgs.proto";
 import "diffraction-status-msgs.proto";
 import "element-set-msgs.proto";
@@ -92,6 +93,8 @@ message WSMessage
         DataModuleListResp dataModuleListResp = 11;
         DataModuleWriteReq dataModuleWriteReq = 14;
         DataModuleWriteResp dataModuleWriteResp = 15;
+        DetectedDiffractionPeaksReq detectedDiffractionPeaksReq = 224;
+        DetectedDiffractionPeaksResp detectedDiffractionPeaksResp = 225;
         DetectorConfigReq detectorConfigReq = 16;
         DetectorConfigResp detectorConfigResp = 17;
         DiffractionPeakManualDeleteReq diffractionPeakManualDeleteReq = 18;

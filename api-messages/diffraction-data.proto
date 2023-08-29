@@ -1,0 +1,50 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// Diffraction detection algorithm delivers detected peaks via these structures
+message DetectedDiffractionPerLocation
+{
+    string id = 1; // Location ID, in PIXL land this is the PMC
+
+    message DetectedDiffractionPeak
+    {
+        int32 peakChannel = 1;
+        float effectSize = 2;
+        float baselineVariation = 3;
+        float globalDifference = 4;
+        float differenceSigma = 5;
+        float peakHeight = 6;
+        string detector = 7;
+    }
+
+    repeated DetectedDiffractionPeak peaks = 2; // Any peaks detected for this location
+}
+
+
+// When a user suspects they see a diffraction peak they can log it using this structure
+message ManualDiffractionPeak
+{
+    // ID could be composed of scanId+pmc+userId+energy (?)
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+    int32 pmc = 3;
+    float energykeV = 4;
+    uint32 createdUnixSec = 5;
+    string creatorUserId = 6;
+}
+
+// Users can mark detected diffraction peaks as valid/invalid, this is stored in DB for those statuses 
+message DetectedDiffractionPeakStatuses
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+
+    message PeakStatus
+    {
+        string status = 1;
+        uint32 createdUnixSec = 2;
+        string creatorUserId = 3;
+    }
+    map<string, PeakStatus> statuses = 3;
+}

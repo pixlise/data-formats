@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "diffraction.proto";
+import "diffraction-data.proto";
 
 
 /* Original:
