@@ -7,14 +7,20 @@ option go_package = ".;protos";
 */
 
 // Uploading quantified data as a CSV
+// NOTE: this expects the same format as we export, with the filename column
+// being used to determine which detector we're reading
 
 // requires(QUANTIFY)
 message QuantUploadReq
 {
     string scanId = 1;
-    string csv = 2;
+    string name = 2;
+    string comments = 3;
+    //bool isCombined = 4;
+    string csvData = 5;
 }
 
 message QuantUploadResp
 {
+    string createdQuantId = 1;
 }

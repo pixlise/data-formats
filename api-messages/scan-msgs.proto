@@ -67,7 +67,7 @@ message ScanListUpd
 }
 
 // This should trigger a ScanListUpd to go out
-// requires(SCAN_EDIT)
+// requires(EDIT_SCAN)
 message ScanUploadReq
 {
     string id = 1;
@@ -80,13 +80,13 @@ message ScanUploadResp
 }
 
 // This should trigger a ScanListUpd to go out
-// requires(SCAN_EDIT)
+// requires(EDIT_SCAN)
 message ScanMetaWriteReq
 {
     string scanId = 1;
     string title = 2;
     string description = 3;
-    map<string, string> metaFields = 4;
+    //map<string, string> metaFields = 4;
 }
 
 message ScanMetaWriteResp
@@ -96,7 +96,7 @@ message ScanMetaWriteResp
 // Triggering a re-import, should publish a ScanListUpd to go out
 // Useful really only if there is a pipeline hooked up for this kind of data that we
 // can re-trigger for. If it's a user-uploaded scan, we can't do anything really...
-// requires(SCAN_EDIT)
+// requires(EDIT_SCAN)
 message ScanTriggerReImportReq
 {
     string scanId = 1;
