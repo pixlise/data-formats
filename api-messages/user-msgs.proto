@@ -48,8 +48,12 @@ message UserSearchReq
 {
     // Searches names and the part of email before @
     string searchString = 1;
-    string firstResultIdx = 2;
-    string resultCount = 3;
+
+    // For now, took this out, we don't have many users, no point paginating
+    // for a long time!
+    
+    //string firstResultIdx = 2;
+    //string resultCount = 3;
 }
 
 message UserSearchResp
