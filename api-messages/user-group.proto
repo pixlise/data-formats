@@ -62,5 +62,6 @@ message UserGroupJoinRequestDB
     string userId = 2; // Who sent it
     string joinGroupId = 3; // What they want to join
     bool asMember = 4; // If false, join request is to join as a viewer only
-    uint32 createdUnixSec = 5;
+    UserInfo details = 5; // The joining user's info at the time of the request
+    uint32 createdUnixSec = 6;
 }
