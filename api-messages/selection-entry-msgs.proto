@@ -7,19 +7,18 @@ import "scan.proto";
 // requires(NONE)
 message SelectedScanEntriesReq
 {
-    string scanId = 1;
+    repeated string scanIds = 1;
 }
 
 message SelectedScanEntriesResp
 {
-    ScanEntryRange entryIndexes = 1;
+    map<string, ScanEntryRange> scanIdEntryIndexes = 1;
 }
 
 // requires(NONE)
 message SelectedScanEntriesWriteReq
 {
-    string scanId = 1;
-    ScanEntryRange entryIndexes = 2;
+    map<string, ScanEntryRange> scanIdEntryIndexes = 1;
 }
 
 message SelectedScanEntriesWriteResp
