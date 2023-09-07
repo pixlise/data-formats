@@ -63,7 +63,7 @@ message UserGroupJoinSummaryInfo
 {
     string name = 1;
     string description = 2;
-    repeated string administrators = 3;
+    repeated UserInfo administrators = 3;
     uint32 datasets = 4;
     uint32 lastUserJoinedUnixSec = 5;
 }
