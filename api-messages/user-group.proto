@@ -61,11 +61,12 @@ message UserGroup
 
 message UserGroupJoinSummaryInfo
 {
-    string name = 1;
-    string description = 2;
-    repeated UserInfo administrators = 3;
-    uint32 datasets = 4;
-    uint32 lastUserJoinedUnixSec = 5;
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string description = 3;
+    repeated UserInfo administrators = 4;
+    uint32 datasets = 5;
+    uint32 lastUserJoinedUnixSec = 6;
 }
 
 // A request to join a user group - stored in DB
