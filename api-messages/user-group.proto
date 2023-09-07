@@ -10,7 +10,9 @@ message UserGroupDB
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
+    string description = 8;
     uint32 createdUnixSec = 7;
+    uint32 lastUserJoinedUnixSec = 9;
 
     UserGroupList viewers = 5;
     UserGroupList members = 3;
@@ -31,7 +33,9 @@ message UserGroupInfo
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
     string name = 2;
+    string description = 5;
     uint32 createdUnixSec = 3;
+    uint32 lastUserJoinedUnixSec = 6;
 
     // OPTIONAL (only returned in UserGroupListResp)
     UserGroupRelationship relationshipToUser = 4;
@@ -53,6 +57,15 @@ message UserGroup
     UserGroupInfoList members = 3;
     
     repeated UserInfo adminUsers = 4;
+}
+
+message UserGroupJoinSummaryInfo
+{
+    string name = 1;
+    string description = 2;
+    repeated string administrators = 3;
+    uint32 datasets = 4;
+    uint32 lastUserJoinedUnixSec = 5;
 }
 
 // A request to join a user group - stored in DB

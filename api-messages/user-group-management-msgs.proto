@@ -12,6 +12,7 @@ import "user-group.proto";
 message UserGroupCreateReq
 {
     string name = 1;
+    string description = 2;
 }
 
 message UserGroupCreateResp

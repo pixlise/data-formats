@@ -21,6 +21,16 @@ message UserGroupListResp
 }
 
 // requires(NONE)
+message UserGroupListJoinableReq
+{
+}
+
+message UserGroupListJoinableResp
+{
+    repeated UserGroupJoinSummaryInfo groups = 1;
+}
+
+// requires(NONE)
 message UserGroupReq
 {
     string groupId = 1;

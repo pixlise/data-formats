@@ -272,6 +272,8 @@ message WSMessage
         UserGroupJoinListResp userGroupJoinListResp = 185;
         UserGroupJoinReq userGroupJoinReq = 186;
         UserGroupJoinResp userGroupJoinResp = 187;
+        UserGroupListJoinableReq userGroupListJoinableReq = 234;
+        UserGroupListJoinableResp userGroupListJoinableResp = 235;
         UserGroupListReq userGroupListReq = 168;
         UserGroupListResp userGroupListResp = 169;
         UserGroupReq userGroupReq = 188;
