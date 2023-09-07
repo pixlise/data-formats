@@ -216,8 +216,8 @@ message WSMessage
         ScanListReq scanListReq = 99;
         ScanListResp scanListResp = 100;
         ScanListUpd scanListUpd = 101;
-        ScanMetaLabelsReq scanMetaLabelsReq = 104;
-        ScanMetaLabelsResp scanMetaLabelsResp = 105;
+        ScanMetaLabelsAndTypesReq scanMetaLabelsAndTypesReq = 104;
+        ScanMetaLabelsAndTypesResp scanMetaLabelsAndTypesResp = 105;
         ScanMetaWriteReq scanMetaWriteReq = 106;
         ScanMetaWriteResp scanMetaWriteResp = 107;
         ScanTriggerReImportReq scanTriggerReImportReq = 108;

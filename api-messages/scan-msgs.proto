@@ -111,14 +111,16 @@ message ScanTriggerReImportResp
 // For example, spectra and housekeeping meta values, instead of storing the string 6000x
 // we store it once here and refer to it by index
 // Therefore, this is an early required download for a scans data to be interpretable
+// Types of the meta data values are also returned by this message
 
 // requires(NONE)
-message ScanMetaLabelsReq
+message ScanMetaLabelsAndTypesReq
 {
     string scanId = 1;
 }
 
-message ScanMetaLabelsResp
+message ScanMetaLabelsAndTypesResp
 {
     repeated string metaLabels = 1;
+    repeated ScanMetaDataType metaTypes = 2;
 }

@@ -84,6 +84,12 @@ message ScanItem
     // and not returned to client!
 }
 
+enum ScanMetaDataType {
+    MT_FLOAT=0;
+    MT_INT=1;
+    MT_STRING=2;
+}
+
 message ScanMetaDataItem
 {
     // NOTE: we store the meta label outside, so these are expected to sit
