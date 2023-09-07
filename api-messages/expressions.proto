@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "ownership-access.proto";
+import "version.proto";
 
 
 ////////////////////////////////////
@@ -28,7 +29,7 @@ message DataExpression
 message ModuleReference
 {
     string moduleId = 1;
-    string version = 2;
+    SemanticVersion version = 2;
 }
 
 message DataExpressionExecStats
