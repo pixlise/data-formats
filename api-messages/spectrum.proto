@@ -24,7 +24,6 @@ message Spectrum
     uint32 maxCount = 4; // The maximum count found in the entire spectrum
     map<int32, ScanMetaDataItem> meta = 5; // Any meta-data for a spectrum is stored here. Examples are values in
                                            // MSA headers, such as energy calibrations, etc
-    uint32 channelCount = 6; // How many channels we have, for PIXL this is 4096
 }
 
 message Spectra

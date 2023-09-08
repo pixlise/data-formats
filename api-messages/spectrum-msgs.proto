@@ -20,4 +20,5 @@ message SpectrumResp
     repeated Spectra spectraPerLocation = 1; // Note a location may have 0 or more spectra
     repeated Spectrum bulkSpectra = 2; // One per detector
     repeated Spectrum maxSpectra = 3; // One per detector
+    uint32 channelCount = 4; // How many channels we have, for PIXL this is 4096
 }
