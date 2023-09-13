@@ -14,7 +14,6 @@ import "tags.proto";
 // requires(NONE)
 message TagListReq
 {
-    string scanId = 1; // Is this required?
 }
 
 message TagListResp
@@ -25,7 +24,9 @@ message TagListResp
 // requires(EDIT_TAGS)
 message TagCreateReq
 {
-    string scanId = 1; // Seems to be optional?
+    string name = 1;
+    string type = 2;
+    string scanId = 3; // Scan the tag was created on
 }
 
 message TagCreateResp
@@ -33,11 +34,10 @@ message TagCreateResp
     Tag tag = 1;
 }
 
-// requires(EDIT_TAGS)
+// requires(PIXLISE_ADMIN)
 message TagDeleteReq
 {
-    string scanId = 1; // Is this required?
-    string tagId = 2;
+    string tagId = 1;
 }
 
 message TagDeleteResp
