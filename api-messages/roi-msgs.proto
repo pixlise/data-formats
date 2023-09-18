@@ -58,10 +58,7 @@ message RegionOfInterestBulkWriteReq
     bool overwrite = 5; // if true, then overwrite existing ROIs with same ID
 
     bool isMIST = 2;
-
-    // if scanID is set, then all ROIs will be associated with that scan
-    string scanId = 3; 
-    bool deleteExistingMISTROIs = 4; // if true, then delete all existing MIST ROIs associated with the scan ID
+    repeated string mistROIScanIdsToDelete = 3; // List of scan ids to delete all MIST ROIs for
 }
 
 message RegionOfInterestBulkWriteResp
