@@ -3,7 +3,16 @@ option go_package = ".;protos";
 
 import "ownership-access.proto";
 
-
+message MistROIItem
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+    string species = 3;
+    string mineralGroupID = 4;
+    int32 idDepth = 5;
+    string classificationTrail = 6;
+    string formula = 7;
+}
 
 message ROIItem
 {
@@ -15,7 +24,10 @@ message ROIItem
     string imageName = 6;
     
     repeated int32 pixelIndexesEncoded = 7;
-    //MistROIItem  MistROIItem `json:"mistROIItem"`
+
+    // Only sent out by API, not stored in DB this way
+    MistROIItem mistROIItem = 8;
+
     repeated string tags = 9;
 
     uint32 modifiedUnixSec = 10;
@@ -36,5 +48,8 @@ message ROIItemSummary
     uint32 modifiedUnixSec = 7;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 8; // @gotags: bson:"-"
+    MistROIItem mistROIItem = 8;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 9; // @gotags: bson:"-"
 }

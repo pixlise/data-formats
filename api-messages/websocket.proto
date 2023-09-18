@@ -197,6 +197,8 @@ message WSMessage
         QuantPublishResp quantPublishResp = 219;
         QuantUploadReq quantUploadReq = 220;
         QuantUploadResp quantUploadResp = 221;
+        RegionOfInterestBulkWriteReq regionOfInterestBulkWriteReq = 236;
+        RegionOfInterestBulkWriteResp regionOfInterestBulkWriteResp = 237;
         RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
         RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
         RegionOfInterestGetReq regionOfInterestGetReq = 91;
