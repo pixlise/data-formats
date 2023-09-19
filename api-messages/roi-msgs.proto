@@ -17,17 +17,20 @@ import "search-params.proto";
 message RegionOfInterestListReq
 {
     SearchParams searchParams = 1;
+    bool isMIST = 2;
 }
 
 message RegionOfInterestListResp
 {
     map<string, ROIItemSummary> regionsOfInterest = 1;
+    bool isMIST = 2;
 }
 
 // requires(NONE)
 message RegionOfInterestGetReq
 {
     string id = 1;
+    bool isMIST = 2;
 }
 
 message RegionOfInterestGetResp
@@ -40,11 +43,27 @@ message RegionOfInterestGetResp
 message RegionOfInterestWriteReq
 {
     ROIItem regionOfInterest = 1;
+    bool isMIST = 2;
 }
 
 message RegionOfInterestWriteResp
 {
     ROIItem regionOfInterest = 1;
+}
+
+// requires(EDIT_ROI)
+message RegionOfInterestBulkWriteReq
+{
+    repeated ROIItem regionsOfInterest = 1;
+    bool overwrite = 5; // if true, then overwrite existing ROIs with same ID
+
+    bool isMIST = 2;
+    repeated string mistROIScanIdsToDelete = 3; // List of scan ids to delete all MIST ROIs for
+}
+
+message RegionOfInterestBulkWriteResp
+{
+    repeated ROIItem regionsOfInterest = 1;
 }
 
 // requires(EDIT_ROI)
