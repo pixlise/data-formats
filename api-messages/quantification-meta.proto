@@ -29,18 +29,8 @@ message QuantStartingParameters
 	repeated string roiIDs = 18;
 	bool includeDwells = 19;
 	string command = 20;
-}
-
-message QuantStartingParametersWithPMCCount
-{
-    QuantStartingParameters params = 1;
-    uint32 PMCCount = 2;
-}
-
-message QuantStartingParametersWithPMCs
-{
-    QuantStartingParameters params = 1;
-    repeated uint32 PMCs = 2;
+	repeated int32 pmcs = 21; // When specifying to PIQUANT this needs to be set correctly
+	uint32 pmcCount = 22; // This is for when we store/send just the summary, sometimes we only need to supply count for brevity
 }
 
 message QuantCreateParams
@@ -65,7 +55,8 @@ message QuantCreateParams
 message QuantificationSummary
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
-	QuantStartingParametersWithPMCCount params = 2;
+    string scanId = 5;
+	QuantStartingParameters params = 2;
 	repeated string elements = 3;
 	JobStatus status = 4;
 	// TODO: Make this also contain *APIObjectItem and remove its own Shared field...
