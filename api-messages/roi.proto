@@ -27,13 +27,14 @@ message ROIItem
 
     // Only sent out by API, not stored in DB this way
     MistROIItem mistROIItem = 8;
+    bool isMIST = 9;
 
-    repeated string tags = 9;
+    repeated string tags = 10;
 
-    uint32 modifiedUnixSec = 10;
+    uint32 modifiedUnixSec = 11;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 11; // @gotags: bson:"-"
+    OwnershipSummary owner = 12; // @gotags: bson:"-"
 }
 
 message ROIItemSummary
@@ -49,7 +50,8 @@ message ROIItemSummary
 
     // Only sent out by API, not stored in DB this way
     MistROIItem mistROIItem = 8;
+    bool isMIST = 9;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 9; // @gotags: bson:"-"
+    OwnershipSummary owner = 10; // @gotags: bson:"-"
 }
