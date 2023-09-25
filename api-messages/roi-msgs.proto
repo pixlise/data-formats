@@ -55,10 +55,11 @@ message RegionOfInterestWriteResp
 message RegionOfInterestBulkWriteReq
 {
     repeated ROIItem regionsOfInterest = 1;
-    bool overwrite = 5; // if true, then overwrite existing ROIs with same ID
+    bool overwrite = 2; // if true, then overwrite existing ROIs with same ID
+    bool skipDuplicates = 3; // if true, then skip ROIs with same ID
 
-    bool isMIST = 2;
-    repeated string mistROIScanIdsToDelete = 3; // List of scan ids to delete all MIST ROIs for
+    bool isMIST = 4;
+    repeated string mistROIScanIdsToDelete = 5; // List of scan ids to delete all MIST ROIs for
 }
 
 message RegionOfInterestBulkWriteResp
