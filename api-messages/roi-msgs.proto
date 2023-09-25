@@ -71,6 +71,7 @@ message RegionOfInterestBulkWriteResp
 message RegionOfInterestDeleteReq
 {
     string id = 1;
+    bool isMIST = 2;
 }
 
 message RegionOfInterestDeleteResp
