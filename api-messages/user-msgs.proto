@@ -27,10 +27,10 @@ message UserDetailsResp
 // requires(EDIT_OWN_USER)
 message UserDetailsWriteReq
 {
-    optional string name = 1;
-    optional string email = 2;
-    optional string iconURL = 3;
-    optional string dataCollectionVersion = 4;
+    string name = 1;
+    string email = 2;
+    string iconURL = 3;
+    string dataCollectionVersion = 4;
 }
 
 message UserDetailsWriteResp
