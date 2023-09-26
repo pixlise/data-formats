@@ -47,6 +47,7 @@ import "user-msgs.proto";
 import "user-notification-msgs.proto";
 import "user-notification-setting-msgs.proto";
 import "viewstate-msgs.proto";
+import "doi-msgs.proto";
 
 
 // This is expected to appear in all Resp messages. It is
@@ -177,6 +178,8 @@ message WSMessage
         PiquantWriteCurrentVersionResp piquantWriteCurrentVersionResp = 84;
         PseudoIntensityReq pseudoIntensityReq = 85;
         PseudoIntensityResp pseudoIntensityResp = 86;
+        PublishExpressionToZenodoReq publishExpressionToZenodoReq = 242;
+        PublishExpressionToZenodoResp publishExpressionToZenodoResp = 243;
         QuantBlessReq quantBlessReq = 202;
         QuantBlessResp quantBlessResp = 203;
         QuantCombineListGetReq quantCombineListGetReq = 204;
@@ -304,5 +307,7 @@ message WSMessage
         ViewStateItemWriteResp viewStateItemWriteResp = 153;
         ViewStateReq viewStateReq = 154;
         ViewStateResp viewStateResp = 155;
+        ZenodoDOIGetReq zenodoDOIGetReq = 240;
+        ZenodoDOIGetResp zenodoDOIGetResp = 241;
     }
 }
