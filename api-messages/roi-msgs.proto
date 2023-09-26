@@ -77,3 +77,15 @@ message RegionOfInterestDeleteReq
 message RegionOfInterestDeleteResp
 {
 }
+
+// requires(EDIT_ROI)
+message RegionOfInterestBulkDuplicateReq
+{
+    repeated string ids = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestBulkDuplicateResp
+{
+    map<string, ROIItemSummary> regionsOfInterest = 1;
+}
