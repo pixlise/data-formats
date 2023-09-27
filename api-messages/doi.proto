@@ -60,6 +60,30 @@ message ZenodoLinks {
     string recordHTML = 9; // @gotags: json:"record_html"
 }
 
+// Links struct {
+// 		Bucket          string `json:"bucket"`
+// 		Discard         string `json:"discard"`
+// 		Edit            string `json:"edit"`
+// 		Files           string `json:"files"`
+// 		HTML            string `json:"html"`
+// 		LatestDraft     string `json:"latest_draft"`
+// 		LatestDraftHTML string `json:"latest_draft_html"`
+// 		Publish         string `json:"publish"`
+// 		Self            string `json:"self"`
+// 	}
+
+message ZenodoDraftLinks {
+    string bucket = 1;
+    string discard = 2;
+    string edit = 3;
+    string files = 4;
+    string html = 5;
+    string latestDraft = 6; // @gotags: json:"latest_draft"
+    string latestDraftHTML = 7; // @gotags: json:"latest_draft_html"
+    string publish = 8;
+    string self = 9;
+}
+
 message ZenodoCommunity {
     string identifier = 1;
 }
@@ -146,7 +170,7 @@ message ZenodoDepositionResponse {
     repeated ZenodoFile files = 3;
 
     uint32 id = 4;
-    ZenodoLinks links = 5;
+    ZenodoDraftLinks links = 5;
     ZenodoPrereserveDOI metadata = 6;
 
     uint32 owner = 7;
