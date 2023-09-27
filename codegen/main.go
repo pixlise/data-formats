@@ -488,8 +488,7 @@ import { Subject } from 'rxjs';
 		angular += "import {\n    " + strings.Join(is, ",\n    ") + ` } from "src/app/generated-protos/` + f + "\"\n"
 	}
 
-	angular += `import { WSMessage } from "src/app/generated-protos/websocket"
-import { ResponseStatus } from "src/app/generated-protos/response"
+	angular += `import { WSMessage, ResponseStatus } from "src/app/generated-protos/websocket"
 
 export class WSError
 {
