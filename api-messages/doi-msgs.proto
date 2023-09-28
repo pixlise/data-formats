@@ -8,7 +8,8 @@ import "doi.proto";
 message PublishExpressionToZenodoReq
 {
     string id = 1; // expression id
-    bytes output = 2; // Zipped expression output
+    string output = 2; // Zipped expression output
+    DOIMetadata metadata = 3; // Filled out DOI metadata
 }
 
 message PublishExpressionToZenodoResp

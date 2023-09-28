@@ -21,18 +21,19 @@ message DOIContributor {
 }
 
 message DOIMetadata {
-    string title = 1;
-    repeated DOICreator creators = 2;
-    string description = 3;
-    string keywords = 4;
-    string notes = 5;
-    repeated DOIRelatedIdentifier relatedIdentifiers = 6;
-    repeated DOIContributor contributors = 7;
-    string references = 8;
-    string version = 9;
-    string doi = 10;
-    string doiBadge = 11;
-    string doiLink = 12;
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string title = 2;
+    repeated DOICreator creators = 3;
+    string description = 4;
+    string keywords = 5;
+    string notes = 6;
+    repeated DOIRelatedIdentifier relatedIdentifiers = 7;
+    repeated DOIContributor contributors = 8;
+    string references = 9;
+    string version = 10;
+    string doi = 11;
+    string doiBadge = 12;
+    string doiLink = 13;
 }
 
 message ZenodoFileLink {
@@ -59,18 +60,6 @@ message ZenodoLinks {
     string record = 8;
     string recordHTML = 9; // @gotags: json:"record_html"
 }
-
-// Links struct {
-// 		Bucket          string `json:"bucket"`
-// 		Discard         string `json:"discard"`
-// 		Edit            string `json:"edit"`
-// 		Files           string `json:"files"`
-// 		HTML            string `json:"html"`
-// 		LatestDraft     string `json:"latest_draft"`
-// 		LatestDraftHTML string `json:"latest_draft_html"`
-// 		Publish         string `json:"publish"`
-// 		Self            string `json:"self"`
-// 	}
 
 message ZenodoDraftLinks {
     string bucket = 1;
