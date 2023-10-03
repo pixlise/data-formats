@@ -490,10 +490,12 @@ import { Subject } from 'rxjs';
 
 	angular += `import { WSMessage, ResponseStatus } from "src/app/generated-protos/websocket"
 
-export class WSError
+export class WSError extends Error
 {
 	constructor(public status: ResponseStatus, public errorText: string)
 	{
+		super(errorText);
+		this.name = "WSError";
 	}
 }
 
