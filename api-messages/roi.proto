@@ -14,6 +14,13 @@ message MistROIItem
     string formula = 7;
 }
 
+message ROIItemDisplaySettings
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string shape = 2;
+    string colour = 3;
+}
+
 message ROIItem
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
@@ -33,8 +40,10 @@ message ROIItem
 
     uint32 modifiedUnixSec = 11;
 
+    ROIItemDisplaySettings displaySettings = 12;
+
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 12; // @gotags: bson:"-"
+    OwnershipSummary owner = 13; // @gotags: bson:"-"
 }
 
 message ROIItemSummary
@@ -52,6 +61,8 @@ message ROIItemSummary
     MistROIItem mistROIItem = 8;
     bool isMIST = 9;
 
+    ROIItemDisplaySettings displaySettings = 10;
+
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 10; // @gotags: bson:"-"
+    OwnershipSummary owner = 11; // @gotags: bson:"-"
 }

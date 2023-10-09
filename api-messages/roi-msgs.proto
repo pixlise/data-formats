@@ -51,6 +51,31 @@ message RegionOfInterestWriteResp
     ROIItem regionOfInterest = 1;
 }
 
+// The user is configuring an ROI for their own use, but not editing it
+// requires(EDIT_OWN_USER)
+message RegionOfInterestDisplaySettingsWriteReq
+{
+    string id = 1;
+    ROIItemDisplaySettings displaySettings = 2;
+}
+
+message RegionOfInterestDisplaySettingsWriteResp
+{
+    ROIItemDisplaySettings displaySettings = 1;
+}
+
+// requires(NONE)
+message RegionOfInterestDisplaySettingsGetReq
+{
+    string id = 1;
+}
+
+message RegionOfInterestDisplaySettingsGetResp
+{
+    ROIItemDisplaySettings displaySettings = 1;
+}
+
+
 // requires(EDIT_ROI)
 message RegionOfInterestBulkWriteReq
 {

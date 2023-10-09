@@ -206,6 +206,10 @@ message WSMessage
         RegionOfInterestBulkWriteResp regionOfInterestBulkWriteResp = 237;
         RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
         RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
+         RegionOfInterestDisplaySettingsGetReq regionOfInterestDisplaySettingsGetReq = 246;
+        RegionOfInterestDisplaySettingsGetResp regionOfInterestDisplaySettingsGetResp = 247;
+        RegionOfInterestDisplaySettingsWriteReq regionOfInterestDisplaySettingsWriteReq = 244;
+        RegionOfInterestDisplaySettingsWriteResp regionOfInterestDisplaySettingsWriteResp = 245;
         RegionOfInterestGetReq regionOfInterestGetReq = 91;
         RegionOfInterestGetResp regionOfInterestGetResp = 92;
         RegionOfInterestListReq regionOfInterestListReq = 89;
