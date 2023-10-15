@@ -11,6 +11,7 @@ message SpectrumReq
     string scanId = 1;
 
     ScanEntryRange entries = 2;
+
     bool bulkSum = 3;
     bool maxValue = 4;
 }
@@ -20,5 +21,9 @@ message SpectrumResp
     repeated Spectra spectraPerLocation = 1; // Note a location may have 0 or more spectra
     repeated Spectrum bulkSpectra = 2; // One per detector
     repeated Spectrum maxSpectra = 3; // One per detector
+    
     uint32 channelCount = 4; // How many channels we have, for PIXL this is 4096
+
+    uint32 normalSpectraForScan = 5; // How many normal spectra for the entire scan, needed when we aggregate a spectrum
+    uint32 dwellSpectraForScan = 6; // How many dwell spectra for the entire scan, needed when we aggregate a spectrum
 }
