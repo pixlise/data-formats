@@ -48,6 +48,7 @@ import "user-notification-msgs.proto";
 import "user-notification-setting-msgs.proto";
 import "viewstate-msgs.proto";
 import "doi-msgs.proto";
+import "screen-configuration-msgs.proto";
 
 
 // This is expected to appear in all Resp messages. It is
@@ -235,6 +236,12 @@ message WSMessage
         ScanTriggerReImportResp scanTriggerReImportResp = 109;
         ScanUploadReq scanUploadReq = 110;
         ScanUploadResp scanUploadResp = 111;
+        ScreenConfigurationGetReq screenConfigurationGetReq = 248;
+        ScreenConfigurationGetResp screenConfigurationGetResp = 249;
+        ScreenConfigurationListReq screenConfigurationListReq = 250;
+        ScreenConfigurationListResp screenConfigurationListResp = 251;
+        ScreenConfigurationWriteReq screenConfigurationWriteReq = 252;
+        ScreenConfigurationWriteResp screenConfigurationWriteResp = 253;
         SelectedImagePixelsReq selectedImagePixelsReq = 226;
         SelectedImagePixelsResp selectedImagePixelsResp = 227;
         SelectedImagePixelsWriteReq selectedImagePixelsWriteReq = 228;

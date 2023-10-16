@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "search-params.proto";
+import "screen-configuration.proto";
+
+
+// requires(NONE)
+message ScreenConfigurationListReq
+{
+    SearchParams searchParams = 1;
+}
+
+message ScreenConfigurationListResp
+{
+    repeated ScreenConfiguration screenConfigurations = 1;
+}
+
+// requires(NONE)
+message ScreenConfigurationGetReq
+{
+    string id = 1;
+    string scanId = 2;
+}
+
+message ScreenConfigurationGetResp
+{
+    ScreenConfiguration screenConfiguration = 1;
+}
+
+// requires(EDIT_OWN_USER)
+message ScreenConfigurationWriteReq
+{
+    string scanId = 2;
+    ScreenConfiguration screenConfiguration = 1;
+}
+
+message ScreenConfigurationWriteResp
+{
+    ScreenConfiguration screenConfiguration = 1;
+}
