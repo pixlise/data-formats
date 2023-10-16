@@ -30,6 +30,13 @@ message WidgetLayoutConfiguration
     int32 endColumn = 6;
 }
 
+message FullScreenLayout
+{
+    repeated ScreenConfigurationRow rows = 4;
+    repeated ScreenConfigurationColumn columns = 5;
+    repeated WidgetLayoutConfiguration widgets = 6;
+}
+
 message ScreenConfiguration
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
@@ -37,9 +44,7 @@ message ScreenConfiguration
     string name = 2;
     string description = 3;
 
-    repeated ScreenConfigurationRow rows = 4;
-    repeated ScreenConfigurationColumn columns = 5;
-    repeated WidgetLayoutConfiguration widgets = 6;
+    repeated FullScreenLayout layouts = 4;
 
     repeated string tags = 7;
     uint32 modifiedUnixSec = 8;
