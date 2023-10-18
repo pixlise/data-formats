@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "ownership-access.proto";
+import "widget-data.proto";
 
 message ScreenConfigurationCSS
 {
@@ -28,6 +29,8 @@ message WidgetLayoutConfiguration
     int32 startColumn = 4;
     int32 endRow = 5;
     int32 endColumn = 6;
+
+    WidgetData data = 7; // @gotags: bson:"-"
 }
 
 message FullScreenLayout
