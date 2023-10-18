@@ -4,7 +4,6 @@ option go_package = ".;protos";
 import "search-params.proto";
 import "screen-configuration.proto";
 
-
 // requires(NONE)
 message ScreenConfigurationListReq
 {

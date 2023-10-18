@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "widget-data.proto";
+
+// requires(NONE)
+message WidgetDataGetReq {
+    string id = 1;
+}
+
+message WidgetDataGetResp {
+    WidgetData widgetData = 1;
+}
+
+// requires(EDIT_OWN_USER)
+message WidgetDataWriteReq {
+    WidgetData widgetData = 1;
+}
+
+message WidgetDataWriteResp {
+    WidgetData widgetData = 1;
+}

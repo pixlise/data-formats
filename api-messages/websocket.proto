@@ -49,7 +49,7 @@ import "user-notification-setting-msgs.proto";
 import "viewstate-msgs.proto";
 import "doi-msgs.proto";
 import "screen-configuration-msgs.proto";
-
+import "widget-data-msgs.proto";
 
 // This is expected to appear in all Resp messages. It is
 // basically a replacement for HTTP status codes
@@ -207,7 +207,7 @@ message WSMessage
         RegionOfInterestBulkWriteResp regionOfInterestBulkWriteResp = 237;
         RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
         RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
-         RegionOfInterestDisplaySettingsGetReq regionOfInterestDisplaySettingsGetReq = 246;
+        RegionOfInterestDisplaySettingsGetReq regionOfInterestDisplaySettingsGetReq = 246;
         RegionOfInterestDisplaySettingsGetResp regionOfInterestDisplaySettingsGetResp = 247;
         RegionOfInterestDisplaySettingsWriteReq regionOfInterestDisplaySettingsWriteReq = 244;
         RegionOfInterestDisplaySettingsWriteResp regionOfInterestDisplaySettingsWriteResp = 245;
@@ -318,6 +318,10 @@ message WSMessage
         ViewStateItemWriteResp viewStateItemWriteResp = 153;
         ViewStateReq viewStateReq = 154;
         ViewStateResp viewStateResp = 155;
+        WidgetDataGetReq widgetDataGetReq = 254;
+        WidgetDataGetResp widgetDataGetResp = 255;
+        WidgetDataWriteReq widgetDataWriteReq = 256;
+        WidgetDataWriteResp widgetDataWriteResp = 257;
         ZenodoDOIGetReq zenodoDOIGetReq = 240;
         ZenodoDOIGetResp zenodoDOIGetResp = 241;
     }
