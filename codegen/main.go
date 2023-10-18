@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -54,7 +53,7 @@ func main() {
 	}
 
 	// Read all files
-	files, err := ioutil.ReadDir(protoPath)
+	files, err := os.ReadDir(protoPath)
 	if err != nil {
 		log.Fatal(err)
 	}

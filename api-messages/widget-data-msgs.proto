@@ -4,19 +4,23 @@ option go_package = ".;protos";
 import "widget-data.proto";
 
 // requires(NONE)
-message WidgetDataGetReq {
+message WidgetDataGetReq
+{
     string id = 1;
 }
 
-message WidgetDataGetResp {
+message WidgetDataGetResp
+{
     WidgetData widgetData = 1;
 }
 
 // requires(EDIT_OWN_USER)
-message WidgetDataWriteReq {
+message WidgetDataWriteReq
+{
     WidgetData widgetData = 1;
 }
 
-message WidgetDataWriteResp {
+message WidgetDataWriteResp
+{
     WidgetData widgetData = 1;
 }
