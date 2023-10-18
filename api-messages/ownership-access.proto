@@ -20,6 +20,7 @@ enum ObjectType
     OT_DATA_MODULE = 5;
     OT_SCAN = 6;
     OT_QUANTIFICATION = 7;
+    OT_SCREEN_CONFIG = 8;
 }
 
 message OwnershipItem
