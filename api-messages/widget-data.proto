@@ -1,55 +1,25 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-message SelectedROI
-{
-    repeated string options = 1;
-}
+import "viewstate.proto";
 
-message SpectrumWidgetData
-{
-    map<string, SelectedROI> rois = 1;
-}
-
-message BinaryWidgetData
-{
-    repeated string rois = 1;
-
-    // expression id, axis
-    map<string, string> expressions = 2;
-}
-
-message TernaryWidgetData
-{
-    repeated string rois = 1;
-
-    // expression id, axis
-    map<string, string> expressions = 2;
-}
-
-message HistogramWidgetData
-{
-    repeated string rois = 1;
-
-    // expression id, axis
-    map<string, string> expressions = 2;
-}
-
-message ChordWidgetData
-{
-    repeated string rois = 1;
-
-    // expression id, node
-    map<string, string> expressions = 2;
-}
 
 message WidgetData
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
 
-    SpectrumWidgetData spectrum = 2;
-    BinaryWidgetData binary = 3;
-    TernaryWidgetData ternary = 4;
-    HistogramWidgetData histogram = 5;
-    ChordWidgetData chord = 6;
+    SpectrumWidgetState spectrum = 2;
+    BinaryState binary = 3;
+    TernaryState ternary = 4;
+    HistogramState histogram = 5;
+    ContextImageState contextImages = 6;
+    ChordState chord = 7;
+    TableState table = 8;
+    ROIQuantTableState roiQuantTable = 9;
+    VariogramState variogram = 10;
+    RGBUPlotWidgetState rgbuPlot = 11;
+    SingleAxisRGBUWidgetState singleAxisRGBU = 12;
+    RGBUImagesWidgetState rgbuImage = 13;
+    ParallelogramWidgetState parallelogram = 14;
+
 }
