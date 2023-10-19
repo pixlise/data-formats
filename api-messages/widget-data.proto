@@ -21,5 +21,4 @@ message WidgetData
     SingleAxisRGBUWidgetState singleAxisRGBU = 12;
     RGBUImagesWidgetState rgbuImage = 13;
     ParallelogramWidgetState parallelogram = 14;
-
 }

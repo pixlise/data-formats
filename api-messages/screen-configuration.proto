@@ -40,6 +40,21 @@ message FullScreenLayout
     repeated WidgetLayoutConfiguration widgets = 6;
 }
 
+message ScanCalibrationConfiguration
+{
+    int32 eVstart = 1;
+    int32 eVperChannel = 2;
+    string detector = 3;
+}
+
+message ScanConfiguration
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    string quantId = 2;
+    ScanCalibrationConfiguration calibration = 3;
+}
+
 message ScreenConfiguration
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
@@ -52,5 +67,7 @@ message ScreenConfiguration
     repeated string tags = 7;
     uint32 modifiedUnixSec = 8;
 
-    OwnershipSummary owner = 9; // @gotags: bson:"-"
+    map<string, ScanConfiguration> scanConfigurations = 9;
+
+    OwnershipSummary owner = 10; // @gotags: bson:"-"
 }
