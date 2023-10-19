@@ -1,8 +1,211 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "viewstate.proto";
+import "element-set.proto";
 
+message VisibleROI
+{
+    string id = 1;
+    string scanId = 2;
+}
+
+message SpectrumXRFLineState
+{
+    ElementLine lineInfo = 1;
+    bool visible = 2;
+}
+
+message EnergyCalibration
+{
+    string detector = 1;
+    float eVStart = 2;
+    float eVPerChannel = 3;
+}
+
+message SpectrumLines
+{
+    string roiID = 1; // can be "dataset" or "selection" for those special cases
+    repeated string lineExpressions = 2; // max(A), bulk(A) or things like sum(max(A), max(B))
+}
+
+message SpectrumWidgetState
+{
+    float panX = 1;
+    float panY = 2;
+    float zoomX = 3;
+    float zoomY = 4;
+    repeated SpectrumLines        spectrumLines = 5;
+    bool logScale = 6;
+    repeated SpectrumXRFLineState xrflines = 7;
+    bool showXAsEnergy = 8;
+    repeated EnergyCalibration    energyCalibration = 9;
+}
+
+message HistogramState
+{
+    bool showStdDeviation = 1;
+    bool logScale = 2;
+    repeated string expressionIDs = 3;
+    repeated VisibleROI visibleROIs = 4;
+}
+
+message ChordState
+{
+    bool showForSelection = 1;
+    repeated string expressionIDs = 2;
+    string displayROI = 3;
+    float threshold = 4;
+    string drawMode = 5;
+}
+
+message BinaryState
+{
+    bool showMmol = 1;
+    repeated string expressionIDs = 2;
+    repeated VisibleROI visibleROIs = 3;
+}
+
+message TernaryState
+{
+    bool showMmol = 1;
+    repeated string expressionIDs = 2;
+    repeated VisibleROI visibleROIs = 3;
+}
+
+message TableState
+{
+    bool showPureElements = 1;
+    string order = 2;
+    repeated VisibleROI visibleROIs = 3;
+}
+
+message ROIQuantTableState
+{
+    string roi = 1;
+    repeated string quantIDs = 2;
+}
+
+message VariogramState
+{
+    repeated string expressionIDs = 1;
+    repeated VisibleROI visibleROIs = 2;
+    string varioModel = 3; // valid: "exponential", "spherical", "gaussian"
+    float maxDistance = 4;
+    int32 binCount = 5;
+    bool drawModeVector = 6; // vector or isotropic
+}
+
+message MapLayerVisibility
+{
+    string expressionID = 1;
+    float opacity = 2;
+    bool visible = 3;
+
+    float displayValueRangeMin = 4;
+    float displayValueRangeMax = 5;
+    string displayValueShading = 6;
+}
+
+message ROILayerVisibility
+{
+    string roiID = 1;
+    float opacity = 2;
+    bool visible = 3;
+}
+
+message ContextImageState
+{
+    float panX = 1;
+    float panY = 2;
+    float zoomX = 3;
+    float zoomY = 4;
+    bool showPoints = 5;
+    bool showPointBBox = 6;
+    string pointColourScheme = 7;
+    string pointBBoxColourScheme = 8;
+    string contextImage = 9;
+    string contextImageSmoothing = 10;
+    repeated MapLayerVisibility mapLayers = 11;
+    repeated ROILayerVisibility roiLayers = 12;
+    bool elementRelativeShading = 13;
+    float brightness = 14;
+    string rgbuChannels = 15;
+    float unselectedOpacity = 16;
+    bool unselectedGrayscale = 17;
+    float colourRatioMin = 18;
+    float colourRatioMax = 19;
+    bool removeTopSpecularArtifacts = 20;
+    bool removeBottomSpecularArtifacts = 21;
+
+    // Could store per-tool state
+    //ActiveTool string activeTool = ;
+    // SelectionAdditiveMode bool selectionAdditiveMode = ;
+    // PMCToolPMC int32 pmcToolPMC = ;
+}
+
+message AnnotationPoint
+{
+    float x = 1;
+    float y = 2;
+    float screenWidth = 3;
+    float screenHeight = 4;
+}
+
+message FullScreenAnnotationItem
+{
+    string type = 1;
+    repeated AnnotationPoint points = 2;
+    string colour = 3;
+    bool complete = 4;
+    string text = 5;
+    int32 fontSize = 6;
+    int32 id = 7;
+}
+
+message AnnotationDisplayState
+{
+    repeated FullScreenAnnotationItem savedAnnotations = 1;
+}
+
+message ROIDisplayState
+{
+    map<string, string> roiColours = 1;
+    map<string, string> roiShapes = 2;
+}
+
+message RGBUPlotWidgetState
+{
+    repeated string minerals = 1;
+    string yChannelA = 2;
+    string yChannelB = 3;
+    string xChannelA = 4;
+    string xChannelB = 5;
+    bool drawMonochrome = 6;
+    float selectedMinXValue = 7;
+    float selectedMaxXValue = 8;
+    float selectedMinYValue = 9;
+    float selectedMaxYValue = 10;
+}
+
+message SingleAxisRGBUWidgetState
+{
+    repeated string minerals = 1;
+    string channelA = 2;
+    string channelB = 3;
+    bool roiStackedOverlap = 4;
+}
+
+message RGBUImagesWidgetState
+{
+    bool logColour = 1;
+    float brightness = 2;
+}
+
+message ParallelogramWidgetState
+{
+    repeated string regions = 1;
+    repeated string channels = 2;
+}
 
 message WidgetData
 {

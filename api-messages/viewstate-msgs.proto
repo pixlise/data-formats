@@ -3,7 +3,7 @@ option go_package = ".;protos";
 
 
 
-import "viewstate.proto";
+// import "viewstate.proto";
 
 /* Originals:
 -PUT    /view-state/{DID}/{id}                               - write:pixlise-settings
@@ -14,46 +14,46 @@ import "viewstate.proto";
 // so this allows us to implement different views, for example
 // scanId_analysis would do what old API allowed... Multi-scan
 // views can have some other scheme
-// requires(NONE)
-message ViewStateReq
-{
-    string id = 1;
-}
+// // requires(NONE)
+// message ViewStateReq
+// {
+//     string id = 1;
+// }
 
-message ViewStateResp
-{
-    ViewState viewState = 1;
-}
+// message ViewStateResp
+// {
+//     ViewState viewState = 1;
+// }
 
-// Writes a part of the view state to state stored for the given id
-// requires(EDIT_VIEW_STATE)
-message ViewStateItemWriteReq
-{
-    string id = 1;
+// // Writes a part of the view state to state stored for the given id
+// // requires(EDIT_VIEW_STATE)
+// message ViewStateItemWriteReq
+// {
+//     string id = 1;
 
-    oneof Widget
-    {
-        AnalysisLayout analysisLayout = 4;
-        ContextImageState contextImages = 5;
-        HistogramState histograms = 6;
-        ChordState chordDiagrams = 7;
-        TernaryState ternaryPlots = 8;
-        BinaryState binaryPlots = 9;
-        TableState tables = 10;
-        ROIQuantTableState roiQuantTables = 11;
-        VariogramState variograms = 12;
-        SpectrumWidgetState spectrums = 13;
-        RGBUPlotWidgetState rgbuPlots = 14;
-        SingleAxisRGBUWidgetState singleAxisRGBU = 15;
-        RGBUImagesWidgetState rgbuImages = 16;
-        ParallelogramWidgetState parallelograms = 17;
-        AnnotationDisplayState annotations = 18;
-        ROIDisplayState rois = 19;
-        QuantificationState quantification = 20;
-        SelectionState selection = 21;
-    }
-}
+//     oneof Widget
+//     {
+//         AnalysisLayout analysisLayout = 4;
+//         ContextImageState contextImages = 5;
+//         HistogramState histograms = 6;
+//         ChordState chordDiagrams = 7;
+//         TernaryState ternaryPlots = 8;
+//         BinaryState binaryPlots = 9;
+//         TableState tables = 10;
+//         ROIQuantTableState roiQuantTables = 11;
+//         VariogramState variograms = 12;
+//         SpectrumWidgetState spectrums = 13;
+//         RGBUPlotWidgetState rgbuPlots = 14;
+//         SingleAxisRGBUWidgetState singleAxisRGBU = 15;
+//         RGBUImagesWidgetState rgbuImages = 16;
+//         ParallelogramWidgetState parallelograms = 17;
+//         AnnotationDisplayState annotations = 18;
+//         ROIDisplayState rois = 19;
+//         QuantificationState quantification = 20;
+//         SelectionState selection = 21;
+//     }
+// }
 
-message ViewStateItemWriteResp
-{
-}
+// message ViewStateItemWriteResp
+// {
+// }

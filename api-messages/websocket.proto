@@ -46,7 +46,6 @@ import "user-management-msgs.proto";
 import "user-msgs.proto";
 import "user-notification-msgs.proto";
 import "user-notification-setting-msgs.proto";
-import "viewstate-msgs.proto";
 import "doi-msgs.proto";
 import "screen-configuration-msgs.proto";
 import "widget-data-msgs.proto";
@@ -314,10 +313,6 @@ message WSMessage
         UserRolesListResp userRolesListResp = 151;
         UserSearchReq userSearchReq = 222;
         UserSearchResp userSearchResp = 223;
-        ViewStateItemWriteReq viewStateItemWriteReq = 152;
-        ViewStateItemWriteResp viewStateItemWriteResp = 153;
-        ViewStateReq viewStateReq = 154;
-        ViewStateResp viewStateResp = 155;
         WidgetDataGetReq widgetDataGetReq = 254;
         WidgetDataGetResp widgetDataGetResp = 255;
         WidgetDataWriteReq widgetDataWriteReq = 256;

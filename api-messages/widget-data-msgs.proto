@@ -14,7 +14,7 @@ message WidgetDataGetResp
     WidgetData widgetData = 1;
 }
 
-// requires(EDIT_OWN_USER)
+// requires(EDIT_VIEW_STATE)
 message WidgetDataWriteReq
 {
     WidgetData widgetData = 1;
