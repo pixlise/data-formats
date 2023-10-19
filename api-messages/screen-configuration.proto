@@ -52,7 +52,7 @@ message ScanConfiguration
     string id = 1; // @gotags: bson:"_id,omitempty"
 
     string quantId = 2;
-    ScanCalibrationConfiguration calibration = 3;
+    repeated ScanCalibrationConfiguration calibrations = 3;
 }
 
 message ScreenConfiguration
