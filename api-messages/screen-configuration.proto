@@ -42,8 +42,8 @@ message FullScreenLayout
 
 message ScanCalibrationConfiguration
 {
-    int32 eVstart = 1;
-    int32 eVperChannel = 2;
+    float eVstart = 1;
+    float eVperChannel = 2;
     string detector = 3;
 }
 
