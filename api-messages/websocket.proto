@@ -98,6 +98,8 @@ message WSMessage
         DataModuleWriteResp dataModuleWriteResp = 15;
         DetectedDiffractionPeaksReq detectedDiffractionPeaksReq = 224;
         DetectedDiffractionPeaksResp detectedDiffractionPeaksResp = 225;
+        DetectorConfigListReq detectorConfigListReq = 258;
+        DetectorConfigListResp detectorConfigListResp = 259;
         DetectorConfigReq detectorConfigReq = 16;
         DetectorConfigResp detectorConfigResp = 17;
         DiffractionPeakManualDeleteReq diffractionPeakManualDeleteReq = 18;
