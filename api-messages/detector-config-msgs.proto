@@ -19,3 +19,14 @@ message DetectorConfigResp
     DetectorConfig config = 1;
     repeated string piquantConfigVersions = 2;
 }
+
+// requires(NONE)
+message DetectorConfigListReq
+{
+    string id = 1;
+}
+
+message DetectorConfigListResp
+{
+    repeated string configs = 1;
+}
