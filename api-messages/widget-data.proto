@@ -49,6 +49,7 @@ message HistogramState
     bool logScale = 2;
     repeated string expressionIDs = 3;
     repeated VisibleROI visibleROIs = 4;
+    bool showWhiskers = 5;
 }
 
 message ChordState
