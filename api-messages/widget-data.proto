@@ -36,9 +36,11 @@ message SpectrumWidgetState
     float zoomY = 4;
     repeated SpectrumLines        spectrumLines = 5;
     bool logScale = 6;
-    repeated SpectrumXRFLineState xrflines = 7;
+    //repeated SpectrumXRFLineState xrflines = 7;
     bool showXAsEnergy = 8;
-    repeated EnergyCalibration    energyCalibration = 9;
+    //repeated EnergyCalibration    energyCalibration = 9;
+    bool yCountsPerMin = 10;
+    bool yCountsPerPMC = 11;
 }
 
 message HistogramState
