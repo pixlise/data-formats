@@ -27,7 +27,7 @@ message ScreenConfigurationGetResp
     ScreenConfiguration screenConfiguration = 1;
 }
 
-// requires(EDIT_OWN_USER)
+// requires(EDIT_VIEW_STATE)
 message ScreenConfigurationWriteReq
 {
     string scanId = 2;
@@ -37,4 +37,15 @@ message ScreenConfigurationWriteReq
 message ScreenConfigurationWriteResp
 {
     ScreenConfiguration screenConfiguration = 1;
+}
+
+// requires(EDIT_VIEW_STATE)
+message ScreenConfigurationDeleteReq
+{
+    string id = 1;
+}
+
+message ScreenConfigurationDeleteResp
+{
+    string id = 1;
 }
