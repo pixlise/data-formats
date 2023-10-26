@@ -218,7 +218,7 @@ message WidgetData
     BinaryState binary = 3;
     TernaryState ternary = 4;
     HistogramState histogram = 5;
-    ContextImageState contextImages = 6;
+    ContextImageState contextImage = 6;
     ChordState chord = 7;
     TableState table = 8;
     ROIQuantTableState roiQuantTable = 9;
