@@ -57,3 +57,9 @@ message ImageMatchTransform
     float xScale = 4;
     float yScale = 5;
 }
+
+message ScanImageDefaultDB
+{
+    string scanId = 1; // @gotags: bson:"_id,omitempty"
+    string defaultImageFileName = 2;
+}

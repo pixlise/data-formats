@@ -150,6 +150,8 @@ message WSMessage
         ImageBeamLocationsResp imageBeamLocationsResp = 191;
         ImageDeleteReq imageDeleteReq = 58;
         ImageDeleteResp imageDeleteResp = 59;
+        ImageGetDefaultReq imageGetDefaultReq = 262;
+        ImageGetDefaultResp imageGetDefaultResp = 263;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
         ImageSetDefaultReq imageSetDefaultReq = 63;
