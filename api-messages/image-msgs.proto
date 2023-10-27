@@ -33,10 +33,21 @@ message ImageListResp
     uint32 defaultImageIdx = 2;
 }
 
+// requires(NONE)
+message ImageGetDefaultReq
+{
+    repeated string scanIds = 1;
+}
+
+message ImageGetDefaultResp
+{
+    map<string, string> defaultImagesPerScanId = 1;
+}
+
 // requires(EDIT_SCAN)
 message ImageSetDefaultReq
 {
-    repeated string scanIds = 1;
+    string scanId = 1;
     string defaultImageFileName = 2;
 }
 
