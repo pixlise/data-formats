@@ -152,6 +152,8 @@ message WSMessage
         ImageDeleteResp imageDeleteResp = 59;
         ImageGetDefaultReq imageGetDefaultReq = 262;
         ImageGetDefaultResp imageGetDefaultResp = 263;
+        ImageGetReq imageGetReq = 264;
+        ImageGetResp imageGetResp = 265;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
         ImageSetDefaultReq imageSetDefaultReq = 63;
