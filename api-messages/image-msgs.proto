@@ -34,6 +34,17 @@ message ImageListResp
 }
 
 // requires(NONE)
+message ImageGetReq
+{
+    string imageName = 1;
+}
+
+message ImageGetResp
+{
+    ScanImage image = 1;
+}
+
+// requires(NONE)
 message ImageGetDefaultReq
 {
     repeated string scanIds = 1;
