@@ -200,8 +200,10 @@ message SingleAxisRGBUWidgetState
 
 message RGBUImagesWidgetState
 {
-    bool logColour = 1;
+    // Setting was never implemented
+    //bool logColour = 1;
     float brightness = 2;
+    string imageName = 3;
 }
 
 message ParallelogramWidgetState
