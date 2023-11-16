@@ -188,6 +188,7 @@ message RGBUPlotWidgetState
     float selectedMaxXValue = 8;
     float selectedMinYValue = 9;
     float selectedMaxYValue = 10;
+    string imageName = 11;
 }
 
 message SingleAxisRGBUWidgetState
@@ -196,6 +197,7 @@ message SingleAxisRGBUWidgetState
     string channelA = 2;
     string channelB = 3;
     bool roiStackedOverlap = 4;
+    string imageName = 5;
 }
 
 message RGBUImagesWidgetState
