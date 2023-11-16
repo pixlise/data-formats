@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "job.proto";
+import "ownership-access.proto";
 
 // Quant Parameters and summary info (metadata about a quant)
 
@@ -60,6 +61,9 @@ message QuantificationSummary
 	repeated string elements = 3;
 	JobStatus status = 4;
 	// TODO: Make this also contain *APIObjectItem and remove its own Shared field...
+
+	// Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 10;  // @gotags: bson:"-"
 }
 
 

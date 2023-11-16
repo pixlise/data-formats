@@ -16,14 +16,13 @@ message DataExpression
     string sourceLanguage = 4;
     string comments = 5;
     repeated string tags = 6;
-    repeated ModuleReference moduleReferences = 7; // @gotags: bson:"moduleReferences,omitempty"
-    DataExpressionExecStats recentExecStats = 8; // @gotags: bson:"recentExecStats,omitempty"
-    //DOIMetadata doiMetadata = 9;
+    repeated ModuleReference moduleReferences = 7;
+    DataExpressionExecStats recentExecStats = 8;
 
-    uint32 modifiedUnixSec = 10;
+    uint32 modifiedUnixSec = 9;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 11;  // @gotags: bson:"-"
+    OwnershipSummary owner = 10;  // @gotags: bson:"-"
 }
 
 message ModuleReference
