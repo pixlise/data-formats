@@ -19,9 +19,10 @@ enum ScanDataType
 enum ScanInstrument
 {
     UNKNOWN_INSTRUMENT = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-    PIXL_FM = 1;
-    PIXL_EM = 2;
-    JPL_BREADBOARD = 3;
+    PIXL_FM = 1; // PIXL flight model, now located on planet Mars
+    PIXL_EM = 2; // PIXL engineering model
+    JPL_BREADBOARD = 3; // JPL PIXL lab Breadboard
+    SBU_BREADBOARD = 4; // Stony Brook Breadboard
     // future possibilities like BRUKER, etc...
 }
 
