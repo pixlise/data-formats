@@ -105,6 +105,7 @@ message ScanTriggerReImportReq
 
 message ScanTriggerReImportResp
 {
+    string logId = 1;
 }
 
 // Scan meta data:
