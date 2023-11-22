@@ -107,6 +107,7 @@ message ImageUploadReq
 
 message ImageUploadResp
 {
+    string logId = 1;
 }
 
 // Deletes ONLY user-created image, should publish a ImageListUpd to go out
