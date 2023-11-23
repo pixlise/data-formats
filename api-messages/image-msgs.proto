@@ -92,6 +92,8 @@ message ImageUploadReq
 {
     string name = 1;
     bytes imageData = 2;
+    repeated string associatedScanIds = 5; // List of all scan ids which are associated with this image - in other words their points are visible on the image
+    string originScanId = 6; // The scan this image came from
 
     oneof Assocation
     {
