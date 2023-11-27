@@ -30,7 +30,7 @@ message ImageListReq
 message ImageListResp
 {
     repeated ScanImage images = 1;
-    uint32 defaultImageIdx = 2;
+    //uint32 defaultImageIdx = 2; <-- Now that ImageListReq takes a list of scanIds - which scan does this correspond to?
 }
 
 // requires(NONE)
