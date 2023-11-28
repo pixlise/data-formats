@@ -123,3 +123,15 @@ message ImageDeleteReq
 message ImageDeleteResp
 {
 }
+
+// requires(EDIT_SCAN)
+message ImageSetMatchTransformReq
+{
+    string imageName = 1;
+    ImageMatchTransform transform = 2;
+}
+
+message ImageSetMatchTransformResp
+{
+}
+

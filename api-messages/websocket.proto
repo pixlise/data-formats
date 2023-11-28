@@ -158,6 +158,8 @@ message WSMessage
         ImageListResp imageListResp = 61;
         ImageSetDefaultReq imageSetDefaultReq = 63;
         ImageSetDefaultResp imageSetDefaultResp = 64;
+        ImageSetMatchTransformReq imageSetMatchTransformReq = 266;
+        ImageSetMatchTransformResp imageSetMatchTransformResp = 267;
         ImageUploadReq imageUploadReq = 65;
         ImageUploadResp imageUploadResp = 66;
         LogGetLevelReq logGetLevelReq = 67;
