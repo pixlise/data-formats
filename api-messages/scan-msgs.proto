@@ -33,6 +33,7 @@ message ScanListReq
     // - description
     // - instrument
     // - timeStampUnixSec
+    // - scanId
     map<string, string> searchFilters = 1;
 
     message MinMaxInt
