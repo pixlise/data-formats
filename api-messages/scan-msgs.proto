@@ -20,20 +20,23 @@ message ScanListReq
 {
     // Allows flexible fields, because scans have flexible metadata
     // but for PIXL suggestions are:
-    // - driveId, drive
-    // - siteId, site,
-    // - targetId, target
-    // - sol
-    // - RTT (round-trip token)
-    // - SCLK
-    // - hasDwell
-    // - hasNormal
-    // Others (generic):
+    //
+    // The scans ID:
+    // - scanId
+    //
+    // Meta fields (member of db meta struct):
+    // - Target, SiteId, Site, RTT, SCLK, Sol, DriveId, TargetId
+    //
+    // DB struct fields directly accessed:
     // - title
     // - description
     // - instrument
+    // - instrumentConfig
     // - timeStampUnixSec
-    // - scanId
+    //
+    // Fields that look at counts:
+    // (NOT IMPLEMENTED YET) - hasDwell
+    // (NOT IMPLEMENTED YET) - hasNormal
     map<string, string> searchFilters = 1;
 
     message MinMaxInt
@@ -48,10 +51,12 @@ message ScanListReq
     // - RTT
     // - SCLK
     // - PMCs
+    //
     // Others (generic):
     // - timeStampUnixSec
+    //
     // (Otherwise use exact matching in searchFilters)
-    map<string, MinMaxInt> searchMinMaxFilters = 2;
+    //(NOT IMPLEMENTED YET) map<string, MinMaxInt> searchMinMaxFilters = 2;
 }
 
 message ScanListResp
