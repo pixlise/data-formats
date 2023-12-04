@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan.proto";
+import "job.proto";
 
 
 
@@ -83,8 +84,14 @@ message ScanUploadReq
 
 message ScanUploadResp
 {
-    string logId = 1;
+    string jobId = 1;
 }
+
+message ScanUploadUpd
+{
+    JobStatus status = 1;
+}
+
 
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
@@ -111,7 +118,12 @@ message ScanTriggerReImportReq
 
 message ScanTriggerReImportResp
 {
-    string logId = 1;
+    string jobId = 1;
+}
+
+message ScanTriggerReImportUpd
+{
+    JobStatus status = 1;
 }
 
 // Scan meta data:

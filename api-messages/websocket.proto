@@ -241,8 +241,10 @@ message WSMessage
         ScanMetaWriteResp scanMetaWriteResp = 107;
         ScanTriggerReImportReq scanTriggerReImportReq = 108;
         ScanTriggerReImportResp scanTriggerReImportResp = 109;
+        ScanTriggerReImportUpd scanTriggerReImportUpd = 269;
         ScanUploadReq scanUploadReq = 110;
         ScanUploadResp scanUploadResp = 111;
+        ScanUploadUpd scanUploadUpd = 268;
         ScreenConfigurationDeleteReq screenConfigurationDeleteReq = 260;
         ScreenConfigurationDeleteResp screenConfigurationDeleteResp = 261;
         ScreenConfigurationGetReq screenConfigurationGetReq = 248;
