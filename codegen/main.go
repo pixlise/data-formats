@@ -592,6 +592,29 @@ export abstract class WSMessageHandler
 	angular += `
         return false;
 	}
+}
+
+export function getMessageName(wsmsg: WSMessage): string {
+`
+	for _, name := range sortedMsgs {
+		types := msgs[name]
+		msgVarName := varName(name)
+
+		if types.Req {
+			angular += fmt.Sprintf(`  if(wsmsg.%vReq) { return "%vReq"; }
+`, msgVarName, msgVarName)
+		}
+		if types.Resp {
+			angular += fmt.Sprintf(`  if(wsmsg.%vResp) { return "%vResp"; }
+`, msgVarName, msgVarName)
+		}
+		if types.Upd {
+			angular += fmt.Sprintf(`  if(wsmsg.%vUpd) { return "%vUpd"; }
+`, msgVarName, msgVarName)
+		}
+	}
+
+	angular += `return "?";
 }`
 
 	err := os.WriteFile(angularOutPath, []byte(angular), 0644)
