@@ -10,7 +10,7 @@ import "ownership-access.proto";
 // datasets together??
 message QuantStartingParameters
 {
-	QuantCreateParams params = 1;
+	QuantCreateParams userParams = 1;
 
 	// This is for when we store/send just the summary, sometimes we only need to supply count for brevity
 	uint32 pmcCount = 2;
