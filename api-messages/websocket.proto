@@ -23,6 +23,7 @@ import "module-msgs.proto";
 import "ownership-access-msgs.proto";
 import "piquant-msgs.proto";
 import "pseudo-intensities-msgs.proto";
+import "quantification-create.proto";
 import "quantification-management-msgs.proto";
 import "quantification-multi-msgs.proto";
 import "quantification-retrieval-msgs.proto";
@@ -196,6 +197,9 @@ message WSMessage
         QuantCombineListWriteResp quantCombineListWriteResp = 207;
         QuantCombineReq quantCombineReq = 208;
         QuantCombineResp quantCombineResp = 209;
+        QuantCreateReq quantCreateReq = 270;
+        QuantCreateResp quantCreateResp = 271;
+        QuantCreateUpd quantCreateUpd = 272;
         QuantDeleteReq quantDeleteReq = 210;
         QuantDeleteResp quantDeleteResp = 211;
         QuantGetReq quantGetReq = 212;

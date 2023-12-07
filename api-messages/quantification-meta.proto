@@ -10,47 +10,65 @@ import "ownership-access.proto";
 // datasets together??
 message QuantStartingParameters
 {
-	string name = 1;
-	string dataBucket = 2;
-	string datasetPath = 3;
-	string datasetID = 4;
+	QuantCreateParams params = 1;
+
+	// This is for when we store/send just the summary, sometimes we only need to supply count for brevity
+	uint32 pmcCount = 2;
+
+	// Paths, Buckets, to help runner initialise
+	string scanFilePath = 3;
+	string dataBucket = 4;
 	string piquantJobsBucket = 5;
-	string detectorConfig = 6;
-	repeated string elements = 7;
-	string parameters = 8;
-	uint32 runTimeSec = 9;
-	uint32 coresPerNode = 10;
-	uint32 startUnixTimeSec = 11;
-    string requestorUserId = 12;
-    string roiID = 13;
-	string elementSetID = 14;
-	string PIQUANTVersion = 15;
-	string quantMode = 16;
-	string comments = 17;
-	repeated string roiIDs = 18;
-	bool includeDwells = 19;
-	string command = 20;
-	repeated int32 pmcs = 21; // When specifying to PIQUANT this needs to be set correctly
-	uint32 pmcCount = 22; // This is for when we store/send just the summary, sometimes we only need to supply count for brevity
+
+	// How many cores we expect to have on the same node as us!
+	uint32 coresPerNode = 6;
+	uint32 startUnixTimeSec = 7;
+    string requestorUserId = 8;
+	string PIQUANTVersion = 9;
+	string comments = 10;
 }
 
 message QuantCreateParams
 {
-	string name = 1;
-	string datasetPath = 2;
-	repeated string pmcs = 3;
-	repeated string elements = 4;
-	string detectorconfig = 5;
-	string parameters = 6;
-	uint32 runtimesec = 7;
-	string roiID = 8; // There is now a list of ROI IDs that can be provided too. More relevant with the QuantMode *Bulk options
-	string elementSetID = 9;
-	string dataset_id = 10;
-	string requestorUserId = 11; // Probably not correct for existing containers...
-	string quantMode = 12;
-	repeated string roiIDs = 13; // If QuantMode = *Bulk, this is used, pmcs is ignored.
-	bool includeDwells = 14;
-	string command = 15;
+	// Depending on this, we may return the result straight away or return a job status
+    // Valid values at time of writing are:
+    // "map" - Runs a quant job, to output a map
+    // "quant" - Runs a quant "fit", a quick job, so we wait and return the result in resp
+	string command = 1;
+
+    // Name of the quantification - note for "quant" (aka Fit) mode, this is not needed
+    string name = 2;
+
+    // Required, id of scan file to pass to PIQUANT
+	string scanId = 3;
+
+    // List of all PMCs (over wire it should be sent encoded with our simple compression method)
+	repeated int32 pmcs = 4;
+
+    // What elements to quantify. NOTE: PIQUANT output will not necessarily match this as
+    // it may choose to output oxides or carbonates
+	repeated string elements = 5;
+
+    // The config of the detector used to capture the scan
+	string detectorConfig = 6;
+
+    // Any extra command line parameters, these are just tacked onto the cmd line
+	string parameters = 7;
+
+    // A "hint" to the PIQUANT runner saying how fast we want it to complete. It should
+    // then create more or less nodes to run PIQUANT on to try to achieve that run time
+	uint32 runTimeSec = 8;
+
+    // What kind of quantification we're creating
+	string quantMode = 9;
+
+    // List of all ROI IDs within the scan that we want to quantify. This is required
+    // so we can output bulk quants for all PMCs in an ROI
+    // NOTE: If QuantMode = *Bulk, this is used, pmcsEncoded is ignored.
+	repeated string roiIDs = 10;
+
+    // Should dwell spectra be included in the quantification calculation
+	bool includeDwells = 11;
 }
 
 message QuantificationSummary
