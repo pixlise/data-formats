@@ -13,10 +13,11 @@ import "quantification-multi.proto";
 // requires(QUANTIFY)
 message QuantCombineReq
 {
-	repeated QuantCombineItem roiZStack = 1;
-	string name = 2;
-	string description = 3;
-	bool summaryOnly = 4;
+    string scanId = 1;
+	repeated QuantCombineItem roiZStack = 2;
+	string name = 3;
+	string description = 4;
+	bool summaryOnly = 5;
 }
 
 message QuantCombineResp
@@ -52,8 +53,10 @@ message QuantCombineListWriteResp
 // requires(QUANTIFY)
 message MultiQuantCompareReq
 {
-    repeated string quantIds = 1;
-    repeated int32 remainingPointsPMCs = 2;
+    string scanId = 1;
+    string reqRoiId = 2;
+    repeated string quantIds = 3;
+    repeated int32 remainingPointsPMCs = 4;
 }
 
 message MultiQuantCompareResp
