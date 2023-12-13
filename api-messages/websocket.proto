@@ -18,6 +18,7 @@ import "expression-group-msgs.proto";
 import "expression-msgs.proto";
 import "image-beam-location-msgs.proto";
 import "image-msgs.proto";
+import "image-coreg-msgs.proto";
 import "log-msgs.proto";
 import "module-msgs.proto";
 import "ownership-access-msgs.proto";
@@ -163,6 +164,9 @@ message WSMessage
         ImageSetMatchTransformResp imageSetMatchTransformResp = 267;
         ImageUploadReq imageUploadReq = 65;
         ImageUploadResp imageUploadResp = 66;
+        ImportMarsViewerImageReq importMarsViewerImageReq = 273;
+        ImportMarsViewerImageResp importMarsViewerImageResp = 274;
+        ImportMarsViewerImageUpd importMarsViewerImageUpd = 275;
         LogGetLevelReq logGetLevelReq = 67;
         LogGetLevelResp logGetLevelResp = 68;
         LogReadReq logReadReq = 69;
