@@ -36,3 +36,9 @@ message MarsViewerExport
 	repeated MVWarpedOverlayImage WarpedOverlayImages = 3; // @gotags: json:"warpedOverlayImages"
 	string MarsviewerLink = 4; // @gotags: json:"marsviewerLink"
 }
+
+message ImageCoregImportJob
+{
+    string JobId = 1;
+    MarsViewerExport Params = 2;
+}
