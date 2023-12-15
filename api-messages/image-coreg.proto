@@ -16,7 +16,7 @@ message MVObservation
 	bool Interpolated = 1; // @gotags: json:"interpolated"
 	string ObservationCSVFilename = 2; // @gotags: json:"observationCSVFilename"
 	string ContextImageUrl = 3; // @gotags: json:"contextImageUrl"
-	string Site = 4; // @gotags: json:"site"
+	int32 Site = 4; // @gotags: json:"site"
 	int32 Drive = 5; // @gotags: json:"drive"
 	repeated MVPoint OriginalPoints = 6; // @gotags: json:"originalPoints"
 	repeated MVPoint TranslatedPoints = 7; // @gotags: json:"translatedPoints"
@@ -35,10 +35,4 @@ message MarsViewerExport
 	string BaseImageUrl = 2; // @gotags: json:"baseImageUrl"
 	repeated MVWarpedOverlayImage WarpedOverlayImages = 3; // @gotags: json:"warpedOverlayImages"
 	string MarsviewerLink = 4; // @gotags: json:"marsviewerLink"
-}
-
-message ImageCoregImportJob
-{
-    string JobId = 1;
-    MarsViewerExport Params = 2;
 }
