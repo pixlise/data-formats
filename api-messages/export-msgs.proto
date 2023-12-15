@@ -2,24 +2,44 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 
+enum ExportDataType
+{
+    EDT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    EDT_QUANT_CSV = 1;
+}
 
+/* Defined in old API, and where it was used on UI:
+"raw-spectra" - UI choice, exported "Raw Spectral Data Per PMC .csv (and bulk .msa)"
+"quant-map-csv" - UI choice, exported "PIQUANT Quantification map .csv"
+"quant-map-tif" <-- Went unused, was exporting "Floating point map images .tif"
+"beam-locations" - UI choice, exported "Beam Locations .csv"
+"rois" - Export data dialog checks if this is specified and only allpoints or selectedpoints ROI is selected. "ROI PMC Membership List .csv"
+"context-image" - Image options export button defaulted to having this
+"unquantified-weight" - UI choice, exported "Unquantified Weight Percent .csv"
+"diffraction-peak" <-- Went unused??? was using ui-diffraction-peak instead
 
-/* Originals:
--POST   /export/files/{DID}                                  -> export:map
+"ui-roi-expressions" - UI builds "ROI Expression Values .csv"
+"ui-diffraction-peak" - UI built diffraction features CSV (incorporating calibration & diffraction peak data), created anomaly-features.csv
 */
 
 // requires(EXPORT)
 message ExportFilesReq
 {
-    string datasetId = 1;
-    string fileName = 2;
+    // What to export
+    repeated ExportDataType exportTypes = 1;
+
+    // Parameters clarifying the choices for the above. Eg if exportTypes contains "quant-map-csv", we'd expect
+    // quantId (and probably scanId) to be set!
+
+    string scanId = 2;
     string quantId = 3;
-    repeated string fileIds = 4;
-    repeated string roiIds = 5;
+    repeated string roiIds = 4;
+    repeated string imageFileNames = 5;
 }
 
 message ExportFilesResp
 {
-    string zipFileName = 1;
-    bytes zipData = 2;
+    // Just contains the zipped exported data. File name is irrelevant because we expect the UI to present this
+    // as needed, potentially unzipping this in memory and zipping UI-generated files into the final output
+    bytes zipData = 1;
 }
