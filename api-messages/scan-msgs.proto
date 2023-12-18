@@ -144,3 +144,15 @@ message ScanMetaLabelsAndTypesResp
     repeated string metaLabels = 1;
     repeated ScanMetaDataType metaTypes = 2;
 }
+
+// This will fail if deleting a scan you are not an editor of, or if it's an FM dataset
+
+// requires(EDIT_SCAN)
+message ScanDeleteReq
+{
+    string scanId = 1;
+}
+
+message ScanDeleteResp
+{
+}

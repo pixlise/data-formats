@@ -158,6 +158,7 @@ message WSMessage
         ImageGetResp imageGetResp = 265;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
+        ImageListUpd imageListUpd = 278;
         ImageSetDefaultReq imageSetDefaultReq = 63;
         ImageSetDefaultResp imageSetDefaultResp = 64;
         ImageSetMatchTransformReq imageSetMatchTransformReq = 266;
@@ -236,6 +237,8 @@ message WSMessage
         RunTestResp runTestResp = 96;
         ScanBeamLocationsReq scanBeamLocationsReq = 192;
         ScanBeamLocationsResp scanBeamLocationsResp = 193;
+        ScanDeleteReq scanDeleteReq = 276;
+        ScanDeleteResp scanDeleteResp = 277;
         ScanEntryMetadataReq scanEntryMetadataReq = 194;
         ScanEntryMetadataResp scanEntryMetadataResp = 195;
         ScanEntryReq scanEntryReq = 196;

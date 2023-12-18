@@ -33,6 +33,13 @@ message ImageListResp
     //uint32 defaultImageIdx = 2; <-- Now that ImageListReq takes a list of scanIds - which scan does this correspond to?
 }
 
+// If something happens to an image - changed, deleted, metadata changed, etc this gets sent out
+message ImageListUpd
+{
+    string associatedScanId = 1;
+    string imageName = 2;
+}
+
 // requires(NONE)
 message ImageGetReq
 {
