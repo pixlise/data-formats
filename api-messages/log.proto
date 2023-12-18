@@ -4,6 +4,7 @@ option go_package = ".;protos";
 
 message LogLine
 {
-    uint64 timeStampUnixMs = 1;
-    string message = 2;
+    uint32 timeStampUnixSec = 1;
+    uint32 timeStampMs = 2;
+    string message = 3;
 }
