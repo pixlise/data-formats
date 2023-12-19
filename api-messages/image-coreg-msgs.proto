@@ -1,7 +1,6 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "image-coreg.proto";
 import "job.proto";
 
 
