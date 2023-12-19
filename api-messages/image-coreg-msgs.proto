@@ -8,10 +8,7 @@ import "job.proto";
 // requires(EDIT_SCAN)
 message ImportMarsViewerImageReq
 {
-    // Either we have the JSON, or the Url to the JSON, not sure what we'll
-    // be provided yet so allow for both
-    MarsViewerExport marsViewerExport = 1;
-    string triggerUrl = 2;
+    string triggerUrl = 1;
 }
 
 message ImportMarsViewerImageResp
