@@ -22,7 +22,7 @@ message DataExpression
     uint32 modifiedUnixSec = 9;
 
     // Only sent out by API, not stored in DB this way
-    OwnershipSummary owner = 10;  // @gotags: bson:"-"
+    OwnershipSummary owner = 10; // @gotags: bson:"-"
 }
 
 message ModuleReference
@@ -34,7 +34,7 @@ message ModuleReference
 message DataExpressionExecStats
 {
     repeated string dataRequired = 1;
-    float runtimeMsPer1000Pts = 2;
+    float runtimeMsPer1000Pts = 2; // @gotags: bson:"runtimeMsPer1000Pts,truncate"
     uint32 timeStampUnixSec = 3;
 }
 
