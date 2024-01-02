@@ -491,7 +491,7 @@ import { Subject } from 'rxjs';
 
 export class WSError extends Error
 {
-	constructor(public status: ResponseStatus, public errorText: string)
+	constructor(public status: ResponseStatus, public errorText: string, public messageName: string)
 	{
 		super(errorText);
 		this.name = "WSError";
@@ -549,7 +549,7 @@ export abstract class WSMessageHandler
             let subj = this._%vSubjects.get(wsmsg.msgId);
 		    if(subj) {
 				if(wsmsg.status != ResponseStatus.WS_OK) {
-					subj.error(new WSError(wsmsg.status, wsmsg.errorText));
+					subj.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
 				} else {
 			    	subj.next(wsmsg.%vResp);
 				}
@@ -559,7 +559,7 @@ export abstract class WSMessageHandler
 				return true;
 		    }
         }
-`, varName(name), name, varName(name), name)
+`, varName(name), name, name, varName(name), name)
 		}
 	}
 
