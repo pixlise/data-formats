@@ -235,6 +235,10 @@ message WSMessage
         RegionOfInterestWriteResp regionOfInterestWriteResp = 94;
         RunTestReq runTestReq = 95;
         RunTestResp runTestResp = 96;
+        ScanAutoShareReq scanAutoShareReq = 279;
+        ScanAutoShareResp scanAutoShareResp = 280;
+        ScanAutoShareWriteReq scanAutoShareWriteReq = 281;
+        ScanAutoShareWriteResp scanAutoShareWriteResp = 282;
         ScanBeamLocationsReq scanBeamLocationsReq = 192;
         ScanBeamLocationsResp scanBeamLocationsResp = 193;
         ScanDeleteReq scanDeleteReq = 276;

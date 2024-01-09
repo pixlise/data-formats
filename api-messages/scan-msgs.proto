@@ -92,6 +92,28 @@ message ScanUploadUpd
     JobStatus status = 1;
 }
 
+// Editing who to auto-share a scan with
+// requires(EDIT_SCAN)
+message ScanAutoShareReq
+{
+    string id = 1;
+}
+
+message ScanAutoShareResp
+{
+    ScanAutoShareEntry entry = 1;
+}
+
+// requires(EDIT_SCAN)
+message ScanAutoShareWriteReq
+{
+    ScanAutoShareEntry entry = 1;
+}
+
+message ScanAutoShareWriteResp
+{
+}
+
 
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
