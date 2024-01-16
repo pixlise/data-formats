@@ -144,8 +144,6 @@ message WSMessage
         ExpressionWriteExecStatResp expressionWriteExecStatResp = 53;
         ExpressionWriteReq expressionWriteReq = 54;
         ExpressionWriteResp expressionWriteResp = 55;
-        ExpressionWriteResultReq expressionWriteResultReq = 56;
-        ExpressionWriteResultResp expressionWriteResultResp = 57;
         GetOwnershipReq getOwnershipReq = 172;
         GetOwnershipResp getOwnershipResp = 173;
         ImageBeamLocationsReq imageBeamLocationsReq = 190;
@@ -174,6 +172,10 @@ message WSMessage
         LogReadResp logReadResp = 70;
         LogSetLevelReq logSetLevelReq = 71;
         LogSetLevelResp logSetLevelResp = 72;
+        MemoiseWriteReq memoiseWriteReq = 56;
+        MemoiseWriteResp memoiseWriteResp = 57;
+        MemoiseGetReq memoiseGetReq = 283;
+        MemoiseGetResp memoiseGetResp = 284;
         MultiQuantCompareReq multiQuantCompareReq = 200;
         MultiQuantCompareResp multiQuantCompareResp = 201;
         ObjectEditAccessReq objectEditAccessReq = 174;

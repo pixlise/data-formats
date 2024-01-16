@@ -68,23 +68,3 @@ message ExpressionWriteExecStatReq
 message ExpressionWriteExecStatResp
 {
 }
-
-// TODO... memoization of expression results... Not sure if we write something specific here
-// or if this becomes some part of a general caching mechanism
-
-// requires(NONE)
-message ExpressionWriteResultReq
-{
-    string expressionId = 1;
-    uint32 expressionModTimeUnixSec = 2;
-    string scanId = 3;
-    string roiId = 4;
-    uint32 roiModTimeUnixSec = 5;
-
-    repeated string resultColumns = 6;
-    repeated ExpressionResultItem resultItems = 7;
-}
-
-message ExpressionWriteResultResp
-{
-}
