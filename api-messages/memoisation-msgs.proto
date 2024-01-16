@@ -24,6 +24,7 @@ message MemoiseWriteReq
 
 message MemoiseWriteResp
 {
+    uint32 memoTimeUnixSec = 1;
 }
 
 // requires(NONE)
