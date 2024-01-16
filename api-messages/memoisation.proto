@@ -1,7 +1,6 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "memoisation.proto";
 import "expressions.proto";
 import "roi.proto";
 
@@ -24,16 +23,16 @@ message MemoisedItem
 message MemPMCDataValue
 {
     uint32 pmc = 1;
-    float32 value = 2;
+    float value = 2;
     bool isUndefined = 3;
     string label = 4;
 }
 
 message MemPMCDataValues
 {
-    float32 minValue = 1;
-    float32 maxValue = 2;
-    repeated PMCDataValue values = 3;
+    float minValue = 1;
+    float maxValue = 2;
+    repeated MemPMCDataValue values = 3;
     bool isBinary = 4;;
     string warning = 5;
 }
@@ -47,10 +46,10 @@ message MemRegionSettings
 
 message MemDataQueryResult
 {
-    PMCDataValues resultValues = 1;
+    MemPMCDataValues resultValues = 1;
     bool isPMCTable = 2;
     DataExpression expression = 3;
-    RegionSettings region = 4;
+    MemRegionSettings region = 4;
 
     // Fields left out:
     // stdout

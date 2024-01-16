@@ -1,6 +1,9 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "memoisation.proto";
+
+
 // General memosation mechanism for data used by the client. The contents is just a byte buffer, and the key should
 // be unique enough that any instance of the client loads the right thing back!
 
