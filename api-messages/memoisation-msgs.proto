@@ -37,11 +37,3 @@ message MemoiseGetResp
 {
     MemoisedItem item = 1;
 }
-
-message MemoisedItem
-{
-    string key = 1; // @gotags: bson:"_id,omitempty"
-    uint32 memoTimeUnixSec = 2;
-
-    bytes data = 3;
-}
