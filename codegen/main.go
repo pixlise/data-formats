@@ -263,9 +263,9 @@ func writeGo(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes
 
 import (
 	"fmt"
-	protos "github.com/pixlise/core/v3/generated-protos"
-	"github.com/pixlise/core/v3/api/ws/wsHelpers"
-	wsHandler "github.com/pixlise/core/v3/api/ws/handlers"
+	protos "github.com/pixlise/core/v4/generated-protos"
+	"github.com/pixlise/core/v4/api/ws/wsHelpers"
+	wsHandler "github.com/pixlise/core/v4/api/ws/handlers"
 )
 `
 	/*	goFunc += `
@@ -408,8 +408,8 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 
 import (
 	"errors"
-	protos "github.com/pixlise/core/v3/generated-protos"
-	"github.com/pixlise/core/v3/api/ws/wsHelpers"
+	protos "github.com/pixlise/core/v4/generated-protos"
+	"github.com/pixlise/core/v4/api/ws/wsHelpers"
 )
 
 `
