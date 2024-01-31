@@ -14,6 +14,7 @@ message ImageLocationsForScan
 {
     // Which scan these are for
     string scanId = 1;
+    uint32 beamVersion = 3;
 
     // The coordinates per entry within the scan (entry Id but entry index)
     // NOTE: This must have the same size as the scan entry array, otherwise
