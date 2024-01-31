@@ -86,6 +86,7 @@ message Experiment
         int32 pmc=2;    /* PMC for the image */
         bool trapezoid_corrected=3; /* Is this image trapezoid corrected */
         int32 scan_source=4; /* Not set if this is not a combined dataset */
+        uint32 beamVersion=5; /* version of beam location generator */
     }
     repeated ContextImageCoordinateInfo aligned_context_images=24;
 
