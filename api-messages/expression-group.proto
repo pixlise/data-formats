@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+
+
+message ExpressionGroupItem
+{
+	string expressionId = 1;
+	float rangeMin = 2;
+	float rangeMax = 3;
+
+    // TODO:
+    // string element <-- We used to store this, now only here for reading
+    // in old files (backwards compatible). PIXLISE then converts it to an
+    // ExpressionID when saving again
+}
+
+message ExpressionGroup
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+	string name = 2;
+    repeated ExpressionGroupItem groupItems = 3;
+	repeated string tags = 4;
+    uint32 modifiedUnixSec = 5;
+	string description = 7;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 6;  // @gotags: bson:"-"
+}

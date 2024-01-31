@@ -1,0 +1,47 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "log.proto";
+
+
+/* Originals:
+-GET    /logger/fetch/{logStream}                            -> read:logs
+-PUT    /logger/level/{logLevel}                             -> write:log-level
+-GET    /logger/level                                        -> read:logs
+*/
+
+// Special permissions required to be able to read logs on certain pages
+// requires(NONE)
+message LogReadReq
+{
+    string logStreamId = 1;
+}
+
+message LogReadResp
+{
+    repeated LogLine entries = 1;
+}
+
+// Admin messages for setting API log level
+
+// Contains the string log level - if invalid, sends back bad request...
+// requires(EDIT_API_SETTINGS)
+message LogSetLevelReq
+{
+    string logLevelId = 1;
+}
+
+message LogSetLevelResp
+{
+    string logLevelId = 1;
+}
+
+// requires(NONE)
+message LogGetLevelReq
+{
+}
+
+message LogGetLevelResp
+{
+    string logLevelId = 1;
+}

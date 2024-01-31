@@ -1,0 +1,39 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+/* Originals:
+-DELETE  /quantification/<datasetID>/<quantID> -> anyone
+-POST  /quantification/bless/<datasetID>/<quantID> -> quant bless perm
+-POST  /quantification/publish/<datasetID>/<quantID> -> quant publish perm
+*/
+
+// requires(QUANTIFY)
+message QuantDeleteReq
+{
+    string quantId = 1;
+}
+
+message QuantDeleteResp
+{
+}
+
+// requires(NONE)
+message QuantBlessReq
+{
+    string quantId = 1;
+}
+
+message QuantBlessResp
+{
+}
+
+// requires(NONE)
+message QuantPublishReq
+{
+    string quantId = 1;
+}
+
+message QuantPublishResp
+{
+}

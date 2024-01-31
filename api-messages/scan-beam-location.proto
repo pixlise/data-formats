@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// We store physical location in these
+message Coordinate3D
+{
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}

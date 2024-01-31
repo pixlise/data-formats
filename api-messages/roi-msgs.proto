@@ -1,0 +1,116 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "roi.proto";
+import "search-params.proto";
+
+
+/* Originals:
+-POST   /roi/{DID}/{bulk}                                    -> write:data-analysis
+-DELETE /roi/{DID}/{id}                                      -> write:data-analysis
+-PUT    /roi/{DID}/{id}                                      -> write:data-analysis
+-GET    /roi/{DID}                                           -> public
+-POST   /roi/{DID}                                           -> write:data-analysis
+*/
+
+// requires(NONE)
+message RegionOfInterestListReq
+{
+    SearchParams searchParams = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestListResp
+{
+    map<string, ROIItemSummary> regionsOfInterest = 1;
+    bool isMIST = 2;
+}
+
+// requires(NONE)
+message RegionOfInterestGetReq
+{
+    string id = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestGetResp
+{
+    ROIItem regionOfInterest = 1;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EDIT_ROI)
+message RegionOfInterestWriteReq
+{
+    ROIItem regionOfInterest = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestWriteResp
+{
+    ROIItem regionOfInterest = 1;
+}
+
+// The user is configuring an ROI for their own use, but not editing it
+// requires(EDIT_OWN_USER)
+message RegionOfInterestDisplaySettingsWriteReq
+{
+    string id = 1;
+    ROIItemDisplaySettings displaySettings = 2;
+}
+
+message RegionOfInterestDisplaySettingsWriteResp
+{
+    ROIItemDisplaySettings displaySettings = 1;
+}
+
+// requires(NONE)
+message RegionOfInterestDisplaySettingsGetReq
+{
+    string id = 1;
+}
+
+message RegionOfInterestDisplaySettingsGetResp
+{
+    ROIItemDisplaySettings displaySettings = 1;
+}
+
+
+// requires(EDIT_ROI)
+message RegionOfInterestBulkWriteReq
+{
+    repeated ROIItem regionsOfInterest = 1;
+    bool overwrite = 2; // if true, then overwrite existing ROIs with same ID
+    bool skipDuplicates = 3; // if true, then skip ROIs with same ID
+
+    bool isMIST = 4;
+    repeated string mistROIScanIdsToDelete = 5; // List of scan ids to delete all MIST ROIs for
+}
+
+message RegionOfInterestBulkWriteResp
+{
+    repeated ROIItem regionsOfInterest = 1;
+}
+
+// requires(EDIT_ROI)
+message RegionOfInterestDeleteReq
+{
+    string id = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestDeleteResp
+{
+}
+
+// requires(EDIT_ROI)
+message RegionOfInterestBulkDuplicateReq
+{
+    repeated string ids = 1;
+    bool isMIST = 2;
+}
+
+message RegionOfInterestBulkDuplicateResp
+{
+    map<string, ROIItemSummary> regionsOfInterest = 1;
+}

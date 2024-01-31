@@ -1,0 +1,39 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+////////////////////////////////////
+// Structures for user/account data
+
+message UserInfo
+{
+    string id = 1;
+    string name = 2; // @gotags: bson:"name,omitempty"
+    string email = 3; // @gotags: bson:"email,omitempty"
+    // NOTE: this can be a link or a data://<base64 image>
+    string iconURL = 4; // @gotags: bson:"iconurl,omitempty"
+}
+
+message UserDetails
+{
+    UserInfo info = 1;
+
+    string dataCollectionVersion = 5;
+
+    repeated string permissions = 8;
+}
+
+message Auth0UserRole
+{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message Auth0UserDetails
+{
+    UserInfo auth0User = 1;
+    UserInfo pixliseUser = 2;
+    uint32 createdUnixSec = 3;
+    uint32 lastLoginUnixSec = 4;
+}

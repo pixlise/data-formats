@@ -1,0 +1,81 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "user.proto";
+
+
+// The UserGroup we store in DB
+message UserGroupDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string description = 8;
+    uint32 createdUnixSec = 7;
+    uint32 lastUserJoinedUnixSec = 9;
+
+    UserGroupList viewers = 5;
+    UserGroupList members = 3;
+    
+    repeated string adminUserIds = 4;
+}
+
+enum UserGroupRelationship
+{
+    UGR_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    UGR_VIEWER = 1;
+    UGR_MEMBER = 2;
+    UGR_ADMIN = 3;
+}
+
+// User Group Info, just the basics...
+message UserGroupInfo
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string description = 5;
+    uint32 createdUnixSec = 3;
+    uint32 lastUserJoinedUnixSec = 6;
+
+    // OPTIONAL (only returned in UserGroupListResp)
+    UserGroupRelationship relationshipToUser = 4;
+}
+
+message UserGroupInfoList
+{
+    repeated UserInfo users = 1;
+    repeated UserGroupInfo groups = 2;
+}
+
+// The user group sent out of API, contains "info" items of each user/user-group
+// that's attached to it
+message UserGroup
+{
+    UserGroupInfo info = 1;
+
+    UserGroupInfoList viewers = 5;
+    UserGroupInfoList members = 3;
+    
+    repeated UserInfo adminUsers = 4;
+}
+
+message UserGroupJoinSummaryInfo
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string description = 3;
+    repeated UserInfo administrators = 4;
+    uint32 datasets = 5;
+    uint32 lastUserJoinedUnixSec = 6;
+}
+
+// A request to join a user group - stored in DB
+message UserGroupJoinRequestDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string userId = 2; // Who sent it
+    string joinGroupId = 3; // What they want to join
+    bool asMember = 4; // If false, join request is to join as a viewer only
+    UserInfo details = 5; // The joining user's info at the time of the request
+    uint32 createdUnixSec = 6;
+}

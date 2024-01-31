@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "tags.proto";
+
+
+
+/* Originals:
+-DELETE /tags/{DID}/{id}                                     -> write:data-analysis
+-GET    /tags/{DID}                                          -> public
+-POST   /tags/{DID}                                          -> write:data-analysis
+*/
+
+// requires(NONE)
+message TagListReq
+{
+}
+
+message TagListResp
+{
+    repeated Tag tags = 1;
+}
+
+// requires(EDIT_TAGS)
+message TagCreateReq
+{
+    string name = 1;
+    string type = 2;
+    string scanId = 3; // Scan the tag was created on
+}
+
+message TagCreateResp
+{
+    Tag tag = 1;
+}
+
+// requires(PIXLISE_ADMIN)
+message TagDeleteReq
+{
+    string tagId = 1;
+}
+
+message TagDeleteResp
+{
+}

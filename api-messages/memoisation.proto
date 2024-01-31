@@ -1,0 +1,61 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expressions.proto";
+import "roi.proto";
+
+
+// The item we store in DB and send in responses
+
+message MemoisedItem
+{
+    string key = 1; // @gotags: bson:"_id,omitempty"
+    uint32 memoTimeUnixSec = 2;
+
+    bytes data = 3;
+}
+
+
+
+// These are defined here so we can support serialisation to and from
+// binary data
+
+message MemPMCDataValue
+{
+    uint32 pmc = 1;
+    float value = 2;
+    bool isUndefined = 3;
+    string label = 4;
+}
+
+message MemPMCDataValues
+{
+    float minValue = 1;
+    float maxValue = 2;
+    repeated MemPMCDataValue values = 3;
+    bool isBinary = 4;;
+    string warning = 5;
+}
+
+message MemRegionSettings
+{
+    ROIItem region = 1;
+    ROIItemDisplaySettings displaySettings = 2;
+    repeated uint32 pixelIndexSet = 3;
+}
+
+message MemDataQueryResult
+{
+    MemPMCDataValues resultValues = 1;
+    bool isPMCTable = 2;
+    DataExpression expression = 3;
+    MemRegionSettings region = 4;
+
+    // Fields left out:
+    // stdout
+    // stderr
+    // runtimeMs
+    // dataRequired
+    // recordedExpressionInputs
+    // errorMsg
+}

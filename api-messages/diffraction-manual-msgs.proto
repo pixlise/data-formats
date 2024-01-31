@@ -1,0 +1,48 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "diffraction-data.proto";
+
+
+
+/* Original:
+-DELETE /diffraction/manual/{DID}/{id}                       -> write:diffraction-peaks
+-GET    /diffraction/manual/{DID}                            -> read:diffraction-peaks
+-POST   /diffraction/manual/{DID}                            -> write:diffraction-peaks
+*/
+
+// requires(NONE)
+message DiffractionPeakManualListReq
+{
+    string scanId = 1;
+}
+
+message DiffractionPeakManualListResp
+{
+    map<string, ManualDiffractionPeak> peaks = 1; // id->ManualDiffractionPeak
+}
+
+// Only allows insert, no updating!
+
+// requires(EDIT_DIFFRACTION)
+message DiffractionPeakManualInsertReq
+{
+    string scanId = 1;
+    int32 pmc = 2;
+    float energykeV = 3;
+}
+
+message DiffractionPeakManualInsertResp
+{
+    string createdId = 1;
+}
+
+// requires(EDIT_DIFFRACTION)
+message DiffractionPeakManualDeleteReq
+{
+    string id = 1;
+}
+
+message DiffractionPeakManualDeleteResp
+{
+}

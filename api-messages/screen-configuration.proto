@@ -1,0 +1,73 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "widget-data.proto";
+
+message ScreenConfigurationCSS
+{
+    string templateColumns = 1;
+    string templateRows = 2;
+}
+
+message ScreenConfigurationRow
+{
+    int32 height = 1;
+}
+
+message ScreenConfigurationColumn
+{
+    int32 width = 1;
+}
+
+message WidgetLayoutConfiguration
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    string type = 2;
+    int32 startRow = 3;
+    int32 startColumn = 4;
+    int32 endRow = 5;
+    int32 endColumn = 6;
+
+    WidgetData data = 7; // @gotags: bson:"-"
+}
+
+message FullScreenLayout
+{
+    repeated ScreenConfigurationRow rows = 4;
+    repeated ScreenConfigurationColumn columns = 5;
+    repeated WidgetLayoutConfiguration widgets = 6;
+}
+
+message ScanCalibrationConfiguration
+{
+    double eVstart = 1;
+    double eVperChannel = 2;
+    string detector = 3;
+}
+
+message ScanConfiguration
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    string quantId = 2;
+    repeated ScanCalibrationConfiguration calibrations = 3;
+}
+
+message ScreenConfiguration
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    string name = 2;
+    string description = 3;
+
+    repeated FullScreenLayout layouts = 4;
+
+    repeated string tags = 7;
+    uint32 modifiedUnixSec = 8;
+
+    map<string, ScanConfiguration> scanConfigurations = 9;
+
+    OwnershipSummary owner = 10; // @gotags: bson:"-"
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan.proto";
+
+
+// requires(NONE)
+message SelectedScanEntriesReq
+{
+    repeated string scanIds = 1;
+}
+
+message SelectedScanEntriesResp
+{
+    map<string, ScanEntryRange> scanIdEntryIndexes = 1;
+}
+
+// requires(NONE)
+message SelectedScanEntriesWriteReq
+{
+    map<string, ScanEntryRange> scanIdEntryIndexes = 1;
+}
+
+message SelectedScanEntriesWriteResp
+{
+}
+
+// TODO: Potentially could have a SelectedScanEntriesUpd!!
+

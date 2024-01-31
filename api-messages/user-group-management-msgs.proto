@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-group.proto";
+
+
+
+////////////////////////////////////////////////////////////////
+// Creating, deleting and renaming entire groups
+// Should only be accessible to sys admins
+// requires(PIXLISE_ADMIN)
+message UserGroupCreateReq
+{
+    string name = 1;
+    string description = 2;
+}
+
+message UserGroupCreateResp
+{
+    UserGroup group = 1;
+}
+
+// requires(PIXLISE_ADMIN)
+message UserGroupDeleteReq
+{
+    string groupId = 1;
+}
+
+message UserGroupDeleteResp
+{
+}
+
+// requires(PIXLISE_ADMIN)
+message UserGroupSetNameReq
+{
+    string groupId = 1;
+    string name = 2;
+}
+
+// requires(PIXLISE_ADMIN)
+message UserGroupSetNameResp
+{
+    UserGroup group = 1;
+}

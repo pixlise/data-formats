@@ -1,0 +1,50 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-group.proto";
+
+
+
+////////////////////////////////////////////////////////////////
+// Joining user groups - users can "request" to join, and admins
+// can see and approve/remove these requests
+
+// Adds join request to DB - anyone can request to join!
+
+// requires(NONE)
+message UserGroupJoinReq
+{
+    string groupId = 1;
+    bool asMember = 2;
+}
+
+message UserGroupJoinResp
+{
+}
+
+// Admin can ignore the join request (delete from DB)
+// Only group admins should be able to do this
+
+// requires(NONE)
+message UserGroupIgnoreJoinReq
+{
+    string groupId = 1;
+    string requestId = 2;
+}
+
+message UserGroupIgnoreJoinResp
+{
+}
+
+// Group admins wanting to see who requested to join the group
+
+// requires(NONE)
+message UserGroupJoinListReq
+{
+    string groupId = 1;
+}
+
+message UserGroupJoinListResp
+{
+    repeated UserGroupJoinRequestDB requests = 1;
+}

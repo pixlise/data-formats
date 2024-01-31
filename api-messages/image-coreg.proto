@@ -1,0 +1,38 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// The structure passed to us by MarsViewer
+
+message MVPoint
+{
+	float Line = 1; // @gotags: json:"line"
+	float Sample = 2; // @gotags: json:"sample"
+	int32 SpectrumNumber = 3; // @gotags: json:"spectrum_number"
+}
+
+message MVObservation
+{
+	bool Interpolated = 1; // @gotags: json:"interpolated"
+	string ObservationCSVFilename = 2; // @gotags: json:"observationCSVFilename"
+	string ContextImageUrl = 3; // @gotags: json:"contextImageUrl"
+	int32 Site = 4; // @gotags: json:"site"
+	int32 Drive = 5; // @gotags: json:"drive"
+	repeated MVPoint OriginalPoints = 6; // @gotags: json:"originalPoints"
+	repeated MVPoint TranslatedPoints = 7; // @gotags: json:"translatedPoints"
+}
+
+message MVWarpedOverlayImage
+{
+	bool Interpolated = 1; // @gotags: json:"interpolated"
+	string MappedImageUrl = 2; // @gotags: json:"mappedImageUrl"
+	string WarpedImageUrl = 3; // @gotags: json:"warpedImageUrl"
+}
+
+message MarsViewerExport
+{
+	repeated MVObservation Observations = 1; // @gotags: json:"observations"
+	string BaseImageUrl = 2; // @gotags: json:"baseImageUrl"
+	repeated MVWarpedOverlayImage WarpedOverlayImages = 3; // @gotags: json:"warpedOverlayImages"
+	string MarsviewerLink = 4; // @gotags: json:"marsviewerLink"
+}

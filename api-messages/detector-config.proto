@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message DetectorConfig
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    int32 minElement = 2;
+    int32 maxElement = 3;
+    int32 xrfeVLowerBound = 4;
+    int32 xrfeVUpperBound = 5;
+    int32 xrfeVResolution = 6;
+    int32 windowElement = 7;
+    int32 tubeElement = 8;
+    string defaultParams = 9;
+    float mmBeamRadius = 10;
+}

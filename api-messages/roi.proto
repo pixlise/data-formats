@@ -1,0 +1,68 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+message MistROIItem
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+    string species = 3;
+    string mineralGroupID = 4;
+    int32 idDepth = 5;
+    string classificationTrail = 6;
+    string formula = 7;
+}
+
+message ROIItemDisplaySettings
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string shape = 2;
+    string colour = 3;
+}
+
+message ROIItem
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+	string name = 3;
+    string description = 4;
+    repeated int32 scanEntryIndexesEncoded = 5;
+    string imageName = 6;
+    
+    repeated int32 pixelIndexesEncoded = 7;
+
+    // Only sent out by API, not stored in DB this way
+    MistROIItem mistROIItem = 8;
+    bool isMIST = 9;
+
+    repeated string tags = 10;
+
+    uint32 modifiedUnixSec = 11;
+
+    ROIItemDisplaySettings displaySettings = 12;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 13; // @gotags: bson:"-"
+}
+
+message ROIItemSummary
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string scanId = 2;
+	string name = 3;
+    string description = 4;
+    string imageName = 5;
+    repeated string tags = 6;
+    
+    uint32 modifiedUnixSec = 7;
+
+    // Only sent out by API, not stored in DB this way
+    MistROIItem mistROIItem = 8;
+    bool isMIST = 9;
+
+    ROIItemDisplaySettings displaySettings = 10;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 11; // @gotags: bson:"-"
+}

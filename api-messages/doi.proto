@@ -1,0 +1,191 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+message DOIRelatedIdentifier
+{
+    string identifier = 1;
+    string relation = 2;
+}
+
+message DOICreator {
+    string name = 1;
+    string affiliation = 2;
+    string orcid = 3;
+}
+
+message DOIContributor {
+    string name = 1;
+    string affiliation = 2;
+    string orcid = 3;
+    string type = 4;
+}
+
+message DOIMetadata {
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string title = 2;
+    repeated DOICreator creators = 3;
+    string description = 4;
+    string keywords = 5;
+    string notes = 6;
+    repeated DOIRelatedIdentifier relatedIdentifiers = 7;
+    repeated DOIContributor contributors = 8;
+    string references = 9;
+    string version = 10;
+    string doi = 11;
+    string doiBadge = 12;
+    string doiLink = 13;
+}
+
+message ZenodoFileLink {
+    string download = 1;
+    string self = 2;
+}
+
+message ZenodoFile {
+    string checksum = 1;
+    string filename = 2;
+    uint32 filesize = 3;
+    string id = 4;
+    ZenodoFileLink links = 5;
+}
+
+message ZenodoLinks {
+    string badge = 1;
+    string bucket = 2;
+    string conceptBadge = 3;
+    string conceptDOI = 4;
+    string doi = 5;
+    string latest = 6;
+    string latestHTML = 7; // @gotags: json:"latest_html"
+    string record = 8;
+    string recordHTML = 9; // @gotags: json:"record_html"
+}
+
+message ZenodoDraftLinks {
+    string bucket = 1;
+    string discard = 2;
+    string edit = 3;
+    string files = 4;
+    string html = 5;
+    string latestDraft = 6; // @gotags: json:"latest_draft"
+    string latestDraftHTML = 7; // @gotags: json:"latest_draft_html"
+    string publish = 8;
+    string self = 9;
+}
+
+message ZenodoCommunity {
+    string identifier = 1;
+}
+
+message ZenodoNameCreator {
+    string name = 1;
+}
+
+message ZenodoNameAffiliationCreator {
+    string name = 1;
+    string affiliation = 2;
+}
+
+message ZenodoPrereserveDOI {
+    string doi = 1;
+    uint32 recid = 2;
+}
+
+message ZenodoPublishResponseMetadata {
+    string accessRight = 1; // @gotags: json:"access_right"
+    repeated ZenodoCommunity communities = 2;
+    repeated ZenodoNameCreator creators = 3;
+    string description = 4;
+    string doi = 5;
+    string license = 6;
+    ZenodoPrereserveDOI prereserveDOI = 7; // @gotags: json:"prereserve_doi"
+    string publicationDate = 8; // @gotags: json:"publication_date"
+    string title = 9;
+    string uploadType = 10; // @gotags: json:"upload_type"
+}
+
+message ZenodoPublishResponse {
+    string conceptDOI = 1; // @gotags: json:"conceptdoi"
+    string conceptRecID = 2; // @gotags: json:"conceptrecid"
+    string created = 3;
+    string doi = 4;
+    string doiURL = 5; // @gotags: json:"doi_url"
+    repeated ZenodoFile files = 6;
+    uint32 id = 7;
+    ZenodoLinks links = 8;
+    ZenodoPublishResponseMetadata metadata = 9;
+    string modified = 10;
+    uint32 owner = 11;
+    uint32 recordID = 12; // @gotags: json:"record_id"
+    string state = 13;
+    bool submitted = 14;
+    string title = 15;
+}
+
+message ZenodoDepositionMetadata {
+    string accessRight = 1; // @gotags: json:"access_right"
+    repeated ZenodoCommunity communities = 2;
+    repeated ZenodoNameAffiliationCreator creators = 3;
+    string description = 4;
+    string doi = 5;
+    string license = 6;
+    ZenodoPrereserveDOI prereserveDOI = 7; // @gotags: json:"prereserve_doi"
+    string publicationDate = 8; // @gotags: json:"publication_date"
+    string title = 9;
+    string uploadType = 10; // @gotags: json:"upload_type"
+}
+
+message ZenodoMetaResponse {
+    string conceptRecID = 1; // @gotags: json:"conceptrecid"
+    string created = 2;
+    string doi = 3;
+    string doiURL = 4; // @gotags: json:"doi_url"
+    repeated ZenodoFile files = 5;
+    uint32 id = 6;
+    ZenodoLinks links = 7;
+    ZenodoDepositionMetadata metadata = 8;
+    string modified = 9;
+    uint32 owner = 10;
+    uint32 recordID = 11; // @gotags: json:"record_id"
+    string state = 12;
+    bool submitted = 13;
+    string title = 14;
+}
+
+message ZenodoDepositionResponse {
+    string conceptRecID = 1; // @gotags: json:"conceptrecid"
+    string created = 2;
+
+    repeated ZenodoFile files = 3;
+
+    uint32 id = 4;
+    ZenodoDraftLinks links = 5;
+    ZenodoPrereserveDOI metadata = 6;
+
+    uint32 owner = 7;
+    uint32 recordID = 8; // @gotags: json:"record_id"
+    string state = 9;
+    bool submitted = 10;
+    string title = 11;
+}
+
+message ZenodoFileUploadsLink {
+    string self = 1;
+    string version = 2;
+    string uploads = 3;
+}
+
+message ZenodoFileUploadResponse {
+    string key = 1;
+    string mimetype = 2;
+    string checksum = 3;
+    string versionID = 4; // @gotags: json:"version_id"
+    uint32 size = 5;
+    string created = 6;
+    string updated = 7;
+
+    ZenodoFileUploadsLink links = 8;
+
+    bool isHead = 9; // @gotags: json:"is_head"
+    bool deleteMarker = 10; // @gotags: json:"delete_marker"
+}

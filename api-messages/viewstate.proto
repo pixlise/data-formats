@@ -1,0 +1,67 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+// import "element-set.proto";
+
+
+////////////////////////////////////
+// View State
+
+// message ViewState
+// {
+// 	string id = 1; // @gotags: bson:"_id,omitempty"
+// 	//string scanId = 2;
+// 	string userId = 3;
+
+//     AnalysisLayout analysisLayout = 4;
+
+//     map<string, ContextImageState> contextImages = 5;
+//     map<string, HistogramState> histograms = 6;
+//     map<string, ChordState> chordDiagrams = 7;
+//     map<string, TernaryState> ternaryPlots = 8;
+//     map<string, BinaryState> binaryPlots = 9;
+//     map<string, TableState> tables = 10;
+//     map<string, ROIQuantTableState> roiQuantTables = 11;
+//     map<string, VariogramState> variograms = 12;
+//     map<string, SpectrumWidgetState> spectrums = 13;
+//     map<string, RGBUPlotWidgetState> rgbuPlots = 14;
+//     map<string, SingleAxisRGBUWidgetState> singleAxisRGBU = 15;
+//     map<string, RGBUImagesWidgetState> rgbuImages = 16;
+//     map<string, ParallelogramWidgetState> parallelograms = 17;
+
+//     AnnotationDisplayState annotations = 18;
+
+//     // Not strictly the view-state of a widget, but the shared display state of ROIs
+//     // for the given user/dataset
+//     ROIDisplayState rois = 19;
+
+//     QuantificationState quantification = 20;
+
+//     SelectionState selection = 21;
+// }
+
+////////////////////////////////////
+// States of individual widgets
+message AnalysisLayout
+{
+    repeated string topWidgetSelectors = 1;
+    repeated string bottomWidgetSelectors = 2;
+}
+
+message QuantificationState
+{
+    string appliedQuantID = 1;
+}
+
+message SelectionState
+{
+    // PMC selection world
+    string roiID = 1;
+    string roiName = 2;
+    repeated int32  locIdxs = 3;
+
+    // PIXEL selection world (Added for RGBU)
+    string pixelSelectionImageName = 4;
+    repeated int32  pixelIdxs = 5;
+    repeated int32  cropPixelIdxs = 6;
+}

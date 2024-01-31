@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// Defines beam locations of an individual location
+message Coordinate2D
+{
+    float i = 1;
+    float j = 2;
+}
+
+// Locations relative to the image
+message ImageLocationsForScan
+{
+    // Which scan these are for
+    string scanId = 1;
+    uint32 beamVersion = 3;
+
+    // The coordinates per entry within the scan (entry Id but entry index)
+    // NOTE: This must have the same size as the scan entry array, otherwise
+    //       how do we know which coordinate maps to which scan entry?
+    repeated Coordinate2D locations = 2;
+}
+
+// Full structure of an image and all locations returned along with the scan
+// they are relative to
+message ImageLocations
+{
+    string imageName = 1; // @gotags: bson:"_id,omitempty"
+    repeated ImageLocationsForScan locationPerScan = 2;
+}

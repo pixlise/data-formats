@@ -1,0 +1,70 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expressions.proto";
+import "search-params.proto";
+
+
+/* Original:
+-PUT    /data-expression/execution-stat/{id}                 -> write:data-analysis
+-DELETE /data-expression/{id}                                -> write:data-analysis
+-GET    /data-expression/{id}                                -> public
+-PUT    /data-expression/{id}                                -> write:data-analysis
+-GET    /data-expression                                     -> public
+-POST   /data-expression                                     -> write:data-analysis
+*/
+
+// requires(NONE)
+message ExpressionListReq
+{
+    SearchParams searchParams = 1;
+}
+
+message ExpressionListResp
+{
+    map<string, DataExpression> expressions = 1;
+}
+
+// requires(NONE)
+message ExpressionGetReq
+{
+    string id = 1;
+}
+
+message ExpressionGetResp
+{
+    DataExpression expression = 1;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EDIT_EXPRESSION)
+message ExpressionWriteReq
+{
+    DataExpression expression = 1;
+}
+
+message ExpressionWriteResp
+{
+    DataExpression expression = 1;
+}
+
+// requires(EDIT_EXPRESSION)
+message ExpressionDeleteReq
+{
+    string id = 1;
+}
+
+message ExpressionDeleteResp
+{
+}
+
+// requires(NONE)
+message ExpressionWriteExecStatReq
+{
+    string id = 1;
+    DataExpressionExecStats stats = 2;
+}
+
+message ExpressionWriteExecStatResp
+{
+}

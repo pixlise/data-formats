@@ -1,0 +1,80 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user-group.proto";
+
+
+////////////////////////////////////////////////////////////////
+// Adding and deleting members from the group
+// Should only be accessible to group admins and sys admins
+// requires(NONE)
+message UserGroupAddMemberReq
+{
+    string groupId = 1;
+
+    // Can add a group or a user id to this
+    oneof Member {
+        string groupMemberId = 2;
+        string userMemberId = 3;
+    }
+}
+
+message UserGroupAddMemberResp
+{
+    UserGroup group = 1;
+}
+
+// requires(NONE)
+message UserGroupDeleteMemberReq
+{
+    string groupId = 1;
+    
+    // Can delete a group or a user id from this
+    oneof Member {
+        string groupMemberId = 2;
+        string userMemberId = 3;
+    }
+}
+
+message UserGroupDeleteMemberResp
+{
+    UserGroup group = 1;
+}
+
+
+////////////////////////////////////////////////////////////////
+// Adding and deleting viewers from the group
+// Should only be accessible to group admins and sys admins
+// requires(NONE)
+message UserGroupAddViewerReq
+{
+    string groupId = 1;
+
+    // Can add a group or a user id to this
+    oneof Viewer {
+        string groupViewerId = 2;
+        string userViewerId = 3;
+    }
+}
+
+message UserGroupAddViewerResp
+{
+    UserGroup group = 1;
+}
+
+// requires(NONE)
+message UserGroupDeleteViewerReq
+{
+    string groupId = 1;
+    
+    // Can delete a group or a user id from this
+    oneof Viewer {
+        string groupViewerId = 2;
+        string userViewerId = 3;
+    }
+}
+
+message UserGroupDeleteViewerResp
+{
+    UserGroup group = 1;
+}

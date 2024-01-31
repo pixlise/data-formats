@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "diffraction-data.proto";
+
+
+/* Original:
+-DELETE /diffraction/status/{DID}/{id}                       -> write:diffraction-peaks
+-GET    /diffraction/status/{DID}                            -> read:diffraction-peaks
+-POST   /diffraction/status/{statusid}/{DID}/{id}            -> write:diffraction-peaks
+*/
+
+// requires(NONE)
+message DiffractionPeakStatusListReq
+{
+    string scanId = 1;
+}
+
+message DiffractionPeakStatusListResp
+{
+    DetectedDiffractionPeakStatuses peakStatuses = 1; // id->peak status
+}
+
+// requires(EDIT_DIFFRACTION)
+message DiffractionPeakStatusWriteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+    string status = 3; // We let the UI define these
+}
+
+message DiffractionPeakStatusWriteResp
+{
+}
+
+// requires(EDIT_DIFFRACTION)
+message DiffractionPeakStatusDeleteReq
+{
+    string scanId = 1;
+    string diffractionPeakId = 2;
+}
+
+message DiffractionPeakStatusDeleteResp
+{
+}

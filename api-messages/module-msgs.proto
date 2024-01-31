@@ -1,0 +1,74 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "modules.proto";
+import "version.proto";
+
+
+/* Original:
+-GET    /data-module/{id}/{version}                          -> public
+-PUT    /data-module/{id}                                    -> write:data-analysis
+-GET    /data-module                                         -> public
+-POST   /data-module                                         -> write:data-analysis
+*/
+
+// requires(NONE)
+message DataModuleListReq
+{
+}
+
+message DataModuleListResp
+{
+    map<string, DataModule> modules = 1;
+}
+
+// requires(NONE)
+message DataModuleGetReq
+{
+    string id = 1;
+    SemanticVersion version = 2;
+}
+
+message DataModuleGetResp
+{
+    DataModule module = 1;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EDIT_EXPRESSION)
+message DataModuleWriteReq
+{
+    string id = 1;
+
+    string name = 2;
+    string comments = 3;
+    
+    // Must be empty if id is empty, this is only the
+    // initial source when creating with a blank id
+    string initialSourceCode = 4;
+    // Same as above...
+    repeated string initialTags = 5;
+}
+
+message DataModuleWriteResp
+{
+    // We return the created module with an initial version set
+    DataModule module = 1;
+}
+
+// requires(EDIT_EXPRESSION)
+message DataModuleAddVersionReq
+{
+    string moduleId = 1;
+    VersionField versionUpdate = 2;
+
+    string sourceCode = 3;
+    string comments = 4;
+    repeated string tags = 5;
+}
+
+message DataModuleAddVersionResp
+{
+    // We return the module with the created version set in it
+    DataModule module = 1;
+}

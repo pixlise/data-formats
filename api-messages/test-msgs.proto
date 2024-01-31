@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+
+
+/* Originals:
+-GET    /test/500                                            -> write:test-endpoints
+-GET    /test/503                                            -> write:test-endpoints
+-POST   /notification/test                                   -> write:piquant-config
+*/
+
+// For asking the API to run self-tests, eg simulating certian kinds of errors
+// allowing us to see if they are logged/reported as expected, to compare
+// to runtime user activity. Also allow implementation of notification test msgs
+// to be sent out so we can verify they are showing up as expected
+
+// requires(PIXLISE_ADMIN)
+message RunTestReq
+{
+    string testType = 1; // Free-form, API may interpret this however
+    string testParameters = 2; // Free-form, API may interpret this however
+}
+
+message RunTestResp
+{
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan-entry-metadata.proto";
+import "scan.proto";
+
+
+// requires(NONE)
+message ScanEntryMetadataReq
+{
+    string scanId = 1;
+    ScanEntryRange entries = 2;
+}
+
+message ScanEntryMetadataResp
+{
+    repeated ScanEntryMetadata entries = 1;
+}

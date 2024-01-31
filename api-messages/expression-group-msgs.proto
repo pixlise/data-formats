@@ -1,0 +1,58 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expression-group.proto";
+import "search-params.proto";
+
+
+/* Originals:
+-DELETE /rgb-mix/{id}                                        -> write:data-analysis
+-PUT    /rgb-mix/{id}                                        -> write:data-analysis
+-GET    /rgb-mix                                             -> public
+-POST   /rgb-mix                                             -> write:data-analysis
+*/
+
+// TODO: Paginate?
+// requires(NONE)
+message ExpressionGroupListReq
+{
+    SearchParams searchParams = 1;
+}
+
+message ExpressionGroupListResp
+{
+    map<string, ExpressionGroup> groups = 1;
+}
+
+// requires(NONE)
+message ExpressionGroupGetReq
+{
+    string id = 1;
+}
+
+message ExpressionGroupGetResp
+{
+    ExpressionGroup group = 1;
+}
+
+// If id is blank, assume its new and generate an ID to return, otherwise update & return same one
+// requires(EDIT_EXPRESSION_GROUP)
+message ExpressionGroupWriteReq
+{
+    ExpressionGroup group = 1;
+}
+
+message ExpressionGroupWriteResp
+{
+    ExpressionGroup group = 1;
+}
+
+// requires(EDIT_EXPRESSION_GROUP)
+message ExpressionGroupDeleteReq
+{
+    string id = 1;
+}
+
+message ExpressionGroupDeleteResp
+{
+}

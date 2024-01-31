@@ -1,0 +1,353 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+/*
+import "scan-msgs.proto";
+import "job-msgs.proto";
+import "multi-quant.proto";
+import "quant-msgs.proto";
+*/
+
+import "detector-config-msgs.proto";
+import "diffraction-detected-peak-msgs.proto";
+import "diffraction-manual-msgs.proto";
+import "diffraction-status-msgs.proto";
+import "element-set-msgs.proto";
+import "export-msgs.proto";
+import "expression-group-msgs.proto";
+import "expression-msgs.proto";
+import "image-beam-location-msgs.proto";
+import "image-msgs.proto";
+import "image-coreg-msgs.proto";
+import "log-msgs.proto";
+import "memoisation-msgs.proto";
+import "module-msgs.proto";
+import "ownership-access-msgs.proto";
+import "piquant-msgs.proto";
+import "pseudo-intensities-msgs.proto";
+import "quantification-create.proto";
+import "quantification-management-msgs.proto";
+import "quantification-multi-msgs.proto";
+import "quantification-retrieval-msgs.proto";
+import "quantification-upload-msgs.proto";
+import "roi-msgs.proto";
+import "scan-beam-location-msgs.proto";
+import "scan-entry-metadata-msgs.proto";
+import "scan-entry-msgs.proto";
+import "scan-msgs.proto";
+import "selection-pixel-msgs.proto";
+import "selection-entry-msgs.proto";
+import "spectrum-msgs.proto";
+import "tag-msgs.proto";
+import "test-msgs.proto";
+import "user-group-management-msgs.proto";
+import "user-group-admins-msgs.proto";
+import "user-group-joining-msgs.proto";
+import "user-group-membership-msgs.proto";
+import "user-group-retrieval-msgs.proto";
+import "user-management-msgs.proto";
+import "user-msgs.proto";
+import "user-notification-msgs.proto";
+import "user-notification-setting-msgs.proto";
+import "doi-msgs.proto";
+import "screen-configuration-msgs.proto";
+import "widget-data-msgs.proto";
+
+// This is expected to appear in all Resp messages. It is
+// basically a replacement for HTTP status codes
+enum ResponseStatus
+{
+    WS_UNDEFINED = 0;
+    WS_OK = 1;
+    WS_NOT_FOUND = 2;
+    WS_BAD_REQUEST = 3;
+    WS_NO_PERMISSION = 4;
+    WS_SERVER_ERROR = 5;
+}
+
+////////////////////////////////////
+// Websocket messaging
+////////////////////////////////////
+
+// The overall wrapper WSMessage
+message WSMessage
+{
+    // Here are some fields that can be used external to the message contents for things
+    // external to the messages being delivered
+
+    // Message ID - think of this as a request ID to help associate requests and responses.
+    // Should be a number counting up for each request sent from client, responses should include the same number
+    // Other messages can leave this empty
+    uint32 msgId = 1;
+
+    // Response Status - only needs to be set on a response going back out of the API
+    // This replaces the HTTP status code, so we don't have to define this field
+    // in every response message (initially started doing that, but what if you need
+    // more fields, see the following one)
+    ResponseStatus status = 2;
+
+    // Error text - if the response status is not WS_OK, this can contain any error string we want to send back
+    string errorText = 3;
+
+    oneof Contents
+    {
+        DataModuleAddVersionReq dataModuleAddVersionReq = 198;
+        DataModuleAddVersionResp dataModuleAddVersionResp = 199;
+        DataModuleGetReq dataModuleGetReq = 12;
+        DataModuleGetResp dataModuleGetResp = 13;
+        DataModuleListReq dataModuleListReq = 10;
+        DataModuleListResp dataModuleListResp = 11;
+        DataModuleWriteReq dataModuleWriteReq = 14;
+        DataModuleWriteResp dataModuleWriteResp = 15;
+        DetectedDiffractionPeaksReq detectedDiffractionPeaksReq = 224;
+        DetectedDiffractionPeaksResp detectedDiffractionPeaksResp = 225;
+        DetectorConfigListReq detectorConfigListReq = 258;
+        DetectorConfigListResp detectorConfigListResp = 259;
+        DetectorConfigReq detectorConfigReq = 16;
+        DetectorConfigResp detectorConfigResp = 17;
+        DiffractionPeakManualDeleteReq diffractionPeakManualDeleteReq = 18;
+        DiffractionPeakManualDeleteResp diffractionPeakManualDeleteResp = 19;
+        DiffractionPeakManualInsertReq diffractionPeakManualInsertReq = 22;
+        DiffractionPeakManualInsertResp diffractionPeakManualInsertResp = 23;
+        DiffractionPeakManualListReq diffractionPeakManualListReq = 20;
+        DiffractionPeakManualListResp diffractionPeakManualListResp = 21;
+        DiffractionPeakStatusDeleteReq diffractionPeakStatusDeleteReq = 24;
+        DiffractionPeakStatusDeleteResp diffractionPeakStatusDeleteResp = 25;
+        DiffractionPeakStatusListReq diffractionPeakStatusListReq = 26;
+        DiffractionPeakStatusListResp diffractionPeakStatusListResp = 27;
+        DiffractionPeakStatusWriteReq diffractionPeakStatusWriteReq = 28;
+        DiffractionPeakStatusWriteResp diffractionPeakStatusWriteResp = 29;
+        ElementSetDeleteReq elementSetDeleteReq = 30;
+        ElementSetDeleteResp elementSetDeleteResp = 31;
+        ElementSetGetReq elementSetGetReq = 32;
+        ElementSetGetResp elementSetGetResp = 33;
+        ElementSetListReq elementSetListReq = 34;
+        ElementSetListResp elementSetListResp = 35;
+        ElementSetWriteReq elementSetWriteReq = 36;
+        ElementSetWriteResp elementSetWriteResp = 37;
+        ExportFilesReq exportFilesReq = 38;
+        ExportFilesResp exportFilesResp = 39;
+        ExpressionDeleteReq expressionDeleteReq = 40;
+        ExpressionDeleteResp expressionDeleteResp = 41;
+        ExpressionGetReq expressionGetReq = 50;
+        ExpressionGetResp expressionGetResp = 51;
+        ExpressionGroupDeleteReq expressionGroupDeleteReq = 42;
+        ExpressionGroupDeleteResp expressionGroupDeleteResp = 43;
+        ExpressionGroupGetReq expressionGroupGetReq = 176;
+        ExpressionGroupGetResp expressionGroupGetResp = 177;
+        ExpressionGroupListReq expressionGroupListReq = 44;
+        ExpressionGroupListResp expressionGroupListResp = 45;
+        ExpressionGroupWriteReq expressionGroupWriteReq = 46;
+        ExpressionGroupWriteResp expressionGroupWriteResp = 47;
+        ExpressionListReq expressionListReq = 48;
+        ExpressionListResp expressionListResp = 49;
+        ExpressionWriteExecStatReq expressionWriteExecStatReq = 52;
+        ExpressionWriteExecStatResp expressionWriteExecStatResp = 53;
+        ExpressionWriteReq expressionWriteReq = 54;
+        ExpressionWriteResp expressionWriteResp = 55;
+        GetOwnershipReq getOwnershipReq = 172;
+        GetOwnershipResp getOwnershipResp = 173;
+        ImageBeamLocationsReq imageBeamLocationsReq = 190;
+        ImageBeamLocationsResp imageBeamLocationsResp = 191;
+        ImageDeleteReq imageDeleteReq = 58;
+        ImageDeleteResp imageDeleteResp = 59;
+        ImageGetDefaultReq imageGetDefaultReq = 262;
+        ImageGetDefaultResp imageGetDefaultResp = 263;
+        ImageGetReq imageGetReq = 264;
+        ImageGetResp imageGetResp = 265;
+        ImageListReq imageListReq = 60;
+        ImageListResp imageListResp = 61;
+        ImageListUpd imageListUpd = 278;
+        ImageSetDefaultReq imageSetDefaultReq = 63;
+        ImageSetDefaultResp imageSetDefaultResp = 64;
+        ImageSetMatchTransformReq imageSetMatchTransformReq = 266;
+        ImageSetMatchTransformResp imageSetMatchTransformResp = 267;
+        ImageUploadReq imageUploadReq = 65;
+        ImageUploadResp imageUploadResp = 66;
+        ImportMarsViewerImageReq importMarsViewerImageReq = 273;
+        ImportMarsViewerImageResp importMarsViewerImageResp = 274;
+        ImportMarsViewerImageUpd importMarsViewerImageUpd = 275;
+        LogGetLevelReq logGetLevelReq = 67;
+        LogGetLevelResp logGetLevelResp = 68;
+        LogReadReq logReadReq = 69;
+        LogReadResp logReadResp = 70;
+        LogSetLevelReq logSetLevelReq = 71;
+        LogSetLevelResp logSetLevelResp = 72;
+        MemoiseGetReq memoiseGetReq = 283;
+        MemoiseGetResp memoiseGetResp = 284;
+        MemoiseWriteReq memoiseWriteReq = 56;
+        MemoiseWriteResp memoiseWriteResp = 57;
+        MultiQuantCompareReq multiQuantCompareReq = 200;
+        MultiQuantCompareResp multiQuantCompareResp = 201;
+        ObjectEditAccessReq objectEditAccessReq = 174;
+        ObjectEditAccessResp objectEditAccessResp = 175;
+        PiquantConfigListReq piquantConfigListReq = 73;
+        PiquantConfigListResp piquantConfigListResp = 74;
+        PiquantConfigVersionReq piquantConfigVersionReq = 75;
+        PiquantConfigVersionResp piquantConfigVersionResp = 76;
+        PiquantConfigVersionsListReq piquantConfigVersionsListReq = 77;
+        PiquantConfigVersionsListResp piquantConfigVersionsListResp = 78;
+        PiquantCurrentVersionReq piquantCurrentVersionReq = 79;
+        PiquantCurrentVersionResp piquantCurrentVersionResp = 80;
+        PiquantVersionListReq piquantVersionListReq = 81;
+        PiquantVersionListResp piquantVersionListResp = 82;
+        PiquantWriteCurrentVersionReq piquantWriteCurrentVersionReq = 83;
+        PiquantWriteCurrentVersionResp piquantWriteCurrentVersionResp = 84;
+        PseudoIntensityReq pseudoIntensityReq = 85;
+        PseudoIntensityResp pseudoIntensityResp = 86;
+        PublishExpressionToZenodoReq publishExpressionToZenodoReq = 242;
+        PublishExpressionToZenodoResp publishExpressionToZenodoResp = 243;
+        QuantBlessReq quantBlessReq = 202;
+        QuantBlessResp quantBlessResp = 203;
+        QuantCombineListGetReq quantCombineListGetReq = 204;
+        QuantCombineListGetResp quantCombineListGetResp = 205;
+        QuantCombineListWriteReq quantCombineListWriteReq = 206;
+        QuantCombineListWriteResp quantCombineListWriteResp = 207;
+        QuantCombineReq quantCombineReq = 208;
+        QuantCombineResp quantCombineResp = 209;
+        QuantCreateReq quantCreateReq = 270;
+        QuantCreateResp quantCreateResp = 271;
+        QuantCreateUpd quantCreateUpd = 272;
+        QuantDeleteReq quantDeleteReq = 210;
+        QuantDeleteResp quantDeleteResp = 211;
+        QuantGetReq quantGetReq = 212;
+        QuantGetResp quantGetResp = 213;
+        QuantLastOutputGetReq quantLastOutputGetReq = 214;
+        QuantLastOutputGetResp quantLastOutputGetResp = 215;
+        QuantListReq quantListReq = 216;
+        QuantListResp quantListResp = 217;
+        QuantPublishReq quantPublishReq = 218;
+        QuantPublishResp quantPublishResp = 219;
+        QuantUploadReq quantUploadReq = 220;
+        QuantUploadResp quantUploadResp = 221;
+        RegionOfInterestBulkDuplicateReq regionOfInterestBulkDuplicateReq = 238;
+        RegionOfInterestBulkDuplicateResp regionOfInterestBulkDuplicateResp = 239;
+        RegionOfInterestBulkWriteReq regionOfInterestBulkWriteReq = 236;
+        RegionOfInterestBulkWriteResp regionOfInterestBulkWriteResp = 237;
+        RegionOfInterestDeleteReq regionOfInterestDeleteReq = 87;
+        RegionOfInterestDeleteResp regionOfInterestDeleteResp = 88;
+        RegionOfInterestDisplaySettingsGetReq regionOfInterestDisplaySettingsGetReq = 246;
+        RegionOfInterestDisplaySettingsGetResp regionOfInterestDisplaySettingsGetResp = 247;
+        RegionOfInterestDisplaySettingsWriteReq regionOfInterestDisplaySettingsWriteReq = 244;
+        RegionOfInterestDisplaySettingsWriteResp regionOfInterestDisplaySettingsWriteResp = 245;
+        RegionOfInterestGetReq regionOfInterestGetReq = 91;
+        RegionOfInterestGetResp regionOfInterestGetResp = 92;
+        RegionOfInterestListReq regionOfInterestListReq = 89;
+        RegionOfInterestListResp regionOfInterestListResp = 90;
+        RegionOfInterestWriteReq regionOfInterestWriteReq = 93;
+        RegionOfInterestWriteResp regionOfInterestWriteResp = 94;
+        RunTestReq runTestReq = 95;
+        RunTestResp runTestResp = 96;
+        ScanAutoShareReq scanAutoShareReq = 279;
+        ScanAutoShareResp scanAutoShareResp = 280;
+        ScanAutoShareWriteReq scanAutoShareWriteReq = 281;
+        ScanAutoShareWriteResp scanAutoShareWriteResp = 282;
+        ScanBeamLocationsReq scanBeamLocationsReq = 192;
+        ScanBeamLocationsResp scanBeamLocationsResp = 193;
+        ScanDeleteReq scanDeleteReq = 276;
+        ScanDeleteResp scanDeleteResp = 277;
+        ScanEntryMetadataReq scanEntryMetadataReq = 194;
+        ScanEntryMetadataResp scanEntryMetadataResp = 195;
+        ScanEntryReq scanEntryReq = 196;
+        ScanEntryResp scanEntryResp = 197;
+        ScanListReq scanListReq = 99;
+        ScanListResp scanListResp = 100;
+        ScanListUpd scanListUpd = 101;
+        ScanMetaLabelsAndTypesReq scanMetaLabelsAndTypesReq = 104;
+        ScanMetaLabelsAndTypesResp scanMetaLabelsAndTypesResp = 105;
+        ScanMetaWriteReq scanMetaWriteReq = 106;
+        ScanMetaWriteResp scanMetaWriteResp = 107;
+        ScanTriggerReImportReq scanTriggerReImportReq = 108;
+        ScanTriggerReImportResp scanTriggerReImportResp = 109;
+        ScanTriggerReImportUpd scanTriggerReImportUpd = 269;
+        ScanUploadReq scanUploadReq = 110;
+        ScanUploadResp scanUploadResp = 111;
+        ScanUploadUpd scanUploadUpd = 268;
+        ScreenConfigurationDeleteReq screenConfigurationDeleteReq = 260;
+        ScreenConfigurationDeleteResp screenConfigurationDeleteResp = 261;
+        ScreenConfigurationGetReq screenConfigurationGetReq = 248;
+        ScreenConfigurationGetResp screenConfigurationGetResp = 249;
+        ScreenConfigurationListReq screenConfigurationListReq = 250;
+        ScreenConfigurationListResp screenConfigurationListResp = 251;
+        ScreenConfigurationWriteReq screenConfigurationWriteReq = 252;
+        ScreenConfigurationWriteResp screenConfigurationWriteResp = 253;
+        SelectedImagePixelsReq selectedImagePixelsReq = 226;
+        SelectedImagePixelsResp selectedImagePixelsResp = 227;
+        SelectedImagePixelsWriteReq selectedImagePixelsWriteReq = 228;
+        SelectedImagePixelsWriteResp selectedImagePixelsWriteResp = 229;
+        SelectedScanEntriesReq selectedScanEntriesReq = 230;
+        SelectedScanEntriesResp selectedScanEntriesResp = 231;
+        SelectedScanEntriesWriteReq selectedScanEntriesWriteReq = 232;
+        SelectedScanEntriesWriteResp selectedScanEntriesWriteResp = 233;
+        SendUserNotificationReq sendUserNotificationReq = 112;
+        SendUserNotificationResp sendUserNotificationResp = 113;
+        SpectrumReq spectrumReq = 114;
+        SpectrumResp spectrumResp = 115;
+        TagCreateReq tagCreateReq = 116;
+        TagCreateResp tagCreateResp = 117;
+        TagDeleteReq tagDeleteReq = 118;
+        TagDeleteResp tagDeleteResp = 119;
+        TagListReq tagListReq = 120;
+        TagListResp tagListResp = 121;
+        UserAddRoleReq userAddRoleReq = 122;
+        UserAddRoleResp userAddRoleResp = 123;
+        UserDeleteRoleReq userDeleteRoleReq = 124;
+        UserDeleteRoleResp userDeleteRoleResp = 125;
+        UserDetailsReq userDetailsReq = 126;
+        UserDetailsResp userDetailsResp = 127;
+        UserDetailsWriteReq userDetailsWriteReq = 129;
+        UserDetailsWriteResp userDetailsWriteResp = 130;
+        UserGroupAddAdminReq userGroupAddAdminReq = 156;
+        UserGroupAddAdminResp userGroupAddAdminResp = 157;
+        UserGroupAddMemberReq userGroupAddMemberReq = 158;
+        UserGroupAddMemberResp userGroupAddMemberResp = 159;
+        UserGroupAddViewerReq userGroupAddViewerReq = 180;
+        UserGroupAddViewerResp userGroupAddViewerResp = 181;
+        UserGroupCreateReq userGroupCreateReq = 160;
+        UserGroupCreateResp userGroupCreateResp = 161;
+        UserGroupDeleteAdminReq userGroupDeleteAdminReq = 162;
+        UserGroupDeleteAdminResp userGroupDeleteAdminResp = 163;
+        UserGroupDeleteMemberReq userGroupDeleteMemberReq = 164;
+        UserGroupDeleteMemberResp userGroupDeleteMemberResp = 165;
+        UserGroupDeleteReq userGroupDeleteReq = 166;
+        UserGroupDeleteResp userGroupDeleteResp = 167;
+        UserGroupDeleteViewerReq userGroupDeleteViewerReq = 178;
+        UserGroupDeleteViewerResp userGroupDeleteViewerResp = 179;
+        UserGroupIgnoreJoinReq userGroupIgnoreJoinReq = 182;
+        UserGroupIgnoreJoinResp userGroupIgnoreJoinResp = 183;
+        UserGroupJoinListReq userGroupJoinListReq = 184;
+        UserGroupJoinListResp userGroupJoinListResp = 185;
+        UserGroupJoinReq userGroupJoinReq = 186;
+        UserGroupJoinResp userGroupJoinResp = 187;
+        UserGroupListJoinableReq userGroupListJoinableReq = 234;
+        UserGroupListJoinableResp userGroupListJoinableResp = 235;
+        UserGroupListReq userGroupListReq = 168;
+        UserGroupListResp userGroupListResp = 169;
+        UserGroupReq userGroupReq = 188;
+        UserGroupResp userGroupResp = 189;
+        UserGroupSetNameReq userGroupSetNameReq = 170;
+        UserGroupSetNameResp userGroupSetNameResp = 171;
+        UserListReq userListReq = 138;
+        UserListResp userListResp = 139;
+        UserNotificationReq userNotificationReq = 140;
+        UserNotificationResp userNotificationResp = 141;
+        UserNotificationSettingsReq userNotificationSettingsReq = 142;
+        UserNotificationSettingsResp userNotificationSettingsResp = 143;
+        UserNotificationSettingsUpd userNotificationSettingsUpd = 144;
+        UserNotificationSettingsWriteReq userNotificationSettingsWriteReq = 145;
+        UserNotificationSettingsWriteResp userNotificationSettingsWriteResp = 146;
+        UserNotificationUpd userNotificationUpd = 147;
+        UserRoleListReq userRoleListReq = 148;
+        UserRoleListResp userRoleListResp = 149;
+        UserRolesListReq userRolesListReq = 150;
+        UserRolesListResp userRolesListResp = 151;
+        UserSearchReq userSearchReq = 222;
+        UserSearchResp userSearchResp = 223;
+        WidgetDataGetReq widgetDataGetReq = 254;
+        WidgetDataGetResp widgetDataGetResp = 255;
+        WidgetDataWriteReq widgetDataWriteReq = 256;
+        WidgetDataWriteResp widgetDataWriteResp = 257;
+        ZenodoDOIGetReq zenodoDOIGetReq = 240;
+        ZenodoDOIGetResp zenodoDOIGetResp = 241;
+    }
+}

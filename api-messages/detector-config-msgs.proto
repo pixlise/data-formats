@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "detector-config.proto";
+
+/* Original:
+-GET    /detector-config/{id}                                -> read:piquant-config
+*/
+
+// requires(NONE)
+message DetectorConfigReq
+{
+    string id = 1;
+}
+
+message DetectorConfigResp
+{
+    DetectorConfig config = 1;
+    repeated string piquantConfigVersions = 2;
+}
+
+// requires(NONE)
+message DetectorConfigListReq
+{
+    string id = 1;
+}
+
+message DetectorConfigListResp
+{
+    repeated string configs = 1;
+}

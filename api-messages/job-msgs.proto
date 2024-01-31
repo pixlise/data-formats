@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+//import "job.proto";
+
+/*
+Need messages for:
+- Job creation
+- Updates of job status as it's running
+- Job list viewing (admins)
+- Job log downloading
+- Job deletion (delete the fact that the job ran, not the quant output!)
+*/

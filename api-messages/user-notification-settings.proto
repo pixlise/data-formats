@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+enum NotificationMethod
+{
+    NOTIF_NONE = 0;
+    NOTIF_EMAIL = 1;
+    NOTIF_UI = 2;
+    NOTIF_BOTH = 3;
+}
+
+message UserNotificationSettings
+{
+    map<string, NotificationMethod> topicSettings = 1;
+}
+
+message UserNotification
+{
+    string subject = 1; // The subject (shown on UI banner or email subject)
+    string contents = 2; // The contents (if user clicks on banner, or email body)
+
+    string from = 3; // Shows where the notification came from
+    uint32 timeStampUnixSec = 4;
+
+    //string scanId = 3;
+    string actionLink = 5;
+
+    // Type-specific values
+    map<string, string> meta = 6;
+}
+
+message UserNotificationDB
+{
+    string destUserId = 1; // The user this notification is destined for
+    UserNotification notification = 2;
+}

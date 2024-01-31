@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message LogLine
+{
+    uint32 timeStampUnixSec = 1;
+    uint32 timeStampMs = 2;
+    string message = 3;
+}

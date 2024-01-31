@@ -1,0 +1,30 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan.proto";
+
+
+// requires(NONE)
+message SelectedImagePixelsReq
+{
+    string image = 1;
+}
+
+message SelectedImagePixelsResp
+{
+    ScanEntryRange pixelIndexes = 1;
+}
+
+// requires(NONE)
+message SelectedImagePixelsWriteReq
+{
+    string image = 1;
+    ScanEntryRange pixelIndexes = 2;
+}
+
+message SelectedImagePixelsWriteResp
+{
+}
+
+// TODO: Potentially could have a SelectedImagePixelsUpd!!
+

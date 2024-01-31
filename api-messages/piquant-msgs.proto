@@ -1,0 +1,86 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "piquant-config.proto";
+
+
+/* Originals:
+-GET    /piquant/config/{id}/{versions}                      -> read:piquant-config
+-GET    /piquant/config/{id}/{version}/{version}             -> read:piquant-config
+-GET    /piquant/config                                      -> read:piquant-config
+-GET    /piquant/version                                     -> read:piquant-config
+-POST   /piquant/version                                     -> write:piquant-config
+
+(not implemented for now, do we use a signed link again?) GET    /piquant/download                                    -> download:piquant
+*/
+
+// Listing all available PIQUANT configs
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantConfigListReq
+{
+}
+
+message PiquantConfigListResp
+{
+    repeated string configNames = 1;
+}
+
+// Listing all available versions of a given PIQUANT config
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantConfigVersionsListReq
+{
+    string configId = 1;
+}
+
+message PiquantConfigVersionsListResp
+{
+    repeated string versions = 1;
+}
+
+// Getting a specific PIQUANT version
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantConfigVersionReq
+{
+    string configId = 1;
+    string version = 2;
+}
+
+message PiquantConfigVersionResp
+{
+    PiquantConfig piquantConfig = 1;
+}
+
+// Listing versions of PIQUANT container to run in API when quant is started
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantVersionListReq
+{
+}
+
+message PiquantVersionListResp
+{
+    repeated string piquantVersions = 1;
+}
+
+// Sets the current version of PIQUANT container to run in API when quant is started
+// requires(EDIT_PIQUANT_SETTINGS)
+message PiquantWriteCurrentVersionReq
+{
+    string piquantVersion = 1;
+}
+
+message PiquantWriteCurrentVersionResp
+{
+    string piquantVersion = 1;
+}
+
+// Gets the current version of PIQUANT container that runs in API when quant is started
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantCurrentVersionReq
+{
+}
+
+message PiquantCurrentVersionResp
+{
+    PiquantVersion piquantVersion = 1;
+}

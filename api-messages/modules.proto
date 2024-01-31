@@ -1,0 +1,54 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "version.proto";
+
+// Data Modules are "shared" by default
+message DataModuleDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string comments = 3;
+    uint32 modifiedUnixSec = 4;
+    
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 5;  // @gotags: bson:"-"
+}
+
+message DataModuleVersionDB
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string moduleId = 2;
+    SemanticVersion version = 3;
+    repeated string tags = 4;
+    string comments = 5;
+    uint32 timeStampUnixSec = 6;
+    string sourceCode = 7;
+    //DOIMetadata doiMetadata = 8;
+}
+
+message DataModuleVersion
+{
+    SemanticVersion version = 1;
+    repeated string tags = 2;
+    string comments = 3;
+    uint32 timeStampUnixSec = 4;
+    
+    // Optional - Get Module doesn't return this but querying a specific version does
+    string sourceCode = 5;
+
+    //DOIMetadata doiMetadata = 8;
+}
+
+// NOT stored in DB!
+message DataModule
+{
+    string id = 1;
+    string name = 2;
+    string comments = 3;
+    uint32 modifiedUnixSec = 4;
+
+    OwnershipSummary creator = 5;
+    repeated DataModuleVersion versions = 6;
+}

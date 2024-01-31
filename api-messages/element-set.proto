@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+
+
+message ElementLine
+{
+    int32 Z = 1;
+    bool K = 2;
+    bool L = 3;
+    bool M = 4;
+    bool Esc = 5;
+}
+
+message ElementSet
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+	string name = 2;
+    repeated ElementLine lines = 3;
+    uint32 modifiedUnixSec = 4;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 5;  // @gotags: bson:"-"
+}
+
+// This is a view of ElementSet, only to be used when viewing
+// a list of element sets, not intended to be in DB
+message ElementSetSummary
+{
+    string id = 1;
+	string name = 2;
+	repeated int32 atomicNumbers = 3;
+    uint32 modifiedUnixSec = 4;
+
+    OwnershipSummary owner = 5;
+}

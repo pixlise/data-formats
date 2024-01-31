@@ -1,0 +1,58 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "user.proto";
+
+
+message UserGroupList
+{
+    repeated string userIds = 1;
+    repeated string groupIds = 2;
+}
+
+enum ObjectType
+{
+    OT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    OT_ROI = 1;
+    OT_ELEMENT_SET = 2;
+    OT_EXPRESSION = 3;
+    OT_EXPRESSION_GROUP = 4;
+    OT_DATA_MODULE = 5;
+    OT_SCAN = 6;
+    OT_QUANTIFICATION = 7;
+    OT_SCREEN_CONFIG = 8;
+}
+
+message OwnershipItem
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    ObjectType objectType = 2; // What kind of object we're created for
+
+    // Creation info
+    string creatorUserId = 3;
+    uint32 createdUnixSec = 4;
+
+    // Who has view or edit access
+    UserGroupList viewers = 5;
+    UserGroupList editors = 6;
+
+    // So we don't have to update this every time the object changes, we
+    // allow this to be defined in the object on an as-needed basis
+    //uint32 modifiedUnixSec = 7;
+}
+
+message OwnershipSummary
+{
+    UserInfo creatorUser = 1;
+    uint32 createdUnixSec = 2;
+
+    uint32 viewerUserCount = 3;
+    uint32 viewerGroupCount = 4;
+    uint32 editorUserCount = 5;
+    uint32 editorGroupCount = 6;
+
+    bool sharedWithOthers = 7;
+
+    // The UI needs to know at a glance whether the current user can edit the item
+    bool canEdit = 8;
+}

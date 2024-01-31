@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message PseudoIntensityData
+{
+    uint32 id = 1; // In PIXL this is the PMC
+    repeated float intensities = 2;
+}

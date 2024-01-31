@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "pseudo-intensities.proto";
+import "scan.proto";
+
+
+// requires(NONE)
+message PseudoIntensityReq
+{
+    string scanId = 1;
+    ScanEntryRange entries = 2;
+}
+
+message PseudoIntensityResp
+{
+    repeated string intensityLabels = 1;
+    // One per location
+    repeated PseudoIntensityData data = 2;
+}

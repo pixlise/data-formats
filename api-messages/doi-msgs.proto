@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "doi.proto";
+
+
+// requires(EDIT_EXPRESSION)
+message PublishExpressionToZenodoReq
+{
+    string id = 1; // expression id
+    string output = 2; // Zipped expression output
+    DOIMetadata metadata = 3; // Filled out DOI metadata
+}
+
+message PublishExpressionToZenodoResp
+{
+    DOIMetadata doi = 1;
+}
+
+// requires(NONE)
+message ZenodoDOIGetReq
+{
+    string id = 1; // expression id
+}
+
+message ZenodoDOIGetResp
+{
+    DOIMetadata doi = 1;
+}

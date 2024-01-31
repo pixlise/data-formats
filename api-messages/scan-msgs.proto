@@ -1,0 +1,181 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan.proto";
+import "job.proto";
+
+
+
+/* Originals:
+-GET    /dataset/meta/{DID}                                  -> public
+-PUT    /dataset/meta/{DID}                                  -> write:dataset
+-POST   /dataset/reprocess/{DID}                             -> read:data-analysis
+-POST   /dataset/{DID}                                       -> write:dataset
+-GET    /dataset                                             -> public
+*/
+
+// Allows listing scans. Contains search fields. If these are all blank
+// all scans are returned
+// requires(NONE)
+message ScanListReq
+{
+    // Allows flexible fields, because scans have flexible metadata
+    // but for PIXL suggestions are:
+    //
+    // The scans ID:
+    // - scanId
+    //
+    // Meta fields (member of db meta struct):
+    // - Target, SiteId, Site, RTT, SCLK, Sol, DriveId, TargetId
+    //
+    // DB struct fields directly accessed:
+    // - title
+    // - description
+    // - instrument
+    // - instrumentConfig
+    // - timeStampUnixSec
+    //
+    // Fields that look at counts:
+    // (NOT IMPLEMENTED YET) - hasDwell
+    // (NOT IMPLEMENTED YET) - hasNormal
+    map<string, string> searchFilters = 1;
+
+    message MinMaxInt
+    {
+        int64 min = 1;
+        int64 max = 2;
+    }
+
+    // Allows specifying limits around meta values, such as in PIXL's
+    // case, we would allow:
+    // - sol
+    // - RTT
+    // - SCLK
+    // - PMCs
+    //
+    // Others (generic):
+    // - timeStampUnixSec
+    //
+    // (Otherwise use exact matching in searchFilters)
+    //(NOT IMPLEMENTED YET) map<string, MinMaxInt> searchMinMaxFilters = 2;
+}
+
+message ScanListResp
+{
+    repeated ScanItem scans = 1;
+}
+
+message ScanListUpd
+{
+    // This just notifies client that something changed... we don't send out a list
+    // of all scans because of the filtering possibilities in the request!
+    // If we added/modified or deleted a scan, that has to be re-requested by the client
+    // potentially after offering the user the option?
+}
+
+// This should trigger a ScanListUpd to go out
+// requires(EDIT_SCAN)
+message ScanUploadReq
+{
+    string id = 1;
+    string format = 2; // currently only allows jpl-breadboard
+    bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
+}
+
+message ScanUploadResp
+{
+    string jobId = 1;
+}
+
+message ScanUploadUpd
+{
+    JobStatus status = 1;
+}
+
+// Editing who to auto-share a scan with
+// requires(EDIT_SCAN)
+message ScanAutoShareReq
+{
+    string id = 1;
+}
+
+message ScanAutoShareResp
+{
+    ScanAutoShareEntry entry = 1;
+}
+
+// requires(EDIT_SCAN)
+message ScanAutoShareWriteReq
+{
+    ScanAutoShareEntry entry = 1;
+}
+
+message ScanAutoShareWriteResp
+{
+}
+
+
+// This should trigger a ScanListUpd to go out
+// requires(EDIT_SCAN)
+message ScanMetaWriteReq
+{
+    string scanId = 1;
+    string title = 2;
+    string description = 3;
+    //map<string, string> metaFields = 4;
+}
+
+message ScanMetaWriteResp
+{
+}
+
+// Triggering a re-import, should publish a ScanListUpd to go out
+// Useful really only if there is a pipeline hooked up for this kind of data that we
+// can re-trigger for. If it's a user-uploaded scan, we can't do anything really...
+// requires(EDIT_SCAN)
+message ScanTriggerReImportReq
+{
+    string scanId = 1;
+}
+
+message ScanTriggerReImportResp
+{
+    string jobId = 1;
+}
+
+message ScanTriggerReImportUpd
+{
+    JobStatus status = 1;
+}
+
+// Scan meta data:
+// Scan data that has labels refers to strings in this array
+// For example, spectra and housekeeping meta values, instead of storing the string 6000x
+// we store it once here and refer to it by index
+// Therefore, this is an early required download for a scans data to be interpretable
+// Types of the meta data values are also returned by this message
+
+// requires(NONE)
+message ScanMetaLabelsAndTypesReq
+{
+    string scanId = 1;
+}
+
+message ScanMetaLabelsAndTypesResp
+{
+    repeated string metaLabels = 1;
+    repeated ScanMetaDataType metaTypes = 2;
+}
+
+// This will fail if deleting a scan you are not an editor of, or if it's an FM dataset
+
+// requires(EDIT_SCAN)
+message ScanDeleteReq
+{
+    string scanId = 1;
+    string scanNameForVerification = 2;
+}
+
+message ScanDeleteResp
+{
+}

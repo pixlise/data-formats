@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "ownership-access.proto";
+import "version.proto";
+
+
+////////////////////////////////////
+// Expressions
+
+message DataExpression
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string sourceCode = 3;
+    string sourceLanguage = 4;
+    string comments = 5;
+    repeated string tags = 6;
+    repeated ModuleReference moduleReferences = 7;
+    DataExpressionExecStats recentExecStats = 8;
+
+    uint32 modifiedUnixSec = 9;
+
+    // Only sent out by API, not stored in DB this way
+    OwnershipSummary owner = 10; // @gotags: bson:"-"
+}
+
+message ModuleReference
+{
+    string moduleId = 1;
+    SemanticVersion version = 2;
+}
+
+message DataExpressionExecStats
+{
+    repeated string dataRequired = 1;
+    float runtimeMsPer1000Pts = 2; // @gotags: bson:"runtimeMsPer1000Pts,truncate"
+    uint32 timeStampUnixSec = 3;
+}
+
+message ExpressionResultItem
+{
+    int32 location = 1;
+    repeated float values = 2;
+}

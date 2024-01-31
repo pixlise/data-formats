@@ -1,0 +1,66 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "quantification-multi.proto";
+
+
+/* Originals:
+-POST /quantification/combine-list/<datasetID>
+-GET  /quantification/combine-list/<datasetID>
+-POST /quantification/combine/<datasetID>
+*/
+
+// requires(QUANTIFY)
+message QuantCombineReq
+{
+    string scanId = 1;
+	repeated QuantCombineItem roiZStack = 2;
+	string name = 3;
+	string description = 4;
+	bool summaryOnly = 5;
+}
+
+message QuantCombineResp
+{
+    oneof CombineResult {
+        string jobId = 1;
+        QuantCombineSummary summary = 2;
+    }
+}
+
+// requires(QUANTIFY)
+message QuantCombineListGetReq
+{
+    string scanId = 1;
+}
+
+message QuantCombineListGetResp
+{
+    QuantCombineItemList list = 1;
+}
+
+// requires(QUANTIFY)
+message QuantCombineListWriteReq
+{
+    string scanId = 1;
+    QuantCombineItemList list = 2;
+}
+
+message QuantCombineListWriteResp
+{
+}
+
+// requires(QUANTIFY)
+message MultiQuantCompareReq
+{
+    string scanId = 1;
+    string reqRoiId = 2;
+    repeated string quantIds = 3;
+    repeated int32 remainingPointsPMCs = 4;
+}
+
+message MultiQuantCompareResp
+{
+    string roiId = 1;
+	repeated QuantComparisonTable quantTables = 2;
+}

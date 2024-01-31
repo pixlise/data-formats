@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan-entry.proto";
+import "scan.proto";
+
+
+// requires(NONE)
+message ScanEntryReq
+{
+    string scanId = 1;
+    ScanEntryRange entries = 2;
+}
+
+message ScanEntryResp
+{
+    repeated ScanEntry entries = 1;
+}

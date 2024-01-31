@@ -1,0 +1,19 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "diffraction-data.proto";
+import "scan.proto";
+
+
+// requires(NONE)
+message DetectedDiffractionPeaksReq
+{
+    string scanId = 1;
+
+    ScanEntryRange entries = 2;
+}
+
+message DetectedDiffractionPeaksResp
+{
+    repeated DetectedDiffractionPerLocation peaksPerLocation = 1;
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "job.proto";
+
+
+// requires(EDIT_SCAN)
+message ImportMarsViewerImageReq
+{
+    string triggerUrl = 1;
+}
+
+message ImportMarsViewerImageResp
+{
+    string jobId = 1;
+}
+
+message ImportMarsViewerImageUpd
+{
+    JobStatus status = 1;
+}
