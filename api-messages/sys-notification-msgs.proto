@@ -25,7 +25,7 @@ message SysNotificationResp
 message SysNotificationUpd
 {
     SysNotifyReason reason = 1;
-    string scanId = 2;
+    repeated string scanIds = 2;
     string imageName = 3;
     string quantId = 4; 
 }
