@@ -38,6 +38,7 @@ import "scan-msgs.proto";
 import "selection-pixel-msgs.proto";
 import "selection-entry-msgs.proto";
 import "spectrum-msgs.proto";
+import "sys-notification-msgs.proto";
 import "tag-msgs.proto";
 import "test-msgs.proto";
 import "user-group-management-msgs.proto";
@@ -283,6 +284,9 @@ message WSMessage
         SendUserNotificationResp sendUserNotificationResp = 113;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
+        SysNotificationReq sysNotificationReq = 286;
+        SysNotificationResp sysNotificationResp = 287;
+        SysNotificationUpd sysNotificationUpd = 285;
         TagCreateReq tagCreateReq = 116;
         TagCreateResp tagCreateResp = 117;
         TagDeleteReq tagDeleteReq = 118;

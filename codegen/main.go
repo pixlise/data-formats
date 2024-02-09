@@ -733,6 +733,18 @@ func readProtoFile(protoPath string, messages *map[string]msgTypes, permissions 
 		}
 
 		if strings.HasPrefix(line, protoMessagePrefix) {
+			// NOTE: we only support syntax where { is on new line... eg:
+			//
+			// message MsgNameReq
+			// {
+			//
+			// as opposed to
+			// message MsgNameReq {
+
+			if strings.HasSuffix(line, "Req {") || strings.HasSuffix(line, "Resp {") || strings.HasSuffix(line, "Upd {") {
+				log.Fatalf("Expected { on new line: \"%v\" in %v on line: %v", line, protoPath, c+1)
+			}
+
 			// Check what kind of message
 			hasReq := strings.HasSuffix(line, "Req")
 			hasResp := strings.HasSuffix(line, "Resp")

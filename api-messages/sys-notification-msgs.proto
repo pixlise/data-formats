@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// System notifications telling the client what changed, so caches can be cleared as needed
+
+enum SysNotifyReason
+{
+    SNR_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    SNR_SCAN = 1;
+    SNR_IMAGE = 2;
+    SNR_QUANT = 3;
+}
+
+// These are only required right now because there's no other way to include the Upd msg
+// requires(NONE)
+message SysNotificationReq
+{
+}
+
+message SysNotificationResp
+{
+}
+
+message SysNotificationUpd
+{
+    SysNotifyReason reason = 1;
+    string scanId = 2;
+    string imageName = 3;
+    string quantId = 4; 
+}
