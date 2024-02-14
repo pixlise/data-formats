@@ -1,6 +1,8 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "scan.proto";
+
 
 // Defines beam locations of an individual location
 message Coordinate2D
@@ -15,6 +17,7 @@ message ImageLocationsForScan
     // Which scan these are for
     string scanId = 1;
     uint32 beamVersion = 3;
+    ScanInstrument instrument = 4;
 
     // The coordinates per entry within the scan (entry Id but entry index)
     // NOTE: This must have the same size as the scan entry array, otherwise
