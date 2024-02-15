@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+enum NotificationType
+{
+    NT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    NT_SYS_DATA_CHANGED = 1;
+    NT_USER_MESSAGE = 2;
+    NT_USER_MODAL = 3;
+    NT_NEW_USER = 4;
+}
+
+message Notification
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    string destUserId = 2; // The user this notification is destined for
+    string destUserGroupId = 3; // The group this notification is destined for
+
+    uint32 maxSecToExpiry = 4;
+
+    string subject = 5; // The subject (shown on UI banner or email subject)
+    string contents = 6; // The contents (if user clicks on banner, or email body)
+
+    string from = 7; // Shows where the notification came from
+    uint32 timeStampUnixSec = 8;
+
+    string actionLink = 9;
+
+    NotificationType notificationType = 10;
+
+    // Optional, depends on what type is set
+    repeated string scanIds = 11;
+    string imageName = 12;
+    string quantId = 13;
+}

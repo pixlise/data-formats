@@ -1,0 +1,49 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "notification.proto";
+
+
+////////////////////////////////////
+// Querying notification once connected - NOTE this also
+// effectively sets up client to receive updates
+
+// requires(NONE)
+message NotificationReq
+{
+}
+
+message NotificationResp
+{
+    repeated Notification notification = 1;
+}
+
+message NotificationUpd
+{
+    Notification notification = 2;
+}
+
+
+// requires(NONE)
+message NotificationDismissReq
+{
+    string id = 1;
+}
+
+message NotificationDismissResp
+{
+}
+
+// Admin-only feature, to send out a notification to all users
+// requires(PIXLISE_ADMIN)
+message SendUserNotificationReq
+{
+    repeated string userIds = 1;
+    repeated string groupIds = 2;
+    Notification notification = 3;
+}
+
+message SendUserNotificationResp
+{
+}
