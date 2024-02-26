@@ -9,6 +9,7 @@ enum NotificationType
     NT_USER_MESSAGE = 2;
     NT_USER_MODAL = 3;
     NT_NEW_USER = 4;
+    NT_JOIN_GROUP_REQUEST = 5;
 }
 
 message Notification
@@ -34,4 +35,5 @@ message Notification
     repeated string scanIds = 11;
     string imageName = 12;
     string quantId = 13;
+    string requestorUserId = 14; // For example, in case of join group request
 }
