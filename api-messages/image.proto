@@ -20,7 +20,11 @@ enum ScanImagePurpose
 // Describes a single image that is associated with a scan
 message ScanImage
 {
-    string name = 1; // @gotags: bson:"_id,omitempty"
+    // NOTE: This has to be unique, so it contains the scanId subdir that it's in. Eg for image named A.jpg
+    //       for scan 123 this will always be 123/A.jpg
+    //       Anything wanting to display just the image file name will have to use what's at the end of this path
+    string imagePath = 1; // @gotags: bson:"_id,omitempty"
+
     ScanImageSource source = 2;
     uint32 width = 3;
     uint32 height = 4;
@@ -39,11 +43,8 @@ message ScanImage
     // but other devices/imports could define a link to some original image location
     string originImageURL = 9;
 
-    // So client can send a HTTP GET and image gets cached by browser, etc
-    string path = 10;
-
     // If its "matched" to another image, this should be filled out
-    ImageMatchTransform matchInfo = 11;
+    ImageMatchTransform matchInfo = 10;
 }
 
 message ImageMatchTransform
