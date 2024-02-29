@@ -10,6 +10,7 @@ enum NotificationMethod
     NOTIF_BOTH = 3;
 }
 
+// NOTE: Need to ensure topic name (string key in map) is the same across all users of these messages!
 message UserNotificationSettings
 {
     map<string, NotificationMethod> topicSettings = 1;
