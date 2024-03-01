@@ -79,7 +79,12 @@ message ScanUploadReq
 {
     string id = 1;
     string format = 2; // currently only allows jpl-breadboard
-    bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
+
+    // NOTE: We used to send the zip data up here, but message size was never big enough
+    //       so instead of increasing that, we now have a PUT /scan endpoint to pass up
+    //       the zip first, then this can be called, passing the same scan id & file name
+    // bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
+    string zipFileName = 4;
 }
 
 message ScanUploadResp
