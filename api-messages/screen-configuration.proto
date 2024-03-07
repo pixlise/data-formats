@@ -53,6 +53,7 @@ message ScanConfiguration
 
     string quantId = 2;
     repeated ScanCalibrationConfiguration calibrations = 3;
+    string colour = 4;
 }
 
 message ScreenConfiguration
