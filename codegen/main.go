@@ -452,7 +452,7 @@ func varName(name string) string {
 func writeAngular(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes, angularOutPath string) {
 	angular := `// GENERATED CODE! Do not hand-modify
 
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 `
 	sourceImports := map[string][]string{}
 	sourceFiles := []string{}
@@ -475,41 +475,40 @@ import { Subject } from 'rxjs';
 			toAdd = append(toAdd, name+"Upd")
 		}
 
-		for _, add := range toAdd {
-			sourceImports[types.SourceFile] = append(sourceImports[types.SourceFile], add)
-		}
+		sourceImports[types.SourceFile] = append(sourceImports[types.SourceFile], toAdd...)
 	}
 
 	sort.Strings(sourceFiles)
 	for _, f := range sourceFiles {
 		is := sourceImports[f]
 		f = f[0 : len(f)-len(".proto")]
-		angular += "import {\n    " + strings.Join(is, ",\n    ") + ` } from "src/app/generated-protos/` + f + "\"\n"
+		angular += "import { " + strings.Join(is, ", ") + ` } from "src/app/generated-protos/` + f + "\"\n"
 	}
 
-	angular += `import { WSMessage, ResponseStatus } from "src/app/generated-protos/websocket"
+	angular += `import { WSMessage, ResponseStatus, responseStatusToJSON } from "src/app/generated-protos/websocket"
 
-export class WSError extends Error
-{
-	constructor(public status: ResponseStatus, public errorText: string, public messageName: string)
-	{
-		super(errorText);
-		this.name = "WSError";
-	}
+export class WSError extends Error {
+  constructor(
+    public status: ResponseStatus,
+    public errorText: string,
+    public messageName: string
+  ) {
+    super(errorText + " [" + messageName + ": " + responseStatusToJSON(status) + "]");
+    this.name = "WSError";
+  }
 }
 
 // Type-specific request send functions which return the right type of response
-export abstract class WSMessageHandler
-{
-    private _lastMsgId = 1;
+export abstract class WSMessageHandler {
+  private _lastMsgId = 1;
 
-	protected abstract sendRequest(msg: WSMessage): void;
+  protected abstract sendRequest(msg: WSMessage): void;
 
 `
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Upd {
-			angular += fmt.Sprintf("    public %vUpd$ = new Subject<%vUpd>();\n", varName(name), name)
+			angular += fmt.Sprintf("  public %vUpd$ = new Subject<%vUpd>();\n", varName(name), name)
 		}
 	}
 
@@ -517,81 +516,83 @@ export abstract class WSMessageHandler
 		types := msgs[name]
 		// If there is a request and response pair, generate a function for it
 		if types.Req && types.Resp {
-			angular += fmt.Sprintf("\n    protected _%vSubjects = new Map<number, Subject<%vResp>>();\n", name, name)
-			angular += fmt.Sprintf(`    send%vRequest(req: %vReq): Subject<%vResp> {
-        let wsreq = WSMessage.create({%vReq: req});
-        wsreq.msgId = this._lastMsgId++;
+			angular += fmt.Sprintf("\n  protected _%vSubjects = new Map<number, Subject<%vResp>>();\n", name, name)
+			angular += fmt.Sprintf(`  send%vRequest(req: %vReq): Subject<%vResp> {
+    const wsreq = WSMessage.create({ %vReq: req });
+    wsreq.msgId = this._lastMsgId++;
 
-		let subj = new Subject<%vResp>();
-        this._%vSubjects.set(wsreq.msgId, subj);
-        this.sendRequest(wsreq);
+    const subj = new Subject<%vResp>();
+    this._%vSubjects.set(wsreq.msgId, subj);
+    this.sendRequest(wsreq);
 
-		return subj;
-    }
+    return subj;
+  }
 `, name, name, name, varName(name), name, name)
 		}
 	}
 
 	angular += `
-    protected dispatchResponse(wsmsg: WSMessage): boolean {
+  protected dispatchResponse(wsmsg: WSMessage): boolean {
 `
 	firstIf := true
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Resp {
-			angular += "        "
+			angular += " "
 			if !firstIf {
 				angular += "else "
+			} else {
+				angular += "   "
 			}
 			firstIf = false
 
-			angular += fmt.Sprintf(`if(wsmsg.%vResp) {
-            let subj = this._%vSubjects.get(wsmsg.msgId);
-		    if(subj) {
-				if(wsmsg.status != ResponseStatus.WS_OK) {
-					subj.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
-				} else {
-			    	subj.next(wsmsg.%vResp);
-				}
-			    subj.complete();
-
-			    this._%vSubjects.delete(wsmsg.msgId);
-				return true;
-		    }
+			angular += fmt.Sprintf(`if (wsmsg.%vResp) {
+      const subj = this._%vSubjects.get(wsmsg.msgId);
+      if (subj) {
+        if (wsmsg.status != ResponseStatus.WS_OK) {
+          subj.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
+        } else {
+          subj.next(wsmsg.%vResp);
         }
-`, varName(name), name, name, varName(name), name)
+        subj.complete();
+
+        this._%vSubjects.delete(wsmsg.msgId);
+        return true;
+      }
+    }`, varName(name), name, name, varName(name), name)
 		}
 	}
 
 	angular += `
-        return false;
-	}
+    return false;
+  }
 `
 
 	angular += `
-    protected dispatchUpdate(wsmsg: WSMessage): boolean {
+  protected dispatchUpdate(wsmsg: WSMessage): boolean {
 `
 	firstIf = true
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Upd {
-			angular += "        "
+			angular += " "
 			if !firstIf {
 				angular += "else "
+			} else {
+				angular += "   "
 			}
 			firstIf = false
 
-			angular += fmt.Sprintf(`if(wsmsg.%vUpd) {
-            this.%vUpd$.next(wsmsg.%vUpd);
-			return true;
-        }
-`, varName(name), varName(name), varName(name))
+			angular += fmt.Sprintf(`if (wsmsg.%vUpd) {
+      this.%vUpd$.next(wsmsg.%vUpd);
+      return true;
+    }`, varName(name), varName(name), varName(name))
 		}
 	}
 
 	angular += `
-        return false;
-	}
+    return false;
+  }
 }
 
 export function getMessageName(wsmsg: WSMessage): string {
@@ -601,21 +602,22 @@ export function getMessageName(wsmsg: WSMessage): string {
 		msgVarName := varName(name)
 
 		if types.Req {
-			angular += fmt.Sprintf(`  if(wsmsg.%vReq) { return "%vReq"; }
+			angular += fmt.Sprintf(`  if (wsmsg.%vReq) { return "%vReq"; }
 `, msgVarName, msgVarName)
 		}
 		if types.Resp {
-			angular += fmt.Sprintf(`  if(wsmsg.%vResp) { return "%vResp"; }
+			angular += fmt.Sprintf(`  if (wsmsg.%vResp) { return "%vResp"; }
 `, msgVarName, msgVarName)
 		}
 		if types.Upd {
-			angular += fmt.Sprintf(`  if(wsmsg.%vUpd) { return "%vUpd"; }
+			angular += fmt.Sprintf(`  if (wsmsg.%vUpd) { return "%vUpd"; }
 `, msgVarName, msgVarName)
 		}
 	}
 
-	angular += `return "?";
-}`
+	angular += `  return "?";
+}
+`
 
 	err := os.WriteFile(angularOutPath, []byte(angular), 0644)
 	if err != nil {
