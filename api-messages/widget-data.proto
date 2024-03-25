@@ -198,6 +198,10 @@ message SingleAxisRGBUWidgetState
     string channelB = 3;
     bool roiStackedOverlap = 4;
     string imageName = 5;
+    float selectedMinValue = 6;
+    float selectedMaxValue = 7;
+    repeated string roiIds = 8;
+    bool showAllMineralLabels = 9;
 }
 
 message RGBUImagesWidgetState
