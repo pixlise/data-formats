@@ -216,6 +216,7 @@ message ParallelogramWidgetState
 {
     repeated string regions = 1;
     repeated string channels = 2;
+    string imageName = 3;
 }
 
 message WidgetData
