@@ -68,3 +68,27 @@ message ExpressionWriteExecStatReq
 message ExpressionWriteExecStatResp
 {
 }
+
+// The user is configuring an expression for their own use, but not editing it
+// requires(EDIT_OWN_USER)
+message ExpressionDisplaySettingsWriteReq
+{
+    string id = 1;
+    ExpressionDisplaySettings displaySettings = 2;
+}
+
+message ExpressionDisplaySettingsWriteResp
+{
+    ExpressionDisplaySettings displaySettings = 1;
+}
+
+// requires(NONE)
+message ExpressionDisplaySettingsGetReq
+{
+    string id = 1;
+}
+
+message ExpressionDisplaySettingsGetResp
+{
+    ExpressionDisplaySettings displaySettings = 1;
+}

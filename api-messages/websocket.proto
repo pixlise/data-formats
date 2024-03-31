@@ -129,6 +129,10 @@ message WSMessage
         ExportFilesResp exportFilesResp = 39;
         ExpressionDeleteReq expressionDeleteReq = 40;
         ExpressionDeleteResp expressionDeleteResp = 41;
+        ExpressionDisplaySettingsGetReq expressionDisplaySettingsGetReq = 288;
+        ExpressionDisplaySettingsGetResp expressionDisplaySettingsGetResp = 289;
+        ExpressionDisplaySettingsWriteReq expressionDisplaySettingsWriteReq = 290;
+        ExpressionDisplaySettingsWriteResp expressionDisplaySettingsWriteResp = 291;
         ExpressionGetReq expressionGetReq = 50;
         ExpressionGetResp expressionGetResp = 51;
         ExpressionGroupDeleteReq expressionGroupDeleteReq = 42;

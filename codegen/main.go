@@ -199,6 +199,8 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 		}
 	}
 
+	lineAbove := ""
+
 	exampleLines := []string{}
 	for _, msg := range sortedMsgs {
 		msgType := messages[msg]
@@ -217,7 +219,10 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 			idStr := ""
 			if id, ok := msgProtoIds[msgName]; ok {
 				idStr = fmt.Sprintf("%v", id)
+			} else if lineAbove == "" {
+				lineAbove = strings.Trim(exampleLines[len(exampleLines)-1], "\t ")
 			}
+
 			exampleLines = append(exampleLines, fmt.Sprintf("        "+msgName+" "+varName(msgName)+" = "+idStr+";"))
 		}
 	}
@@ -251,6 +256,16 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 		fmt.Println(line)
 	}
 
+	highestMsgId := 0
+	for _, id := range msgProtoIds {
+		if id > highestMsgId {
+			highestMsgId = id
+		}
+	}
+
+	fmt.Printf("\nWSMessage Path: %v\n", wsMsgFileName)
+	fmt.Printf("The next ID should be: %v\n", highestMsgId+1)
+	fmt.Printf("Insert Below Line: \"%v\"\n\n", lineAbove)
 	fmt.Println("----------------------------------------------------------------------")
 }
 

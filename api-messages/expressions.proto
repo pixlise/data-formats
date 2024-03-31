@@ -4,7 +4,6 @@ option go_package = ".;protos";
 import "ownership-access.proto";
 import "version.proto";
 
-
 ////////////////////////////////////
 // Expressions
 
@@ -42,4 +41,10 @@ message ExpressionResultItem
 {
     int32 location = 1;
     repeated float values = 2;
+}
+
+message ExpressionDisplaySettings
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string colourRamp = 2;
 }
