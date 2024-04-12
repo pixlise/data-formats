@@ -73,6 +73,17 @@ message ScanListUpd
     // potentially after offering the user the option?
 }
 
+// requires(NONE)
+message ScanGetReq
+{
+    string id = 1;
+}
+
+message ScanGetResp
+{
+    ScanItem scan = 1;
+}
+
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
 message ScanUploadReq

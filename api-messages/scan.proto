@@ -81,6 +81,7 @@ message ScanItem
     map<string, int32> contentCounts = 9;
 
     string creatorUserId = 10; // Optional, but dataset may have been uploaded by a given user
+    OwnershipSummary owner = 11; // @gotags: bson:"-"
 
     //AccessControl access = 12; // Who is allowed to access this scan <-- NOTE, this should be handled separately of dataset struct
     // and not returned to client!

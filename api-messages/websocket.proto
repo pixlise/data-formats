@@ -259,6 +259,8 @@ message WSMessage
         ScanEntryMetadataResp scanEntryMetadataResp = 195;
         ScanEntryReq scanEntryReq = 196;
         ScanEntryResp scanEntryResp = 197;
+        ScanGetReq scanGetReq = 292;
+        ScanGetResp scanGetResp = 293;
         ScanListReq scanListReq = 99;
         ScanListResp scanListResp = 100;
         ScanListUpd scanListUpd = 101;

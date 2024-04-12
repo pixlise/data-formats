@@ -200,6 +200,7 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 	}
 
 	lineAbove := ""
+	linesToInsert := []string{}
 
 	exampleLines := []string{}
 	for _, msg := range sortedMsgs {
@@ -219,8 +220,6 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 			idStr := ""
 			if id, ok := msgProtoIds[msgName]; ok {
 				idStr = fmt.Sprintf("%v", id)
-			} else if lineAbove == "" {
-				lineAbove = strings.Trim(exampleLines[len(exampleLines)-1], "\t ")
 			}
 
 			exampleLines = append(exampleLines, fmt.Sprintf("        "+msgName+" "+varName(msgName)+" = "+idStr+";"))
@@ -229,6 +228,19 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 
 	// Alphabetical order, so comparison is more useful!
 	sort.Strings(exampleLines)
+
+	// Search for "= ;" and insert below that
+	for i, line := range exampleLines {
+		if strings.Contains(line, "= ;") {
+			if lineAbove == "" {
+				lineAbove = strings.Trim(exampleLines[i-1], "\t ")
+			}
+
+			// Remove the ending so we can add on the latest ids later
+			line = strings.ReplaceAll(line, " = ;", "")
+			linesToInsert = append(linesToInsert, line)
+		}
+	}
 
 	// Print only if they differ...
 	printMsg := false
@@ -265,8 +277,13 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 
 	fmt.Printf("\nWSMessage Path: %v\n", wsMsgFileName)
 	fmt.Printf("The next ID should be: %v\n", highestMsgId+1)
-	fmt.Printf("Insert Below Line: \"%v\"\n\n", lineAbove)
-	fmt.Println("----------------------------------------------------------------------")
+	fmt.Printf("Insert Below Line: \"%v\"\n", lineAbove)
+	fmt.Printf("Lines to Insert:\n")
+	for i, line := range linesToInsert {
+		fmt.Printf("%v = %v;\n", line, highestMsgId+1+i)
+	}
+
+	fmt.Println("\n----------------------------------------------------------------------")
 }
 
 // With help from:
