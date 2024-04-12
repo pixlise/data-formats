@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "export.proto";
 
 enum ExportDataType
 {
@@ -41,5 +42,5 @@ message ExportFilesResp
 {
     // Just contains the zipped exported data. File name is irrelevant because we expect the UI to present this
     // as needed, potentially unzipping this in memory and zipping UI-generated files into the final output
-    bytes zipData = 1;
+    repeated ExportFile files = 1;
 }

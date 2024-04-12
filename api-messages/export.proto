@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+message ExportFile
+{
+    string name = 1;
+    string extension = 2;
+    bytes content = 3;
+}
