@@ -3,6 +3,7 @@ option go_package = ".;protos";
 
 import "roi.proto";
 import "search-params.proto";
+import "ownership-access.proto";
 
 
 /* Originals:
@@ -85,6 +86,9 @@ message RegionOfInterestBulkWriteReq
 
     bool isMIST = 4;
     repeated string mistROIScanIdsToDelete = 5; // List of scan ids to delete all MIST ROIs for
+
+    UserGroupList editors = 6; // List of groups that can edit the ROIs
+    UserGroupList viewers = 7; // List of groups that can view the ROIs
 }
 
 message RegionOfInterestBulkWriteResp
