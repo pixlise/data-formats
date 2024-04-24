@@ -139,6 +139,7 @@ message ScanMetaWriteReq
     string title = 2;
     string description = 3;
     //map<string, string> metaFields = 4;
+    repeated string tags= 5;
 }
 
 message ScanMetaWriteResp
