@@ -55,6 +55,7 @@ enum QuantOutputType
 message QuantLastOutputGetReq
 {
     QuantOutputType outputType = 1;
+    string scanId = 2;
 }
 
 message QuantLastOutputGetResp
