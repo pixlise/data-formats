@@ -85,6 +85,8 @@ message ScanItem
 
     //AccessControl access = 12; // Who is allowed to access this scan <-- NOTE, this should be handled separately of dataset struct
     // and not returned to client!
+
+    repeated string tags = 12;
 }
 
 enum ScanMetaDataType {
