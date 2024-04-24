@@ -56,6 +56,7 @@ message QuantLastOutputGetReq
 {
     QuantOutputType outputType = 1;
     string scanId = 2;
+    string piquantCommand = 3;
 }
 
 message QuantLastOutputGetResp
