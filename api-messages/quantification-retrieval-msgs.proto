@@ -44,12 +44,20 @@ message QuantGetResp
 
 // For FIT command, retrieves last quant output
 
+enum QuantOutputType
+{
+    QO_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    QO_DATA = 1;
+    QO_LOG = 2;
+}
+
 // requires(NONE)
 message QuantLastOutputGetReq
 {
+    QuantOutputType outputType = 1;
 }
 
 message QuantLastOutputGetResp
 {
-    // ???
+    string output = 1;
 }
