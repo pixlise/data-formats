@@ -111,9 +111,10 @@ message MapLayerVisibility
 
 message ROILayerVisibility
 {
-    string roiID = 1;
+    string id = 1;
     float opacity = 2;
     bool visible = 3;
+    string scanId = 4;
 }
 
 message ContextImageState
