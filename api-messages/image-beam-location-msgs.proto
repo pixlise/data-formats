@@ -9,6 +9,7 @@ message ImageBeamLocationsReq
 {
     string imageName = 1;
     uint32 beamVersion = 2;
+    string generateForScanId = 3;
 }
 
 message ImageBeamLocationsResp
