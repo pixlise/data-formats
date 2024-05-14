@@ -530,11 +530,17 @@ export class WSError extends Error {
   }
 }
 
+class WSOustandingReq {
+  constructor(public req: WSMessage, public sub: Subject<any>) {}
+}
+
 // Type-specific request send functions which return the right type of response
 export abstract class WSMessageHandler {
   private _lastMsgId = 1;
 
   protected abstract sendRequest(msg: WSMessage): void;
+
+  protected _outstandingRequests = new Map<number, WSOustandingReq>();
 
 `
 	for _, name := range sortedMsgs {
@@ -548,18 +554,17 @@ export abstract class WSMessageHandler {
 		types := msgs[name]
 		// If there is a request and response pair, generate a function for it
 		if types.Req && types.Resp {
-			angular += fmt.Sprintf("\n  protected _%vSubjects = new Map<number, Subject<%vResp>>();\n", name, name)
 			angular += fmt.Sprintf(`  send%vRequest(req: %vReq): Subject<%vResp> {
     const wsreq = WSMessage.create({ %vReq: req });
     wsreq.msgId = this._lastMsgId++;
 
     const subj = new Subject<%vResp>();
-    this._%vSubjects.set(wsreq.msgId, subj);
+    this._outstandingRequests.set(wsreq.msgId, new WSOustandingReq(wsreq, subj));
     this.sendRequest(wsreq);
 
     return subj;
   }
-`, name, name, name, varName(name), name, name)
+`, name, name, name, varName(name), name)
 		}
 	}
 
@@ -579,19 +584,19 @@ export abstract class WSMessageHandler {
 			firstIf = false
 
 			angular += fmt.Sprintf(`if (wsmsg.%vResp) {
-      const subj = this._%vSubjects.get(wsmsg.msgId);
-      if (subj) {
+      const outstanding = this._outstandingRequests.get(wsmsg.msgId);
+      if (outstanding) {
         if (wsmsg.status != ResponseStatus.WS_OK) {
-          subj.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
+          outstanding.sub.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
         } else {
-          subj.next(wsmsg.%vResp);
+          outstanding.sub.next(wsmsg.%vResp);
         }
-        subj.complete();
+        outstanding.sub.complete();
 
-        this._%vSubjects.delete(wsmsg.msgId);
+        this._outstandingRequests.delete(wsmsg.msgId);
         return true;
       }
-    }`, varName(name), name, name, varName(name), name)
+    }`, varName(name), name, varName(name))
 		}
 	}
 
