@@ -89,6 +89,9 @@ message WSMessage
     // Error text - if the response status is not WS_OK, this can contain any error string we want to send back
     string errorText = 3;
 
+    // Signalling this message is not yet complete, more will be sent
+    bool incomplete = 4;
+
     oneof Contents
     {
         DataModuleAddVersionReq dataModuleAddVersionReq = 198;
