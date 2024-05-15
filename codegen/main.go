@@ -536,15 +536,13 @@ export class WSError extends Error {
   }
 }
 
-class WSOustandingReq {
+export class WSOustandingReq {
   constructor(public req: WSMessage, public sub: Subject<any>) {}
 }
 
 // Type-specific request send functions which return the right type of response
 export abstract class WSMessageHandler {
-  private _lastMsgId = 1;
-
-  protected abstract sendRequest(msg: WSMessage): void;
+  protected abstract sendRequest(msg: WSMessage, subj: Subject<any>): void;
 
   protected _outstandingRequests = new Map<number, WSOustandingReq>();
 
@@ -560,54 +558,51 @@ export abstract class WSMessageHandler {
 		types := msgs[name]
 		// If there is a request and response pair, generate a function for it
 		if types.Req && types.Resp {
-			angular += fmt.Sprintf(`  send%vRequest(req: %vReq): Subject<%vResp> {
-    const wsreq = WSMessage.create({ %vReq: req });
-    wsreq.msgId = this._lastMsgId++;
-
+			angular += fmt.Sprintf(`
+  send%vRequest(req: %vReq): Subject<%vResp> {
     const subj = new Subject<%vResp>();
-    this._outstandingRequests.set(wsreq.msgId, new WSOustandingReq(wsreq, subj));
-    this.sendRequest(wsreq);
-
+    this.sendRequest(WSMessage.create({ %vReq: req }), subj);
     return subj;
   }
-`, name, name, name, varName(name), name)
+`, name, name, name, name, varName(name))
 		}
 	}
 
 	angular += `
   protected dispatchResponse(wsmsg: WSMessage): boolean {
+    const outstanding = this._outstandingRequests.get(wsmsg.msgId);
+    if (!outstanding) {
+      return false; // Expected to find this outstanding request
+    }
+
+    // We have someone waiting for it, check if it's an error
+    if (wsmsg.status != ResponseStatus.WS_OK) {
+      outstanding.sub.error(new WSError(wsmsg.status, wsmsg.errorText, getMessageName(wsmsg)));
+    }
+
 `
 	firstIf := true
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Resp {
-			angular += " "
+			angular += "    "
 			if !firstIf {
 				angular += "else "
-			} else {
-				angular += "   "
 			}
 			firstIf = false
 
-			angular += fmt.Sprintf(`if (wsmsg.%vResp) {
-      const outstanding = this._outstandingRequests.get(wsmsg.msgId);
-      if (outstanding) {
-        if (wsmsg.status != ResponseStatus.WS_OK) {
-          outstanding.sub.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
-        } else {
-          outstanding.sub.next(wsmsg.%vResp);
-        }
-        outstanding.sub.complete();
-
-        this._outstandingRequests.delete(wsmsg.msgId);
-        return true;
-      }
-    }`, varName(name), name, varName(name))
+			angular += fmt.Sprintf(`if (wsmsg.%vResp) { outstanding.sub.next(wsmsg.%vResp); }
+`, varName(name), varName(name))
 		}
 	}
 
 	angular += `
-    return false;
+    if (!wsmsg.incomplete) {
+      outstanding.sub.complete();
+      this._outstandingRequests.delete(wsmsg.msgId);
+    }
+
+    return true;
   }
 `
 
