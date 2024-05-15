@@ -341,7 +341,7 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 
 	goFunc += `
 
-func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.HandlerContext) (*protos.WSMessage, error) {
+func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.HandlerContext) ([]*protos.WSMessage, error) {
 	switch wsmsg.Contents.(type) {
 `
 	for _, name := range sortedMsgs {
@@ -353,17 +353,23 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.H
 			if types.RequiredPermission != "NONE" {
 				permCheck = fmt.Sprintf(`
             if !hctx.SessUser.Permissions["%v"] {
-			    return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}, nil
+			    return []*protos.WSMessage{&protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}}, nil
 			}
 `, types.RequiredPermission, name, name, name, name)
 			}
 
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:%v
-            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), hctx)
+            resps, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), hctx)
 			if err != nil {
-                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
+                return []*protos.WSMessage{&protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}}, nil
 			}
-			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK}, nil
+
+			result := []*protos.WSMessage{}
+			for c, resp := range resps {
+				result = append(result, &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK, Incomplete: (len(resps) - (c + 1)) > 0 })
+			}
+
+			return result, nil
 `, name, permCheck, name, name, name, name, name, name, name)
 		}
 	}
@@ -418,7 +424,7 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 
 			// Now that we know the out file struct exists, generate handler
 			funcName := fmt.Sprintf("Handle%vReq", msgName)
-			signature := fmt.Sprintf("func %v(req *protos.%vReq, hctx wsHelpers.HandlerContext) (*protos.%vResp, error)", funcName, msgName, msgName)
+			signature := fmt.Sprintf("func %v(req *protos.%vReq, hctx wsHelpers.HandlerContext) ([]*protos.%vResp, error)", funcName, msgName, msgName)
 			handler := signature + fmt.Sprintf(` {
     return nil, errors.New("%v not implemented yet")
 }
