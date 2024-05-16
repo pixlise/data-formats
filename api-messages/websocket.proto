@@ -63,6 +63,10 @@ enum ResponseStatus
     WS_BAD_REQUEST = 3;
     WS_NO_PERMISSION = 4;
     WS_SERVER_ERROR = 5;
+
+    // Really, this is likely a client-side error but included here
+    // so it's in the enum
+    WS_TIMEOUT = 6;
 }
 
 ////////////////////////////////////

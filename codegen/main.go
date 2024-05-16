@@ -489,6 +489,7 @@ func varName(name string) string {
 
 func writeAngular(allMsgTypes []string, sortedMsgs []string, msgs map[string]msgTypes, angularOutPath string) {
 	angular := `// GENERATED CODE! Do not hand-modify
+/* eslint-disable prettier/prettier */
 
 import { Subject } from "rxjs";
 `
@@ -520,10 +521,10 @@ import { Subject } from "rxjs";
 	for _, f := range sourceFiles {
 		is := sourceImports[f]
 		f = f[0 : len(f)-len(".proto")]
-		angular += "import { " + strings.Join(is, ", ") + ` } from "src/app/generated-protos/` + f + "\"\n"
+		angular += "import { " + strings.Join(is, ", ") + ` } from "src/app/generated-protos/` + f + "\";\n"
 	}
 
-	angular += `import { WSMessage, ResponseStatus, responseStatusToJSON } from "src/app/generated-protos/websocket"
+	angular += `import { WSMessage, ResponseStatus, responseStatusToJSON } from "src/app/generated-protos/websocket";
 
 export class WSError extends Error {
   constructor(
@@ -537,7 +538,18 @@ export class WSError extends Error {
 }
 
 export class WSOustandingReq {
-  constructor(public req: WSMessage, public sub: Subject<any>) {}
+  private _createTime: number = 0;
+  constructor(public req: WSMessage, public sub: Subject<any>) {
+    this.resetCreateTime();
+  }
+
+  resetCreateTime() {
+    this._createTime = performance.now();
+  }
+
+  get createTime(): number {
+    return this._createTime;
+  }
 }
 
 // Type-specific request send functions which return the right type of response
@@ -597,10 +609,8 @@ export abstract class WSMessageHandler {
 	}
 
 	angular += `
-    if (!wsmsg.incomplete) {
-      outstanding.sub.complete();
-      this._outstandingRequests.delete(wsmsg.msgId);
-    }
+    outstanding.sub.complete();
+    this._outstandingRequests.delete(wsmsg.msgId);
 
     return true;
   }
