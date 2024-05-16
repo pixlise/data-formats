@@ -341,7 +341,7 @@ func MakeUpdateWSMessage[T protos.` + strings.Join(allUpdMsgs, "|protos.") + `](
 
 	goFunc += `
 
-func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.HandlerContext) ([]*protos.WSMessage, error) {
+func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.HandlerContext) (*protos.WSMessage, error) {
 	switch wsmsg.Contents.(type) {
 `
 	for _, name := range sortedMsgs {
@@ -353,23 +353,18 @@ func (ws *WSHandler) dispatchWSMessage(wsmsg *protos.WSMessage, hctx wsHelpers.H
 			if types.RequiredPermission != "NONE" {
 				permCheck = fmt.Sprintf(`
             if !hctx.SessUser.Permissions["%v"] {
-			    return []*protos.WSMessage{&protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}}, nil
+			    return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: protos.ResponseStatus_WS_NO_PERMISSION, ErrorText: "%vReq not allowed"}, nil
 			}
 `, types.RequiredPermission, name, name, name, name)
 			}
 
 			goFunc += fmt.Sprintf(`        case *protos.WSMessage_%vReq:%v
-            resps, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), hctx)
+            resp, err := wsHandler.Handle%vReq(wsmsg.Get%vReq(), hctx)
 			if err != nil {
-                return []*protos.WSMessage{&protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}}, nil
+                return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: &protos.%vResp{}}, Status: makeRespStatus(err), ErrorText: err.Error()}, nil
 			}
 
-			result := []*protos.WSMessage{}
-			for c, resp := range resps {
-				result = append(result, &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK, Incomplete: (len(resps) - (c + 1)) > 0 })
-			}
-
-			return result, nil
+			return &protos.WSMessage{Contents: &protos.WSMessage_%vResp{%vResp: resp}, Status: protos.ResponseStatus_WS_OK }, nil
 `, name, permCheck, name, name, name, name, name, name, name)
 		}
 	}
@@ -424,7 +419,7 @@ func generateGoHandlers(sortedMsgs []string, msgs map[string]msgTypes, goOutPath
 
 			// Now that we know the out file struct exists, generate handler
 			funcName := fmt.Sprintf("Handle%vReq", msgName)
-			signature := fmt.Sprintf("func %v(req *protos.%vReq, hctx wsHelpers.HandlerContext) ([]*protos.%vResp, error)", funcName, msgName, msgName)
+			signature := fmt.Sprintf("func %v(req *protos.%vReq, hctx wsHelpers.HandlerContext) (*protos.%vResp, error)", funcName, msgName, msgName)
 			handler := signature + fmt.Sprintf(` {
     return nil, errors.New("%v not implemented yet")
 }
@@ -554,7 +549,9 @@ export class WSOustandingReq {
 
 // Type-specific request send functions which return the right type of response
 export abstract class WSMessageHandler {
-  protected abstract sendRequest(msg: WSMessage, subj: Subject<any>): void;
+  private _lastMsgId = 1;
+
+  protected abstract sendRequest(msg: WSMessage): void;
 
   protected _outstandingRequests = new Map<number, WSOustandingReq>();
 
@@ -570,41 +567,49 @@ export abstract class WSMessageHandler {
 		types := msgs[name]
 		// If there is a request and response pair, generate a function for it
 		if types.Req && types.Resp {
-			angular += fmt.Sprintf(`
-  send%vRequest(req: %vReq): Subject<%vResp> {
+			angular += fmt.Sprintf(`  send%vRequest(req: %vReq): Subject<%vResp> {
+    const wsreq = WSMessage.create({ %vReq: req });
+    wsreq.msgId = this._lastMsgId++;
+
     const subj = new Subject<%vResp>();
-    this.sendRequest(WSMessage.create({ %vReq: req }), subj);
+    this._outstandingRequests.set(wsreq.msgId, new WSOustandingReq(wsreq, subj));
+    this.sendRequest(wsreq);
+
     return subj;
   }
-`, name, name, name, name, varName(name))
+`, name, name, name, varName(name), name)
 		}
 	}
 
 	angular += `
   protected dispatchResponse(wsmsg: WSMessage): boolean {
-    const outstanding = this._outstandingRequests.get(wsmsg.msgId);
-    if (!outstanding) {
-      return false; // Expected to find this outstanding request
-    }
-
-    // We have someone waiting for it, check if it's an error
-    if (wsmsg.status != ResponseStatus.WS_OK) {
-      outstanding.sub.error(new WSError(wsmsg.status, wsmsg.errorText, getMessageName(wsmsg)));
-    }
-
 `
 	firstIf := true
 	for _, name := range sortedMsgs {
 		types := msgs[name]
 		if types.Resp {
-			angular += "    "
+			angular += " "
 			if !firstIf {
 				angular += "else "
+			} else {
+				angular += "   "
 			}
 			firstIf = false
 
-			angular += fmt.Sprintf(`if (wsmsg.%vResp) { outstanding.sub.next(wsmsg.%vResp); }
-`, varName(name), varName(name))
+			angular += fmt.Sprintf(`if (wsmsg.%vResp) {
+      const outstanding = this._outstandingRequests.get(wsmsg.msgId);
+      if (outstanding) {
+        if (wsmsg.status != ResponseStatus.WS_OK) {
+          outstanding.sub.error(new WSError(wsmsg.status, wsmsg.errorText, "%vResp"));
+        } else {
+          outstanding.sub.next(wsmsg.%vResp);
+        }
+        outstanding.sub.complete();
+
+        this._outstandingRequests.delete(wsmsg.msgId);
+        return true;
+      }
+    }`, varName(name), name, varName(name))
 		}
 	}
 
