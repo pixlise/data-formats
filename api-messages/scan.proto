@@ -88,8 +88,11 @@ message ScanItem
 
     repeated string tags = 12;
 
-    // If we import multiple times, we save the import time in our scan item. ONLY save if the scan is complete (has all normal spectra downloaded)
-    repeated uint32 previousImportTimeStamps = 13;
+    // If we import multiple times, we save the import time in our scan item
+    repeated uint32 previousImportTimesUnixSec = 13;
+
+    // Time stamp when we had a complete scan (have all normal spectra)
+    uint32 completeTimeStampUnixSec = 14;
 }
 
 enum ScanMetaDataType {
