@@ -196,3 +196,13 @@ message ScanDeleteReq
 message ScanDeleteResp
 {
 }
+
+// requires(QUANTIFY)
+message ScanTriggerAutoQuantReq
+{
+    string scanId = 1;
+}
+
+message ScanTriggerAutoQuantResp
+{
+}
