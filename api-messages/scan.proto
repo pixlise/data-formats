@@ -57,7 +57,7 @@ message ScanItem
     // Unix time stamp for this scan (just to order it, so we don't care if this is the
     // time when the instrument did the scan, or when data was ingested into PIXLISE,
     // just need a time!)
-    uint32 timestampUnixSec = 7; 
+    uint32 timestampUnixSec = 7;
 
     // Meta-data for the scan to describe in an instrument-specific way when and where
     // it was collected
@@ -87,6 +87,9 @@ message ScanItem
     // and not returned to client!
 
     repeated string tags = 12;
+
+    // If we import multiple times, we save the import time in our scan item. ONLY save if the scan is complete (has all normal spectra downloaded)
+    repeated uint32 previousImportTimeStamps = 13;
 }
 
 enum ScanMetaDataType {
