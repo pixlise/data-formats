@@ -96,6 +96,8 @@ message VariogramState
     float maxDistance = 4;
     int32 binCount = 5;
     bool drawModeVector = 6; // vector or isotropic
+    repeated string comparisonAlgorithms = 7; // "Subtract", "XOR-Sum", <Expression ID>
+    bool liveUpdate = 8;
 }
 
 message MapLayerVisibility
