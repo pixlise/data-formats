@@ -102,6 +102,7 @@ message VariogramState
     float distanceSliderMax = 10;
     float binSliderMin = 11;
     float binSliderMax = 12;
+    bool drawBestFit = 13;
 }
 
 message MapLayerVisibility
