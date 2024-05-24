@@ -272,6 +272,8 @@ message WSMessage
         ScanMetaLabelsAndTypesResp scanMetaLabelsAndTypesResp = 105;
         ScanMetaWriteReq scanMetaWriteReq = 106;
         ScanMetaWriteResp scanMetaWriteResp = 107;
+        ScanTriggerAutoQuantReq scanTriggerAutoQuantReq = 294;
+        ScanTriggerAutoQuantResp scanTriggerAutoQuantResp = 295;
         ScanTriggerReImportReq scanTriggerReImportReq = 108;
         ScanTriggerReImportResp scanTriggerReImportResp = 109;
         ScanTriggerReImportUpd scanTriggerReImportUpd = 269;
