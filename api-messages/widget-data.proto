@@ -98,6 +98,10 @@ message VariogramState
     bool drawModeVector = 6; // vector or isotropic
     repeated string comparisonAlgorithms = 7; // "Subtract", "XOR-Sum", <Expression ID>
     bool liveUpdate = 8;
+    float distanceSliderMin = 9;
+    float distanceSliderMax = 10;
+    float binSliderMin = 11;
+    float binSliderMax = 12;
 }
 
 message MapLayerVisibility
