@@ -75,11 +75,18 @@ message TernaryState
     repeated VisibleROI visibleROIs = 3;
 }
 
+message VisibleROIAndQuant
+{
+    string id = 1;
+    string scanId = 2;
+    string quantId = 3;
+}
+
 message TableState
 {
     bool showPureElements = 1;
     string order = 2;
-    repeated VisibleROI visibleROIs = 3;
+    repeated VisibleROIAndQuant visibleROIs = 3;
 }
 
 message ROIQuantTableState
