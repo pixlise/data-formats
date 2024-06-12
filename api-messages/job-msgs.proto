@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "job.proto";
-import "search-params.proto";
+//import "search-params.proto";
 
 
 /*
@@ -20,7 +20,7 @@ Need messages for:
 // requires(QUANTIFY)
 message JobListReq
 {
-    SearchParams searchParams = 1;
+    //SearchParams searchParams = 1;
 }
 
 message JobListResp
