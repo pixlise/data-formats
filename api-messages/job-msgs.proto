@@ -1,7 +1,9 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-//import "job.proto";
+import "job.proto";
+import "search-params.proto";
+
 
 /*
 Need messages for:
@@ -11,3 +13,22 @@ Need messages for:
 - Job log downloading
 - Job deletion (delete the fact that the job ran, not the quant output!)
 */
+
+// For now we use quant permissions, but we may want a specific job permission in future
+// because a job might come from multiple places. Currently: import, quantification...
+
+// requires(QUANTIFY)
+message JobListReq
+{
+    SearchParams searchParams = 1;
+}
+
+message JobListResp
+{
+    repeated JobStatus jobs = 1;
+}
+
+message JobListUpd
+{
+    JobStatus job = 1;
+}

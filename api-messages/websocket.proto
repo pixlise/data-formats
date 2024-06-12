@@ -19,6 +19,7 @@ import "expression-msgs.proto";
 import "image-beam-location-msgs.proto";
 import "image-msgs.proto";
 import "image-coreg-msgs.proto";
+import "job-msgs.proto";
 import "log-msgs.proto";
 import "memoisation-msgs.proto";
 import "module-msgs.proto";
@@ -175,6 +176,9 @@ message WSMessage
         ImportMarsViewerImageReq importMarsViewerImageReq = 273;
         ImportMarsViewerImageResp importMarsViewerImageResp = 274;
         ImportMarsViewerImageUpd importMarsViewerImageUpd = 275;
+        JobListReq jobListReq = 296;
+        JobListResp jobListResp = 297;
+        JobListUpd jobListUpd = 298;
         LogGetLevelReq logGetLevelReq = 67;
         LogGetLevelResp logGetLevelResp = 68;
         LogReadReq logReadReq = 69;
