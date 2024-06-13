@@ -47,7 +47,12 @@ message JobStatus
 
     // Job requestor
     string requestorUserId = 12; // Where the job output its final result(s)
+
+    // Some more info about the job itself
+    string name = 13; // Eg the quant, scan or image name
+    repeated string elements = 14; // If it's a quant, the list of elements being quantified
 }
+
 
 // Which API instance wants to handle this job? This is only used
 // when it's an external request and APIs realise that an unknown
