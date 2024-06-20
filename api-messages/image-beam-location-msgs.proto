@@ -21,6 +21,7 @@ message ImageBeamLocationsResp
 message ImageBeamLocationVersionsReq
 {
     string imageName = 1;
+    string scanId = 2;
 }
 
 message ImageBeamLocationVersionsResp
