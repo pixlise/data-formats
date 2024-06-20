@@ -21,10 +21,12 @@ message ImageBeamLocationsResp
 message ImageBeamLocationVersionsReq
 {
     string imageName = 1;
-    string scanId = 2;
 }
 
 message ImageBeamLocationVersionsResp
 {
-    repeated uint32 availableVersions = 1;
+    message AvailableVersions {
+        repeated uint32 versions = 1;
+    }
+    map<string, AvailableVersions> beamVersionPerScan = 1;
 }
