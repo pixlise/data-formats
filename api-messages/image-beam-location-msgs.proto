@@ -16,3 +16,14 @@ message ImageBeamLocationsResp
 {
     ImageLocations locations = 1;
 }
+
+// requires(NONE)
+message ImageBeamLocationVersionsReq
+{
+    string imageName = 1;
+}
+
+message ImageBeamLocationVersionsResp
+{
+    repeated uint32 availableVersions = 1;
+}
