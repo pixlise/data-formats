@@ -42,6 +42,29 @@ message QuantGetResp
     Quantification data = 2;
 }
 
+// requires(NONE)
+message QuantLogListReq
+{
+    string quantId = 1;
+}
+
+message QuantLogListResp
+{
+    repeated string fileName = 1;
+}
+
+// requires(NONE)
+message QuantLogGetReq
+{
+    string quantId = 1;
+    string logName = 2;
+}
+
+message QuantLogGetResp
+{
+    string logData = 1;
+}
+
 // For FIT command, retrieves last quant output
 
 enum QuantOutputType

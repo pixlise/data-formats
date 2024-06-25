@@ -235,6 +235,10 @@ message WSMessage
         QuantLastOutputGetResp quantLastOutputGetResp = 215;
         QuantListReq quantListReq = 216;
         QuantListResp quantListResp = 217;
+        QuantLogGetReq quantLogGetReq = 301;
+        QuantLogGetResp quantLogGetResp = 302;
+        QuantLogListReq quantLogListReq = 303;
+        QuantLogListResp quantLogListResp = 304;
         QuantPublishReq quantPublishReq = 218;
         QuantPublishResp quantPublishResp = 219;
         QuantUploadReq quantUploadReq = 220;
