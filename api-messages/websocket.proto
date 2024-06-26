@@ -241,6 +241,8 @@ message WSMessage
         QuantLogListResp quantLogListResp = 304;
         QuantPublishReq quantPublishReq = 218;
         QuantPublishResp quantPublishResp = 219;
+        QuantRawDataGetReq quantRawDataGetReq = 305;
+        QuantRawDataGetResp quantRawDataGetResp = 306;
         QuantUploadReq quantUploadReq = 220;
         QuantUploadResp quantUploadResp = 221;
         RegionOfInterestBulkDuplicateReq regionOfInterestBulkDuplicateReq = 238;

@@ -50,7 +50,7 @@ message QuantLogListReq
 
 message QuantLogListResp
 {
-    repeated string fileName = 1;
+    repeated string fileNames = 1;
 }
 
 // requires(NONE)
@@ -61,6 +61,17 @@ message QuantLogGetReq
 }
 
 message QuantLogGetResp
+{
+    string logData = 1;
+}
+
+// requires(NONE)
+message QuantRawDataGetReq
+{
+    string quantId = 1;
+}
+
+message QuantRawDataGetResp
 {
     string logData = 1;
 }
