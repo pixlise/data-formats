@@ -73,7 +73,7 @@ message QuantRawDataGetReq
 
 message QuantRawDataGetResp
 {
-    string logData = 1;
+    string data = 1;
 }
 
 // For FIT command, retrieves last quant output
