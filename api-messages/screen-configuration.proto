@@ -35,6 +35,12 @@ message WidgetLayoutConfiguration
 
 message FullScreenLayout
 {
+    string tabId = 1;
+    string tabName = 2;
+    string tabDescription = 3;
+    repeated string tags = 7;
+    bool hidden = 8;
+
     repeated ScreenConfigurationRow rows = 4;
     repeated ScreenConfigurationColumn columns = 5;
     repeated WidgetLayoutConfiguration widgets = 6;
@@ -62,6 +68,10 @@ message ScreenConfiguration
 
     string name = 2;
     string description = 3;
+
+    bool browseTabHidden = 11;
+    bool codeEditorTabHidden = 12;
+    bool elementMapsTabHidden = 13;
 
     repeated FullScreenLayout layouts = 4;
 
