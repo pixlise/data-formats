@@ -173,8 +173,6 @@ message WSMessage
         ImageSetDefaultResp imageSetDefaultResp = 64;
         ImageSetMatchTransformReq imageSetMatchTransformReq = 266;
         ImageSetMatchTransformResp imageSetMatchTransformResp = 267;
-        ImageUploadReq imageUploadReq = 65;
-        ImageUploadResp imageUploadResp = 66;
         ImportMarsViewerImageReq importMarsViewerImageReq = 273;
         ImportMarsViewerImageResp importMarsViewerImageResp = 274;
         ImportMarsViewerImageUpd importMarsViewerImageUpd = 275;
