@@ -154,6 +154,9 @@ message ContextImageState
     float colourRatioMax = 19;
     bool removeTopSpecularArtifacts = 20;
     bool removeBottomSpecularArtifacts = 21;
+    repeated string hideFootprintsForScans = 22;
+    repeated string hidePointsForScans = 23;
+    bool drawImage = 24;
 
     // Could store per-tool state
     //ActiveTool string activeTool = ;
