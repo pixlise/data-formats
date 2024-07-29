@@ -204,6 +204,7 @@ message RGBUPlotWidgetState
     float selectedMinYValue = 9;
     float selectedMaxYValue = 10;
     string imageName = 11;
+    repeated string roiIds = 12;
 }
 
 message SingleAxisRGBUWidgetState
