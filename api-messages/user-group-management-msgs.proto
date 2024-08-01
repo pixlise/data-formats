@@ -13,6 +13,7 @@ message UserGroupCreateReq
 {
     string name = 1;
     string description = 2;
+    bool joinable = 3;
 }
 
 message UserGroupCreateResp
