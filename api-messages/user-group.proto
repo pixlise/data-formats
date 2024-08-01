@@ -13,6 +13,7 @@ message UserGroupDB
     string description = 8;
     uint32 createdUnixSec = 7;
     uint32 lastUserJoinedUnixSec = 9;
+    bool joinable = 10;
 
     UserGroupList viewers = 5;
     UserGroupList members = 3;
@@ -36,6 +37,7 @@ message UserGroupInfo
     string description = 5;
     uint32 createdUnixSec = 3;
     uint32 lastUserJoinedUnixSec = 6;
+    bool joinable = 7;
 
     // OPTIONAL (only returned in UserGroupListResp)
     UserGroupRelationship relationshipToUser = 4;
