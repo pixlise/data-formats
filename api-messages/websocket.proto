@@ -340,6 +340,8 @@ message WSMessage
         UserGroupDeleteResp userGroupDeleteResp = 167;
         UserGroupDeleteViewerReq userGroupDeleteViewerReq = 178;
         UserGroupDeleteViewerResp userGroupDeleteViewerResp = 179;
+        UserGroupEditDetailsReq userGroupEditDetailsReq = 170;
+        UserGroupEditDetailsResp userGroupEditDetailsResp = 171;
         UserGroupIgnoreJoinReq userGroupIgnoreJoinReq = 182;
         UserGroupIgnoreJoinResp userGroupIgnoreJoinResp = 183;
         UserGroupJoinListReq userGroupJoinListReq = 184;
@@ -352,8 +354,6 @@ message WSMessage
         UserGroupListResp userGroupListResp = 169;
         UserGroupReq userGroupReq = 188;
         UserGroupResp userGroupResp = 189;
-        UserGroupSetNameReq userGroupSetNameReq = 170;
-        UserGroupSetNameResp userGroupSetNameResp = 171;
         UserListReq userListReq = 138;
         UserListResp userListResp = 139;
         UserNotificationSettingsReq userNotificationSettingsReq = 142;

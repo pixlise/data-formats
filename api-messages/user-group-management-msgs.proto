@@ -32,14 +32,16 @@ message UserGroupDeleteResp
 }
 
 // requires(PIXLISE_ADMIN)
-message UserGroupSetNameReq
+message UserGroupEditDetailsReq
 {
     string groupId = 1;
     string name = 2;
+    string description = 3;
+    bool joinable = 4;
 }
 
 // requires(PIXLISE_ADMIN)
-message UserGroupSetNameResp
+message UserGroupEditDetailsResp
 {
     UserGroup group = 1;
 }
