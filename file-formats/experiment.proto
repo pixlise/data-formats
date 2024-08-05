@@ -9,6 +9,8 @@ message Experiment
     *  has access to an Experiment file won't need to also download the corresponding Dataset Summary.
     *  NOTE: Now that we support combining scans, these fields may not be set if it's a combination dataset
     */
+    uint64 import_time_stamp_unix_sec = 28;
+
     string target_id=1;
     int32 drive_id=11;
     int32 site_id=12;

@@ -28,4 +28,6 @@ message SpectrumResp
     uint32 dwellSpectraForScan = 6; // How many dwell spectra for the entire scan, needed when we aggregate a spectrum
 
     uint32 liveTimeMetaIndex = 7; // The index into the meta fields array for live time. This is sent so we have all data needed when we aggregate a spectrum
+
+    uint32 timeStampUnixSec = 8; // Scan import time stamp, older scans won't have one
 }
