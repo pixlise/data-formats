@@ -157,6 +157,7 @@ message ContextImageState
     repeated string hideFootprintsForScans = 22;
     repeated string hidePointsForScans = 23;
     bool drawImage = 24;
+    bool linkToDataset = 25;
 
     // Could store per-tool state
     //ActiveTool string activeTool = ;
