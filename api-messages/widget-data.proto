@@ -239,6 +239,11 @@ message ParallelogramWidgetState
     string imageName = 3;
 }
 
+message MarkdownViewState
+{
+    string content = 1;
+}
+
 message WidgetData
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
@@ -256,4 +261,5 @@ message WidgetData
     SingleAxisRGBUWidgetState singleAxisRGBU = 12;
     RGBUImagesWidgetState rgbuImage = 13;
     ParallelogramWidgetState parallelogram = 14;
+    MarkdownViewState markdownView = 15;
 }
