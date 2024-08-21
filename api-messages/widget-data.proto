@@ -156,8 +156,9 @@ message ContextImageState
     bool removeBottomSpecularArtifacts = 21;
     repeated string hideFootprintsForScans = 22;
     repeated string hidePointsForScans = 23;
-    bool drawImage = 24;
+    reserved 24; // was drawImage
     bool unlinkFromDataset = 25;
+    bool hideImage = 26; // Was drawImage but zero-value being false meant lots of hidden context images!
 
     // Could store per-tool state
     //ActiveTool string activeTool = ;
