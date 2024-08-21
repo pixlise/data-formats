@@ -237,7 +237,10 @@ message ParallelogramWidgetState
 {
     repeated string regions = 1;
     repeated string channels = 2;
-    string imageName = 3;
+    reserved 3; // previously imageName, now comes from regions
+    bool excludeZero = 4;
+    string averageMode = 5; // "mean", "median"
+    string sigmaLevel = 6; // None, Sigma +1, Sigma +2
 }
 
 message MarkdownViewState
