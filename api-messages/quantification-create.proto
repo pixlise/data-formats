@@ -20,11 +20,8 @@ message QuantCreateReq
 
 message QuantCreateResp
 {
-    // If the req created a job, this returns the job status and updates will follow
+    // This returns the job status and updates will follow
     JobStatus status = 1;
-
-    // If the req just ran a one-shot quick command, the result is returned here
-    bytes resultData = 2;
 }
 
 // Updates are sent until the job timeout is reached, at which point a final update will
@@ -32,4 +29,7 @@ message QuantCreateResp
 message QuantCreateUpd
 {
     JobStatus status = 1;
+    
+    // If the req just ran a one-shot quick command, the result is returned here
+    bytes resultData = 2;
 }
