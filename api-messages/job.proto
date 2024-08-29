@@ -33,6 +33,7 @@ message JobStatus
         JT_REIMPORT_SCAN = 2;
         JT_IMPORT_IMAGE = 3;
         JT_RUN_QUANT = 4;
+        JT_RUN_FIT = 5;
     }
 
     JobType jobType = 11;
