@@ -102,3 +102,15 @@ message UserImpersonateResp
     // Returns the currently set user in this user session
     UserInfo sessionUser = 1;
 }
+
+// Allows querying if we're impersonating anyone
+// requires(NONE)
+message UserImpersonateGetReq
+{
+}
+
+message UserImpersonateGetResp
+{
+    // Returns the currently set user in this user session
+    UserInfo sessionUser = 1;
+}
