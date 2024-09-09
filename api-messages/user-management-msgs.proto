@@ -99,4 +99,6 @@ message UserImpersonateReq
 
 message UserImpersonateResp
 {
+    // Returns the currently set user in this user session
+    UserInfo sessionUser = 1;
 }
