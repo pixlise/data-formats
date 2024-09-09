@@ -354,6 +354,8 @@ message WSMessage
         UserGroupListResp userGroupListResp = 169;
         UserGroupReq userGroupReq = 188;
         UserGroupResp userGroupResp = 189;
+        UserImpersonateGetReq userImpersonateGetReq = 309;
+        UserImpersonateGetResp userImpersonateGetResp = 310;
         UserImpersonateReq userImpersonateReq = 307;
         UserImpersonateResp userImpersonateResp = 308;
         UserListReq userListReq = 138;
