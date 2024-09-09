@@ -85,3 +85,18 @@ message UserDeleteRoleReq
 message UserDeleteRoleResp
 {
 }
+
+////////////////////////////////////
+// To impersonate a user, we can send this in. This modifies the user stored in memory for a
+// given web socket session to contain the details of the user we want to impersonate.
+
+// requires(PIXLISE_ADMIN)
+message UserImpersonateReq
+{
+    // "Become" the user with specified id. If this is blank, this session stops impersonating
+    string userId = 1;
+}
+
+message UserImpersonateResp
+{
+}
