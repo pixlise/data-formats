@@ -53,6 +53,8 @@ import "user-notification-setting-msgs.proto";
 import "doi-msgs.proto";
 import "screen-configuration-msgs.proto";
 import "widget-data-msgs.proto";
+import "system.proto";
+
 
 // This is expected to appear in all Resp messages. It is
 // basically a replacement for HTTP status codes
@@ -96,6 +98,8 @@ message WSMessage
 
     oneof Contents
     {
+        BackupDBReq backupDBReq = 311;
+        BackupDBResp backupDBResp = 312;
         DataModuleAddVersionReq dataModuleAddVersionReq = 198;
         DataModuleAddVersionResp dataModuleAddVersionResp = 199;
         DataModuleGetReq dataModuleGetReq = 12;

@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+// Triggers a DB backup. This does a mongodump, which is then zipped and
+// copied to S3, with the destination configured by the API config file.
+
+// requires(PIXLISE_ADMIN)
+message BackupDBReq
+{
+}
+
+message BackupDBResp
+{
+}

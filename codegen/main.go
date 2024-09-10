@@ -233,7 +233,9 @@ func checkWSMessage(wsMsgFileName string, sortedMsgs []string, messages map[stri
 	for i, line := range exampleLines {
 		if strings.Contains(line, "= ;") {
 			if lineAbove == "" {
-				lineAbove = strings.Trim(exampleLines[i-1], "\t ")
+				if i > 0 {
+					lineAbove = strings.Trim(exampleLines[i-1], "\t ")
+				}
 			}
 
 			// Remove the ending so we can add on the latest ids later
