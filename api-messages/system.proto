@@ -13,3 +13,29 @@ message BackupDBReq
 message BackupDBResp
 {
 }
+
+message BackupDBUpd
+{
+}
+
+// requires(PIXLISE_ADMIN)
+message RestoreDBReq
+{
+}
+
+message RestoreDBResp
+{
+}
+
+// requires(PIXLISE_ADMIN)
+message DBAdminConfigGetReq
+{
+}
+
+message DBAdminConfigGetResp
+{
+    bool canBackup = 1;
+    string backupDestination = 2;
+    bool canRestore = 3;
+    string restoreFrom = 4;
+}

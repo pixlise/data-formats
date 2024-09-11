@@ -100,6 +100,9 @@ message WSMessage
     {
         BackupDBReq backupDBReq = 311;
         BackupDBResp backupDBResp = 312;
+        BackupDBUpd backupDBUpd = 313;
+        DBAdminConfigGetReq dBAdminConfigGetReq = 314;
+        DBAdminConfigGetResp dBAdminConfigGetResp = 315;
         DataModuleAddVersionReq dataModuleAddVersionReq = 198;
         DataModuleAddVersionResp dataModuleAddVersionResp = 199;
         DataModuleGetReq dataModuleGetReq = 12;
@@ -263,6 +266,8 @@ message WSMessage
         RegionOfInterestListResp regionOfInterestListResp = 90;
         RegionOfInterestWriteReq regionOfInterestWriteReq = 93;
         RegionOfInterestWriteResp regionOfInterestWriteResp = 94;
+        RestoreDBReq restoreDBReq = 316;
+        RestoreDBResp restoreDBResp = 317;
         RunTestReq runTestReq = 95;
         RunTestResp runTestResp = 96;
         ScanAutoShareReq scanAutoShareReq = 279;
