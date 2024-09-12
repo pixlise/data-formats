@@ -8,6 +8,9 @@ import "screen-configuration.proto";
 message ScreenConfigurationListReq
 {
     SearchParams searchParams = 1;
+
+    // If this is set, only return configurations that are children of this workspace
+    string snapshotParentId = 2;
 }
 
 message ScreenConfigurationListResp

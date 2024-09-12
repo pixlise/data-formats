@@ -81,4 +81,6 @@ message ScreenConfiguration
     map<string, ScanConfiguration> scanConfigurations = 9;
 
     OwnershipSummary owner = 10; // @gotags: bson:"-"
+
+    string snapshotParentId = 14; // @gotags: bson:"snapshotParentId,omitempty"
 }
