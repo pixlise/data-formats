@@ -38,4 +38,5 @@ message DBAdminConfigGetResp
     string backupDestination = 2;
     bool canRestore = 3;
     string restoreFrom = 4;
+    bool impersonateEnabled = 5;
 }
