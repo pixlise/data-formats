@@ -12,6 +12,7 @@ message MistROIItem
     int32 idDepth = 5;
     string classificationTrail = 6;
     string formula = 7;
+    map<int32, double> pmcConfidenceMap = 8;
 }
 
 message ROIItemDisplaySettings
