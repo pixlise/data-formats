@@ -14,4 +14,5 @@ message DetectorConfig
     int32 tubeElement = 8;
     string defaultParams = 9;
     float mmBeamRadius = 10;
+    float elevAngle = 11;
 }
