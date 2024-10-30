@@ -46,6 +46,7 @@ message ScreenConfigurationWriteResp
 message ScreenConfigurationDeleteReq
 {
     string id = 1;
+    bool preserveDanglingWidgetReferences = 2;
 }
 
 message ScreenConfigurationDeleteResp
