@@ -12,6 +12,8 @@ message UserInfo
     string email = 3; // @gotags: bson:"email,omitempty"
     // NOTE: this can be a link or a data://<base64 image>
     string iconURL = 4; // @gotags: bson:"iconurl,omitempty"
+    string reviewerWorkspaceId = 5; // @gotags: bson:"reviewerworkspaceid,omitempty"
+    int64 expirationDateUnixSec = 6; // @gotags: bson:"expirationunixsec,omitempty"
 }
 
 message UserDetails

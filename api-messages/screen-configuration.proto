@@ -83,4 +83,5 @@ message ScreenConfiguration
     OwnershipSummary owner = 10; // @gotags: bson:"-"
 
     string snapshotParentId = 14; // @gotags: bson:"snapshotParentId,omitempty"
+    string reviewerId = 15; // @gotags: bson:"reviewerId,omitempty"
 }

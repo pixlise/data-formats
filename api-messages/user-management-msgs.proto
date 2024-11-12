@@ -114,3 +114,26 @@ message UserImpersonateGetResp
     // Returns the currently set user in this user session
     UserInfo sessionUser = 1;
 }
+
+// requires(NONE)
+message ReviewerMagicLinkCreateReq
+{
+    int64 accessLength = 1;
+    string workspaceId = 2;
+}
+
+message ReviewerMagicLinkCreateResp
+{
+    string magicLink = 1;
+}
+
+// requires(NONE)
+message ReviewerMagicLinkLoginReq
+{
+    string magicLink = 1;
+}
+
+message ReviewerMagicLinkLoginResp
+{
+    string userId = 1;
+}
