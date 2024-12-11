@@ -14,6 +14,7 @@ message UserInfo
     string iconURL = 4; // @gotags: bson:"iconurl,omitempty"
     string reviewerWorkspaceId = 5; // @gotags: bson:"reviewerworkspaceid,omitempty"
     int64 expirationDateUnixSec = 6; // @gotags: bson:"expirationunixsec,omitempty"
+    string nonSecretPassword = 7; // @gotaags: bson:"nonsecretpassword,omitempty"
 }
 
 message UserDetails
