@@ -84,4 +84,5 @@ message ScreenConfiguration
 
     string snapshotParentId = 14; // @gotags: bson:"snapshotParentId,omitempty"
     string reviewerId = 15; // @gotags: bson:"reviewerId,omitempty"
+    int64 reviewerExpirationDateUnixSec = 6; // @gotags: bson:"reviewerExpirationDateUnixSec,omitempty"
 }
