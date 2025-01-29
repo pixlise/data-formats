@@ -24,7 +24,7 @@ enum ScanInstrument
     PIXL_EM = 2; // PIXL engineering model
     JPL_BREADBOARD = 3; // JPL PIXL lab Breadboard
     SBU_BREADBOARD = 4; // Stony Brook Breadboard
-    // future possibilities like BRUKER, etc...
+    BRUKER = 5;
 }
 
 message ScanItem
