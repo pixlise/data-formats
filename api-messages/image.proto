@@ -53,10 +53,14 @@ message ImageMatchTransform
     string beamImageFileName = 1;
 
     // The transform to allow rendering the image relative to the existing beam locations
-    float xOffset = 2;
-    float yOffset = 3;
-    float xScale = 4;
-    float yScale = 5;
+    // NOTE: These were previously floats, but were redefined to double so mongo stops complaining about
+    // float64->float32 conversion losing accuracy. Might be due to user-entered values, eg entering 0.1
+    // can't be repesented by float32... Other places might be OK because it's a computer-created value
+    // eg a mouse drag event... but still, this might need to be done in a number of places.
+    double xOffset = 2;
+    double yOffset = 3;
+    double xScale = 4;
+    double yScale = 5;
 }
 
 message ScanImageDefaultDB
