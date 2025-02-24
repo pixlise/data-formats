@@ -40,3 +40,25 @@ message MemoiseGetResp
 {
     MemoisedItem item = 1;
 }
+
+// requires(NONE)
+message MemoiseDeleteReq
+{
+    string key = 1;
+}
+
+message MemoiseDeleteResp
+{
+    bool success = 1;
+}
+
+// requires(NONE)
+message MemoiseDeleteByRegexReq
+{
+    string pattern = 1;
+}
+
+message MemoiseDeleteByRegexResp
+{
+    uint32 numDeleted = 1;
+}

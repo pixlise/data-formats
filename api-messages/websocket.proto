@@ -192,6 +192,10 @@ message WSMessage
         LogReadResp logReadResp = 70;
         LogSetLevelReq logSetLevelReq = 71;
         LogSetLevelResp logSetLevelResp = 72;
+        MemoiseDeleteByRegexReq memoiseDeleteByRegexReq = 324;
+        MemoiseDeleteByRegexResp memoiseDeleteByRegexResp = 325;
+        MemoiseDeleteReq memoiseDeleteReq = 322;
+        MemoiseDeleteResp memoiseDeleteResp = 323;
         MemoiseGetReq memoiseGetReq = 283;
         MemoiseGetResp memoiseGetResp = 284;
         MemoiseWriteReq memoiseWriteReq = 56;
