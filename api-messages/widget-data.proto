@@ -45,11 +45,13 @@ message SpectrumWidgetState
 
 message HistogramState
 {
-    bool showStdDeviation = 1;
+    bool showStdDeviation = 1; // deprecated, see whiskerDisplayMode
     bool logScale = 2;
     repeated string expressionIDs = 3;
     repeated VisibleROI visibleROIs = 4;
-    bool showWhiskers = 5;
+    bool showWhiskers = 5; // deprecated, see zoomMode
+    string whiskerDisplayMode = 6;
+    string zoomMode = 7;
 }
 
 message ChordState
