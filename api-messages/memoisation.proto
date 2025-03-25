@@ -13,6 +13,10 @@ message MemoisedItem
     uint32 memoTimeUnixSec = 2;
 
     bytes data = 3;
+
+    string scanId = 4;
+    string quantId = 5;
+    string exprId = 6;
 }
 
 
