@@ -196,10 +196,10 @@ message WSMessage
         MemoiseDeleteByRegexResp memoiseDeleteByRegexResp = 325;
         MemoiseDeleteReq memoiseDeleteReq = 322;
         MemoiseDeleteResp memoiseDeleteResp = 323;
-        MemoiseGetReq memoiseGetReq = 283;
-        MemoiseGetResp memoiseGetResp = 284;
-        MemoiseWriteReq memoiseWriteReq = 56;
-        MemoiseWriteResp memoiseWriteResp = 57;
+        // MemoiseGetReq memoiseGetReq = 283;
+        // MemoiseGetResp memoiseGetResp = 284;
+        // MemoiseWriteReq memoiseWriteReq = 56;
+        // MemoiseWriteResp memoiseWriteResp = 57;
         MultiQuantCompareReq multiQuantCompareReq = 200;
         MultiQuantCompareResp multiQuantCompareResp = 201;
         NotificationDismissReq notificationDismissReq = 286;
