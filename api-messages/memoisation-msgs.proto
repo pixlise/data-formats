@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "memoisation.proto";
+//import "memoisation.proto";
 
 
 // General memosation mechanism for data used by the client. The contents is just a byte buffer, and the key should
