@@ -17,6 +17,9 @@ message MemoisedItem
     string scanId = 4;
     string quantId = 5;
     string exprId = 6;
+
+    uint32 dataSize = 7;
+    uint32 lastReadTimeUnixSec = 8;
 }
 
 
