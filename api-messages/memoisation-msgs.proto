@@ -23,6 +23,10 @@ message MemoiseWriteReq
 {
     string key = 1;
     bytes data = 2;
+
+    string scanId = 3;
+    string quantId = 4;
+    string exprId = 5;
 }
 
 message MemoiseWriteResp
