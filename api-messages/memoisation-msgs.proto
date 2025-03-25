@@ -18,6 +18,7 @@ option go_package = ".;protos";
 
 // Requires no permissions because it's just a caching mechanism, users shouldn't even know it's here
 
+/* Went unused, moved to HTTP requests, so get has query parameter for key, item is returned in response payload
 // requires(NONE)
 message MemoiseWriteReq
 {
@@ -34,7 +35,6 @@ message MemoiseWriteResp
     uint32 memoTimeUnixSec = 1;
 }
 
-/* Went unused, moved to HTTP requests, so get has query parameter for key, item is returned in response payload
 // requires(NONE)
 message MemoiseGetReq
 {
