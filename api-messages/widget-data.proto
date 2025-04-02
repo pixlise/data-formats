@@ -161,6 +161,7 @@ message ContextImageState
     reserved 24; // was drawImage
     bool unlinkFromDataset = 25;
     bool hideImage = 26; // Was drawImage but zero-value being false meant lots of hidden context images!
+    bool showMISTROIReproducibility = 27;
 
     // Could store per-tool state
     //ActiveTool string activeTool = ;
