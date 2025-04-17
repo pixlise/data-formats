@@ -290,8 +290,6 @@ message WSMessage
         ScanGetResp scanGetResp = 293;
         ScanListJobsReq scanListJobsReq = 326;
         ScanListJobsResp scanListJobsResp = 327;
-        ScanWriteJobReq scanWriteJobReq = 328;
-        ScanWriteJobResp scanWriteJobResp = 329;
         ScanListReq scanListReq = 99;
         ScanListResp scanListResp = 100;
         ScanListUpd scanListUpd = 101;
@@ -307,6 +305,8 @@ message WSMessage
         ScanUploadReq scanUploadReq = 110;
         ScanUploadResp scanUploadResp = 111;
         ScanUploadUpd scanUploadUpd = 268;
+        ScanWriteJobReq scanWriteJobReq = 328;
+        ScanWriteJobResp scanWriteJobResp = 329;
         ScreenConfigurationDeleteReq screenConfigurationDeleteReq = 260;
         ScreenConfigurationDeleteResp screenConfigurationDeleteResp = 261;
         ScreenConfigurationGetReq screenConfigurationGetReq = 248;
