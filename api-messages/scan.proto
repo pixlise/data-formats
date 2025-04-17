@@ -132,3 +132,39 @@ message ScanAutoShareEntry
     UserGroupList viewers = 2;
     UserGroupList editors = 3;
 }
+
+message JobGroupConfig {
+	string jobGroupId = 1;
+	string dockerImage = 2;
+	bool fastStart = 3;
+	int32 nodeCount = 4;
+	JobConfig nodeConfig = 5;
+}
+
+message JobFilePath {
+	// The remote file info
+	string remoteBucket = 1;
+	string remotePath = 2;
+
+	// Local copy
+	string localPath = 3;
+}
+
+message JobConfig {
+	// The job id
+	string jobId = 1;
+
+	// Logging method - If these are empty, we just log to stdout
+	// LogCloudwatchGroup string
+	// LogCloudwatchStream string
+
+	// What files are required to be present when running the job?
+	repeated JobFilePath requiredFiles = 2;
+
+	// What command to execute
+	string command = 3;
+	repeated string args = 4;
+
+	// What to upload on completion (if file doesn't exist, it can be ignored with a warning)
+	repeated JobFilePath outputFiles = 5;
+}

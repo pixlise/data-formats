@@ -288,6 +288,10 @@ message WSMessage
         ScanEntryResp scanEntryResp = 197;
         ScanGetReq scanGetReq = 292;
         ScanGetResp scanGetResp = 293;
+        ScanListJobsReq scanListJobsReq = 326;
+        ScanListJobsResp scanListJobsResp = 327;
+        ScanWriteJobReq scanWriteJobReq = 328;
+        ScanWriteJobResp scanWriteJobResp = 329;
         ScanListReq scanListReq = 99;
         ScanListResp scanListResp = 100;
         ScanListUpd scanListUpd = 101;
@@ -295,8 +299,8 @@ message WSMessage
         ScanMetaLabelsAndTypesResp scanMetaLabelsAndTypesResp = 105;
         ScanMetaWriteReq scanMetaWriteReq = 106;
         ScanMetaWriteResp scanMetaWriteResp = 107;
-        ScanTriggerAutoQuantReq scanTriggerAutoQuantReq = 294;
-        ScanTriggerAutoQuantResp scanTriggerAutoQuantResp = 295;
+        ScanTriggerJobReq scanTriggerJobReq = 294;
+        ScanTriggerJobResp scanTriggerJobResp = 295;
         ScanTriggerReImportReq scanTriggerReImportReq = 108;
         ScanTriggerReImportResp scanTriggerReImportResp = 109;
         ScanTriggerReImportUpd scanTriggerReImportUpd = 269;

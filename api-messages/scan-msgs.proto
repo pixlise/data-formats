@@ -197,12 +197,36 @@ message ScanDeleteResp
 {
 }
 
-// requires(QUANTIFY)
-message ScanTriggerAutoQuantReq
+// requires(EDIT_SCAN)
+message ScanTriggerJobReq
+{
+    string scanId = 1;
+    string jobId = 2;
+}
+
+message ScanTriggerJobResp
+{
+}
+
+// requires(NONE)
+message ScanListJobsReq
 {
     string scanId = 1;
 }
 
-message ScanTriggerAutoQuantResp
+message ScanListJobsResp
+{
+    repeated JobGroupConfig jobs = 1;
+}
+
+// requires(EDIT_SCAN)
+message ScanWriteJobReq
+{
+    string scanId = 1;
+    string jobId = 2;
+    JobGroupConfig job = 3;
+}
+
+message ScanWriteJobResp
 {
 }
