@@ -211,7 +211,6 @@ message ScanTriggerJobResp
 // requires(NONE)
 message ScanListJobsReq
 {
-    string scanId = 1;
 }
 
 message ScanListJobsResp
@@ -222,8 +221,6 @@ message ScanListJobsResp
 // requires(EDIT_SCAN)
 message ScanWriteJobReq
 {
-    string scanId = 1;
-    string jobId = 2;
     JobGroupConfig job = 3;
 }
 
