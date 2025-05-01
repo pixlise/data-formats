@@ -168,3 +168,10 @@ message JobConfig {
 	// What to upload on completion (if file doesn't exist, it can be ignored with a warning)
 	repeated JobFilePath outputFiles = 5;
 }
+
+
+// Client library side encoding of meta labels and types
+message ClientScanMetaLabelsAndTypes
+{
+    map<string, ScanMetaDataType> items = 1;
+}
