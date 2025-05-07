@@ -51,7 +51,7 @@ message DetectedDiffractionPeakStatuses
 
 message ClientDiffractionPeak
 {
-    string id = 1; // Location ID, in PIXL land this is the PMC
+    int32 id = 1; // Location ID, in PIXL land this is the PMC
     DetectedDiffractionPerLocation.DetectedDiffractionPeak peak = 2;
     float energykeV = 3;
     float startEnergykeV = 4;
