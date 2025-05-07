@@ -52,3 +52,11 @@ message ClientEnergyCalibration
 {
     map<string, ClientSpectrumEnergyCalibration> DetectorCalibrations = 1;
 }
+
+enum EnergyCalibrationSource
+{
+    CAL_UNKNOWN = 0;
+    CAL_BULK_SUM = 1;
+    CAL_USER = 2;
+    //CAL_QUANTIFICATION = 3;
+}
