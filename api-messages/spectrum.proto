@@ -41,3 +41,14 @@ message ClientSpectrum
     // Special client-version which has the labels in it already
     map<string, ScanMetaDataItem> meta = 5;
 }
+
+message ClientSpectrumEnergyCalibration
+{
+    float StarteV = 1;
+    float PerChaneV = 2;
+}
+
+message ClientEnergyCalibration
+{
+    map<string, ClientSpectrumEnergyCalibration> DetectorCalibrations = 1;
+}
