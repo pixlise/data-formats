@@ -56,7 +56,7 @@ message ClientDiffractionPeak
     float energykeV = 3;
     float startEnergykeV = 4;
     float endEnergykeV = 5;
-    DetectedDiffractionPeakStatuses.PeakStatus status = 6;
+    string status = 6;
 }
 
 message ClientDiffractionPeaks
