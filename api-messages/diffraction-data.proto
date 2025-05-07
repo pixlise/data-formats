@@ -59,6 +59,13 @@ message ClientDiffractionPeak
     string status = 6;
 }
 
+message ClientRoughnessItem
+{
+    int32 id = 1; // Location ID, in PIXL land this is the PMC
+    float GlobalDifference  = 2;
+    bool Deleted = 3;
+}
+
 message ClientDiffractionPeaks
 {
     repeated ClientDiffractionPeak peaks = 1;
