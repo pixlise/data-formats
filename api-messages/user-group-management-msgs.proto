@@ -14,6 +14,7 @@ message UserGroupCreateReq
     string name = 1;
     string description = 2;
     bool joinable = 3;
+    repeated string defaultRoles = 4;
 }
 
 message UserGroupCreateResp
@@ -38,6 +39,7 @@ message UserGroupEditDetailsReq
     string name = 2;
     string description = 3;
     bool joinable = 4;
+    repeated string defaultRoles = 5;
 }
 
 // requires(PIXLISE_ADMIN)
