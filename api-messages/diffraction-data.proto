@@ -48,3 +48,18 @@ message DetectedDiffractionPeakStatuses
     }
     map<string, PeakStatus> statuses = 3;
 }
+
+message ClientDiffractionPeak
+{
+    string id = 1; // Location ID, in PIXL land this is the PMC
+    DetectedDiffractionPerLocation.DetectedDiffractionPeak peak = 2;
+    float energykeV = 3;
+    float startEnergykeV = 4;
+    float endEnergykeV = 5;
+    DetectedDiffractionPeakStatuses.PeakStatus status = 6;
+}
+
+message ClientDiffractionPeaks
+{
+    repeated ClientDiffractionPeak peaks = 1;
+}

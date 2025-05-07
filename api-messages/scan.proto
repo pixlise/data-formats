@@ -170,8 +170,16 @@ message JobConfig {
 }
 
 
-// Client library side encoding of meta labels and types
-message ClientScanMetaLabelsAndTypes
+// Client library side message types
+message ClientMap
 {
-    map<string, ScanMetaDataType> items = 1;
+    repeated int32 EntryPMCs = 1;
+    repeated double FloatValues = 2;
+    repeated int64 IntValues = 3;
+    repeated string StringValues = 4;
+}
+
+message ClientStringList
+{
+    repeated string Strings = 1;
 }
