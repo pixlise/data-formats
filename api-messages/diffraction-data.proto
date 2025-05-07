@@ -61,7 +61,6 @@ message ClientDiffractionPeak
 
 message ClientDiffractionPeaks
 {
-    repeated ClientDiffractionPeak peaks = 1;
 }
 
 message ClientRoughnessItem
@@ -71,7 +70,8 @@ message ClientRoughnessItem
     bool Deleted = 3;
 }
 
-message ClientRoughnessItems
+message ClientDiffractionData
 {
-    repeated ClientRoughnessItem items = 1;
+    repeated ClientDiffractionPeak peaks = 1;
+    repeated ClientRoughnessItem roughnesses = 2;
 }
