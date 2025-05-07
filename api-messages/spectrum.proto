@@ -45,7 +45,7 @@ message ClientSpectrum
 message ClientSpectrumEnergyCalibration
 {
     float StarteV = 1;
-    float PerChaneV = 2;
+    float PerChanneleV = 2;
 }
 
 message ClientEnergyCalibration
