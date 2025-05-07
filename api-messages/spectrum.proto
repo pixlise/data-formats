@@ -30,3 +30,14 @@ message Spectra
 {
     repeated Spectrum spectra = 1;
 }
+
+message ClientSpectrum
+{
+    string detector = 1;
+    SpectrumType type = 2;
+    repeated uint32 counts = 3;
+    uint32 maxCount = 4;
+
+    // Special client-version which has the labels in it already
+    map<string, ScanMetaDataItem> meta = 5;
+}
