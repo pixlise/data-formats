@@ -20,7 +20,7 @@ message ScanBeamLocationsResp
 message ClientBeamLocation
 {
     int32 PMC = 1;
-    Coordinate3D coordinates = 2;
+    Coordinate3D coordinate = 2;
 }
 
 message ClientBeamLocations
