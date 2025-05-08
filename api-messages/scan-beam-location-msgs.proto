@@ -17,8 +17,13 @@ message ScanBeamLocationsResp
     repeated Coordinate3D beamLocations = 1;
 }
 
-message ClientBeamLocations
+message ClientBeamLocation
 {
     int32 PMC = 1;
     Coordinate3D coordinates = 2;
+}
+
+message ClientBeamLocations
+{
+    repeated ClientBeamLocation locations = 1;
 }
