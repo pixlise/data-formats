@@ -34,7 +34,7 @@ message TagCreateResp
     Tag tag = 1;
 }
 
-// requires(PIXLISE_ADMIN)
+// requires(EDIT_TAGS)
 message TagDeleteReq
 {
     string tagId = 1;
