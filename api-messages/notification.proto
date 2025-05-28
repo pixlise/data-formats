@@ -36,4 +36,6 @@ message Notification
     string imageName = 12;
     string quantId = 13;
     string requestorUserId = 14; // For example, in case of join group request
+    string roiId = 15;
+    string mapId = 16; // For maps saved by saveMapData() client library function, allows UI to update when map is recalculated externally to PIXLISE
 }
