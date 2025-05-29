@@ -20,6 +20,8 @@ message MemoisedItem
 
     uint32 dataSize = 7;
     uint32 lastReadTimeUnixSec = 8;
+
+    string memoWriterUserId = 9;
 }
 
 
