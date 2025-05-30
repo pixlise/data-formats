@@ -30,3 +30,16 @@ message ImageBeamLocationVersionsResp
     }
     map<string, AvailableVersions> beamVersionPerScan = 1;
 }
+
+// requires(EDIT_SCAN)
+message ImageBeamLocationUploadReq
+{
+    string imageName = 1;
+    uint32 version = 2;
+    ImageLocations locations = 3;
+}
+
+message ImageBeamLocationUploadResp
+{
+    ImageLocations locations = 1;
+}
