@@ -35,11 +35,9 @@ message ImageBeamLocationVersionsResp
 message ImageBeamLocationUploadReq
 {
     string imageName = 1;
-    uint32 version = 2;
-    ImageLocations locations = 3;
+    ImageLocationsForScan location = 2;
 }
 
 message ImageBeamLocationUploadResp
 {
-    ImageLocations locations = 1;
 }

@@ -163,6 +163,8 @@ message WSMessage
         ExpressionWriteResp expressionWriteResp = 55;
         GetOwnershipReq getOwnershipReq = 172;
         GetOwnershipResp getOwnershipResp = 173;
+        ImageBeamLocationUploadReq imageBeamLocationUploadReq = 330;
+        ImageBeamLocationUploadResp imageBeamLocationUploadResp = 331;
         ImageBeamLocationVersionsReq imageBeamLocationVersionsReq = 299;
         ImageBeamLocationVersionsResp imageBeamLocationVersionsResp = 300;
         ImageBeamLocationsReq imageBeamLocationsReq = 190;
