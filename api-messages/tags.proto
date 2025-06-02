@@ -16,7 +16,6 @@ message Tag
     UserInfo owner = 5;  // @gotags: bson:"-"
 }
 
-
 message TagDB
 {
 	string id = 1; // @gotags: bson:"_id,omitempty"
@@ -25,4 +24,9 @@ message TagDB
     string scanId = 4;
 
     string ownerId = 5; 
+}
+
+message ClientTagList
+{
+    repeated Tag tags = 1;
 }
