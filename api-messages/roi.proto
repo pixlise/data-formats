@@ -45,6 +45,13 @@ message ROIItem
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 13; // @gotags: bson:"-"
+
+    string associatedROIId = 14; // The id of an "associated" ROI. Mostly for deletion purposes. This was
+                                 // introduced when we added the ability to create ROIs for non-contiguous
+                                 // clusters of PMCs. That could result in 100s of small ROIs being created
+                                 // and hand-deleting those would take forever, so in that case the first
+                                 // ROI's id is added to all subsequently created ROIs, and they can all
+                                 // be deleted together in one operation
 }
 
 message ROIItemSummary
@@ -66,4 +73,7 @@ message ROIItemSummary
 
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 11; // @gotags: bson:"-"
+
+    
+    string associatedROIId = 12; // See description in ROIItem
 }
