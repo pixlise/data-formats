@@ -22,6 +22,7 @@ message MemoisedItem
     uint32 lastReadTimeUnixSec = 8;
 
     string memoWriterUserId = 9;
+    bool noGC = 10; // Don't garbage collect this item! Used for items that need permanence like client-library saved maps
 }
 
 
