@@ -99,9 +99,9 @@ message RegionOfInterestBulkWriteResp
 // requires(EDIT_ROI)
 message RegionOfInterestDeleteReq
 {
-    string id = 1; // To delete an individual ROI, specify this
+    string id = 1;
     bool isMIST = 2;
-    string associatedROIId = 3; // If specified, we delete all ROIs that have this in their associatedROIId field
+    bool isAssociatedROIId = 3; // If set to true, we delete all ROIs whose associatedROIId matches id
 }
 
 message RegionOfInterestDeleteResp
