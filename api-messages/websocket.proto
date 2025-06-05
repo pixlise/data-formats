@@ -394,6 +394,10 @@ message WSMessage
         WidgetDataGetResp widgetDataGetResp = 255;
         WidgetDataWriteReq widgetDataWriteReq = 256;
         WidgetDataWriteResp widgetDataWriteResp = 257;
+        WidgetMetadataGetReq widgetMetadataGetReq = 332;
+        WidgetMetadataGetResp widgetMetadataGetResp = 333;
+        WidgetMetadataWriteReq widgetMetadataWriteReq = 334;
+        WidgetMetadataWriteResp widgetMetadataWriteResp = 335;
         ZenodoDOIGetReq zenodoDOIGetReq = 240;
         ZenodoDOIGetResp zenodoDOIGetResp = 241;
     }

@@ -254,6 +254,8 @@ message MarkdownViewState
 message WidgetData
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
+    string widgetName = 16; // @gotags: bson:"widgetName,omitempty"
+    string widgetDescription = 17; // @gotags: bson:"widgetDescription,omitempty"
 
     SpectrumWidgetState spectrum = 2;
     BinaryState binary = 3;

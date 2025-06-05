@@ -24,3 +24,31 @@ message WidgetDataWriteResp
 {
     WidgetData widgetData = 1;
 }
+
+// requires(NONE)
+message WidgetMetadataGetReq
+{
+    string id = 1;
+}
+
+message WidgetMetadataGetResp
+{
+    string id = 1;
+    string widgetName = 2;
+    string widgetDescription = 3;
+}
+
+// requires(EDIT_VIEW_STATE)
+message WidgetMetadataWriteReq
+{
+    string id = 1;
+    string widgetName = 2;
+    string widgetDescription = 3;
+}
+
+message WidgetMetadataWriteResp
+{
+    string id = 1;
+    string widgetName = 2;
+    string widgetDescription = 3;
+}
