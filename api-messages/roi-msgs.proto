@@ -106,7 +106,7 @@ message RegionOfInterestDeleteReq
 
 message RegionOfInterestDeleteResp
 {
-    uint32 deleteCount = 1; // How many ROIs were deleted
+    repeated string deletedIds = 1;
 }
 
 // requires(EDIT_ROI)

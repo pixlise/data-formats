@@ -74,6 +74,5 @@ message ROIItemSummary
     // Only sent out by API, not stored in DB this way
     OwnershipSummary owner = 11; // @gotags: bson:"-"
 
-    
     string associatedROIId = 12; // See description in ROIItem
 }
