@@ -251,6 +251,11 @@ message MarkdownViewState
     string content = 1;
 }
 
+message Scan3DViewState
+{
+    
+}
+
 message WidgetData
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
@@ -271,4 +276,5 @@ message WidgetData
     RGBUImagesWidgetState rgbuImage = 13;
     ParallelogramWidgetState parallelogram = 14;
     MarkdownViewState markdownView = 15;
+    Scan3DViewState scan3DView = 16;
 }
