@@ -253,7 +253,7 @@ message MarkdownViewState
 
 message Scan3DViewState
 {
-    
+
 }
 
 message WidgetData
@@ -276,5 +276,5 @@ message WidgetData
     RGBUImagesWidgetState rgbuImage = 13;
     ParallelogramWidgetState parallelogram = 14;
     MarkdownViewState markdownView = 15;
-    Scan3DViewState scan3DView = 16;
+    Scan3DViewState scan3DView = 18;
 }
