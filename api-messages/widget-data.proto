@@ -169,6 +169,24 @@ message ContextImageState
     // PMCToolPMC int32 pmcToolPMC = ;
 }
 
+message Scan3DViewState
+{
+    bool showPoints = 1;
+    bool showLight = 2;
+    float brightness = 3;
+    string rgbuChannels = 4;
+    float unselectedOpacity = 5;
+    bool unselectedGrayscale = 6;
+    float colourRatioMin = 7;
+    float colourRatioMax = 8;
+    bool removeTopSpecularArtifacts = 9;
+    bool removeBottomSpecularArtifacts = 10;
+    repeated string hideFootprintsForScans = 11;
+    repeated string hidePointsForScans = 12;
+    string contextImage = 13;
+    string contextImageSmoothing = 14;
+}
+
 message AnnotationPoint
 {
     float x = 1;
