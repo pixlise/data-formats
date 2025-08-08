@@ -269,11 +269,6 @@ message MarkdownViewState
     string content = 1;
 }
 
-message Scan3DViewState
-{
-
-}
-
 message WidgetData
 {
     string id = 1; // @gotags: bson:"_id,omitempty"
