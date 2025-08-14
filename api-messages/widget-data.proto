@@ -171,7 +171,7 @@ message ContextImageState
 
 message Scan3DViewState
 {
-    bool showPoints = 1;
+    // bool showPoints = 1; <-- already have hidePointsForScans!
     bool showLight = 2;
     float brightness = 3;
     string rgbuChannels = 4;
