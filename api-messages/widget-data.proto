@@ -169,10 +169,16 @@ message ContextImageState
     // PMCToolPMC int32 pmcToolPMC = ;
 }
 
+enum LightMode
+{
+    LM_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    LM_POINT = 1;
+    LM_ENVIRONMENT = 3;
+}
+
 message Scan3DViewState
 {
-    // bool showPoints = 1; <-- already have hidePointsForScans!
-    bool showLight = 2;
+    LightMode lightMode = 2;
     float brightness = 3;
     string rgbuChannels = 4;
     float unselectedOpacity = 5;
