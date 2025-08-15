@@ -191,6 +191,7 @@ message Scan3DViewState
     repeated string hidePointsForScans = 12;
     string contextImage = 13;
     string contextImageSmoothing = 14;
+    float planeYScale = 15;
 }
 
 message AnnotationPoint
