@@ -192,6 +192,7 @@ message Scan3DViewState
     string contextImage = 13;
     string contextImageSmoothing = 14;
     float planeYScale = 15;
+    bool showFootprint = 16;
 }
 
 message AnnotationPoint
