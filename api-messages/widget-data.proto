@@ -177,6 +177,15 @@ enum LightMode
     LM_ENVIRONMENT = 3;
 }
 
+message Coordinate4D
+{
+    float x = 1;
+    float y = 2;
+    float z = 3;
+    float w = 4;
+}
+
+
 message Scan3DViewState
 {
     float brightness = 3;
@@ -196,7 +205,7 @@ message Scan3DViewState
     float planeYScale = 15;
     bool showFootprint = 16;
     Coordinate3D cameraPosition = 17;
-    Coordinate3D cameraRotation = 18;
+    Coordinate4D cameraRotation = 18;
 }
 
 message AnnotationPoint
