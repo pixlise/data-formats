@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "element-set.proto";
+import "scan-beam-location.proto";
 
 message VisibleROI
 {
@@ -178,7 +179,6 @@ enum LightMode
 
 message Scan3DViewState
 {
-    LightMode lightMode = 2;
     float brightness = 3;
     string rgbuChannels = 4;
     float unselectedOpacity = 5;
@@ -191,8 +191,12 @@ message Scan3DViewState
     repeated string hidePointsForScans = 12;
     string contextImage = 13;
     string contextImageSmoothing = 14;
+
+    LightMode lightMode = 2;
     float planeYScale = 15;
     bool showFootprint = 16;
+    Coordinate3D cameraPosition = 17;
+    Coordinate3D cameraRotation = 18;
 }
 
 message AnnotationPoint
