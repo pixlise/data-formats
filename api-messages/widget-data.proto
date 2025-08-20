@@ -206,6 +206,9 @@ message Scan3DViewState
     bool showFootprint = 16;
     Coordinate3D cameraPosition = 17;
     Coordinate4D cameraRotation = 18;
+    Coordinate3D cameraTarget = 19;
+    float cameraZoom = 20;
+    float heightExaggerationScale = 21;
 }
 
 message AnnotationPoint
