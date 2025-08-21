@@ -209,6 +209,7 @@ message Scan3DViewState
     Coordinate3D cameraTarget = 19;
     float cameraZoom = 20;
     float heightExaggerationScale = 21;
+    Coordinate3D pointLightPosition = 22;
 }
 
 message AnnotationPoint
