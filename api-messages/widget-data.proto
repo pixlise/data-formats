@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "element-set.proto";
+import "scan-beam-location.proto";
 
 message VisibleROI
 {
@@ -171,6 +172,51 @@ message ContextImageState
     // PMCToolPMC int32 pmcToolPMC = ;
 }
 
+enum LightMode
+{
+    LM_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    LM_POINT = 1;
+    LM_ENVIRONMENT = 3;
+}
+
+message Coordinate4D
+{
+    float x = 1;
+    float y = 2;
+    float z = 3;
+    float w = 4;
+}
+
+
+message Scan3DViewState
+{
+    float brightness = 3;
+    string rgbuChannels = 4;
+    float unselectedOpacity = 5;
+    bool unselectedGrayscale = 6;
+    float colourRatioMin = 7;
+    float colourRatioMax = 8;
+    bool removeTopSpecularArtifacts = 9;
+    bool removeBottomSpecularArtifacts = 10;
+    repeated string hideFootprintsForScans = 11;
+    repeated string hidePointsForScans = 12;
+    string contextImage = 13;
+    string contextImageSmoothing = 14;
+
+    LightMode lightMode = 2;
+    float planeYScale = 15;
+    bool showFootprint = 16;
+    Coordinate3D cameraPosition = 17;
+    Coordinate4D cameraRotation = 18;
+    Coordinate3D cameraTarget = 19;
+    float cameraZoom = 20;
+    float heightExaggerationScale = 21;
+    Coordinate3D pointLightPosition = 22;
+
+    repeated MapLayerVisibility mapLayers = 23;
+    repeated ROILayerVisibility roiLayers = 24;
+}
+
 message AnnotationPoint
 {
     float x = 1;
@@ -273,4 +319,5 @@ message WidgetData
     RGBUImagesWidgetState rgbuImage = 13;
     ParallelogramWidgetState parallelogram = 14;
     MarkdownViewState markdownView = 15;
+    Scan3DViewState scan3DView = 18;
 }
