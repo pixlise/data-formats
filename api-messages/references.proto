@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message ExpressionValuePair
+{
+    string expressionId = 1;
+    string expressionName = 2;
+    double value = 3;
+}
+
+message ReferenceData
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string category = 2;
+    string group = 3;
+    string mineralSampleName = 4;
+    string sourceCitation = 5;
+    string sourceLink = 6;
+    repeated ExpressionValuePair expressionValuePairs = 7;
+}

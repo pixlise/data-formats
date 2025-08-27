@@ -68,6 +68,7 @@ message BinaryState
     bool showMmol = 1;
     repeated string expressionIDs = 2;
     repeated VisibleROI visibleROIs = 3;
+    repeated string referenceIds = 4;
 }
 
 message TernaryState
@@ -75,6 +76,7 @@ message TernaryState
     bool showMmol = 1;
     repeated string expressionIDs = 2;
     repeated VisibleROI visibleROIs = 3;
+    repeated string referenceIds = 4;
 }
 
 message VisibleROIAndQuant

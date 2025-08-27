@@ -1,0 +1,57 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "references.proto";
+
+// requires(NONE)
+message ReferenceDataListReq
+{
+}
+
+message ReferenceDataListResp
+{
+    repeated ReferenceData referenceData = 1;
+}
+
+// requires(NONE)
+message ReferenceDataGetReq
+{
+    string id = 1;
+}
+
+message ReferenceDataGetResp
+{
+    ReferenceData referenceData = 1;
+}
+
+// requires(EDIT_TAGS)
+message ReferenceDataWriteReq
+{
+    ReferenceData referenceData = 1;
+}
+
+message ReferenceDataWriteResp
+{
+    ReferenceData referenceData = 1;
+}
+
+// requires(EDIT_TAGS)
+message ReferenceDataBulkWriteReq
+{
+    repeated ReferenceData referenceData = 1;
+    bool matchByFields = 2;
+}
+
+message ReferenceDataBulkWriteResp
+{
+    repeated ReferenceData referenceData = 1;
+}
+
+// requires(EDIT_TAGS)
+message ReferenceDataDeleteReq
+{
+    string id = 1;
+}
+
+message ReferenceDataDeleteResp
+{}

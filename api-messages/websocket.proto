@@ -54,6 +54,7 @@ import "doi-msgs.proto";
 import "screen-configuration-msgs.proto";
 import "widget-data-msgs.proto";
 import "system.proto";
+import "references-msgs.proto";
 
 
 // This is expected to appear in all Resp messages. It is
@@ -252,6 +253,16 @@ message WSMessage
         QuantRawDataGetResp quantRawDataGetResp = 306;
         QuantUploadReq quantUploadReq = 220;
         QuantUploadResp quantUploadResp = 221;
+        ReferenceDataBulkWriteReq referenceDataBulkWriteReq = 344;
+        ReferenceDataBulkWriteResp referenceDataBulkWriteResp = 345;
+        ReferenceDataDeleteReq referenceDataDeleteReq = 336;
+        ReferenceDataDeleteResp referenceDataDeleteResp = 337;
+        ReferenceDataGetReq referenceDataGetReq = 338;
+        ReferenceDataGetResp referenceDataGetResp = 339;
+        ReferenceDataListReq referenceDataListReq = 340;
+        ReferenceDataListResp referenceDataListResp = 341;
+        ReferenceDataWriteReq referenceDataWriteReq = 342;
+        ReferenceDataWriteResp referenceDataWriteResp = 343;
         RegionOfInterestBulkDuplicateReq regionOfInterestBulkDuplicateReq = 238;
         RegionOfInterestBulkDuplicateResp regionOfInterestBulkDuplicateResp = 239;
         RegionOfInterestBulkWriteReq regionOfInterestBulkWriteReq = 236;
