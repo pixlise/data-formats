@@ -210,6 +210,9 @@ message Scan3DViewState
     float cameraZoom = 20;
     float heightExaggerationScale = 21;
     Coordinate3D pointLightPosition = 22;
+
+    repeated MapLayerVisibility mapLayers = 23;
+    repeated ROILayerVisibility roiLayers = 24;
 }
 
 message AnnotationPoint
