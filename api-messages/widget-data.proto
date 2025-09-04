@@ -117,6 +117,13 @@ message VariogramState
     bool drawBestFit = 13;
 }
 
+message MapLayerGroupDisplayRange
+{
+    string expressionID = 1;
+    float displayValueRangeMin = 2;
+    float displayValueRangeMax = 3;
+}
+
 message MapLayerVisibility
 {
     string expressionID = 1;
@@ -126,6 +133,9 @@ message MapLayerVisibility
     float displayValueRangeMin = 4;
     float displayValueRangeMax = 5;
     string displayValueShading = 6;
+
+    // For RGB Mixes, we want to store the display value ranges for each group of layers
+    repeated MapLayerGroupDisplayRange displayValueRanges = 7;
 }
 
 message ROILayerVisibility
