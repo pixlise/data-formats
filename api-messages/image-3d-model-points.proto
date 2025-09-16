@@ -8,7 +8,7 @@ import "scan-beam-location.proto";
 message Image3DPoints
 {
     // Which image these are for
-    string imageName = 1;
+    string imageName = 1; // @gotags: bson:"_id,omitempty"
 
     // The 3d points - these can then be drawn as needed, point cloud, mesh etc.
     // NOTE: These are just free points, not related to PMCs or other data. Inteded
