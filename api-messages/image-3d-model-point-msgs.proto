@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "image-3d-model-points.proto";
+
+
+// requires(NONE)
+message Image3DModelPointsReq
+{
+    string imageName = 1;
+}
+
+message Image3DModelPointsResp
+{
+    Image3DPoints points = 1;
+}
+
+
+// requires(EDIT_SCAN)
+message Image3DModelPointUploadReq
+{
+    Image3DPoints points = 1;
+}
+
+message Image3DModelPointUploadResp
+{
+}

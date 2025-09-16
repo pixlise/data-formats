@@ -16,6 +16,7 @@ import "element-set-msgs.proto";
 import "export-msgs.proto";
 import "expression-group-msgs.proto";
 import "expression-msgs.proto";
+import "image-3d-model-point-msgs.proto";
 import "image-beam-location-msgs.proto";
 import "image-msgs.proto";
 import "image-coreg-msgs.proto";
@@ -164,6 +165,10 @@ message WSMessage
         ExpressionWriteResp expressionWriteResp = 55;
         GetOwnershipReq getOwnershipReq = 172;
         GetOwnershipResp getOwnershipResp = 173;
+        Image3DModelPointUploadReq image3DModelPointUploadReq = 346;
+        Image3DModelPointUploadResp image3DModelPointUploadResp = 347;
+        Image3DModelPointsReq image3DModelPointsReq = 348;
+        Image3DModelPointsResp image3DModelPointsResp = 349;
         ImageBeamLocationUploadReq imageBeamLocationUploadReq = 330;
         ImageBeamLocationUploadResp imageBeamLocationUploadResp = 331;
         ImageBeamLocationVersionsReq imageBeamLocationVersionsReq = 299;
