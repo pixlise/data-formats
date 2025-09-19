@@ -70,10 +70,10 @@ message BinaryState
     repeated string expressionIDs = 2;
     repeated VisibleROI visibleROIs = 3;
     repeated string referenceIds = 4;
-    optional double selectedMinXValue = 5;
-    optional double selectedMaxXValue = 6;
-    optional double selectedMinYValue = 7;
-    optional double selectedMaxYValue = 8;
+    double selectedMinXValue = 5;
+    double selectedMaxXValue = 6;
+    double selectedMinYValue = 7;
+    double selectedMaxYValue = 8;
 }
 
 message TernaryState
