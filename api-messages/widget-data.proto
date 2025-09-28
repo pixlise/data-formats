@@ -201,6 +201,15 @@ message Coordinate4D
     float w = 4;
 }
 
+enum ModelStyle
+{
+    MS_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    MS_FLAT_BOTTOM_GROUND_PLANE = 1;
+    MS_MID_GROUND_PLANE = 2;
+    MS_MCC_MODEL_ONLY = 3;
+    MS_MCC_MODEL_PMCS_DROPPED = 4;
+    MS_MCC_MODEL_PMCS_POKING_THROUGH = 5;
+}
 
 message Scan3DViewState
 {
