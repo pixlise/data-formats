@@ -52,8 +52,6 @@ message ROIItem
                                  // and hand-deleting those would take forever, so in that case the first
                                  // ROI's id is added to all subsequently created ROIs, and they can all
                                  // be deleted together in one operation
-
-    string sourceRegionId = 15; // In the case of an ROI which was broken up, we set the ID of the original ROI here
 }
 
 message ROIItemSummary
