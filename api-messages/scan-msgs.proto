@@ -96,6 +96,10 @@ message ScanUploadReq
     //       the zip first, then this can be called, passing the same scan id & file name
     // bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
     string zipFileName = 4;
+
+    uint32 skipRows = 5;
+    uint32 skipColumns = 6;
+    uint32 maxMapPoints = 7;
 }
 
 message ScanUploadResp
