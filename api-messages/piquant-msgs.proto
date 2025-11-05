@@ -51,6 +51,20 @@ message PiquantConfigVersionResp
     PiquantConfig piquantConfig = 1;
 }
 
+// Getting a specific PIQUANT file
+// requires(READ_PIQUANT_SETTINGS)
+message PiquantConfigFileReq
+{
+    string configId = 1;
+    string version = 2;
+    string filename = 3;
+}
+
+message PiquantConfigFileResp
+{
+    string contents = 1;
+}
+
 // Listing versions of PIQUANT container to run in API when quant is started
 // requires(READ_PIQUANT_SETTINGS)
 message PiquantVersionListReq
