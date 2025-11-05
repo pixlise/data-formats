@@ -213,6 +213,8 @@ message WSMessage
         NotificationUpd notificationUpd = 147;
         ObjectEditAccessReq objectEditAccessReq = 174;
         ObjectEditAccessResp objectEditAccessResp = 175;
+        PiquantConfigFileReq piquantConfigFileReq = 350;
+        PiquantConfigFileResp piquantConfigFileResp = 351;
         PiquantConfigListReq piquantConfigListReq = 73;
         PiquantConfigListResp piquantConfigListResp = 74;
         PiquantConfigVersionReq piquantConfigVersionReq = 75;
