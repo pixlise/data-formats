@@ -1,0 +1,34 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message AABB
+{
+    Coordinate3D min = 1;
+    Coordinate3D max = 2;
+}
+
+message Polygon
+{
+    repeated Coordinate3D vertexes = 1;
+}
+
+message BigScanTile
+{
+    string id = 1;
+    AABB bounds = 2;
+    repeated string images = 3;
+    repeated Coordinate3D points = 4;
+    repeated Polygon polygons = 5;
+}
+
+message BigScanLayer
+{
+    string id = 1;
+    repeated BigScanTile tiles = 2;
+}
+
+message BigScan
+{
+    repeated BigScanLayer layers = 1;
+}
