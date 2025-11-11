@@ -1,0 +1,44 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+import "image-pyramid.proto";
+
+
+// requires(NONE)
+message ImagePyramidGetReq
+{
+    string id = 1;
+    // Perhaps add controls to limit what layer of the pyramid to return?
+}
+
+message ImagePyramidGetResp
+{
+    ImagePyramid image = 1;
+}
+
+// requires(NONE)
+message ImageTileStructureGetReq
+{
+    string scanId = 1;
+    uint32 layer = 2;
+    uint32 tile = 3;
+}
+
+message ImageTileStructureGetResp
+{
+    ImageTileStructure tile = 1;
+}
+
+// requires(NONE)
+message ImageTileDataGetReq
+{
+    string scanId = 1;
+    uint32 layer = 2;
+    uint32 tile = 3;
+}
+
+message ImageTileDataGetResp
+{
+    ImageTileData data = 1;
+}

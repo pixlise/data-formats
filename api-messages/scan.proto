@@ -15,6 +15,7 @@ enum ScanDataType
     SD_IMAGE = 1;
     SD_XRF = 2;
     SD_RGBU = 3;
+    SD_BIGIMAGE = 4; // If the scan has "big image" data - stored as pyramids with tiled layers (see BigScan)
 }
 
 enum ScanInstrument
@@ -24,7 +25,10 @@ enum ScanInstrument
     PIXL_EM = 2; // PIXL engineering model
     JPL_BREADBOARD = 3; // JPL PIXL lab Breadboard
     SBU_BREADBOARD = 4; // Stony Brook Breadboard
-    BRUKER = 5;
+    BRUKER = 5; // TODO: Remove this, never implemented it anyway! Replace with GENERIC_XRF
+    GENERIC_XRF = 6; // Generic XRF, behaves like PIXL but from a commercial provider, eg Bruker
+    GENERIC_WDS = 7; // Wavelength Dispursive Spectroscopy instrument (??)
+    GENERIC_SEM = 8; // Scanning electron microscope
 }
 
 message ScanItem

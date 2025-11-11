@@ -1,0 +1,62 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan-beam-location.proto";
+
+
+// Axis aligned bounding cube
+message AABB
+{
+    Coordinate3D min = 1;
+    Coordinate3D max = 2;
+}
+
+// 3D polygon
+message Polygon3D
+{
+    repeated Coordinate3D vertexes = 1;
+    AABB bounds = 2;
+}
+
+// The basic structure for the tile containing:
+// - A list of images
+// - Points representing locations we have data from
+// - Polygons generated to display the point data in a map layer
+// - Summary information like the bounding volume
+message ImageTileStructure
+{
+    ImageTileSummary summary = 1;
+    repeated Coordinate3D points = 2;
+    repeated Polygon3D polygons = 3;
+}
+
+// Data values we have for a tile. Each tile stores an array of these
+// containing ints OR floats. This can be used to generate colours to
+// display on polygons on the tile
+message ImageTileData
+{
+    repeated float fValues = 1;
+    repeated int32 iValues = 2;
+}
+
+message ImageTileSummary
+{
+    string id = 1;
+    AABB bounds = 2;
+    repeated string images = 3; // All images
+    uint32 points = 4; // How many points this tile has
+    uint32 polygons = 5; // How many polygons this tile has
+}
+
+message ImagePyramidLayer
+{
+    string id = 1;
+    AABB bounds = 2;
+    repeated ImageTileSummary tiles = 3;
+}
+
+message ImagePyramid
+{
+    repeated ImagePyramidLayer pyramid = 1;
+    AABB bounds = 2;
+}
