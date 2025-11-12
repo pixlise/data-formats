@@ -41,22 +41,23 @@ message ImageTileData
 
 message ImageTileSummary
 {
-    string id = 1;
-    AABB bounds = 2;
-    repeated string images = 3; // All images (element maps) 
-    uint32 points = 4; // How many points this tile has
-    uint32 polygons = 5; // How many polygons this tile has
+    AABB bounds = 1; // Tile bounding box
+
+    uint32 points = 2; // How many points this tile has
+    uint32 polygons = 3; // How many polygons this tile has
 }
 
 message ImagePyramidLayer
 {
-    string id = 1;
-    AABB bounds = 2;
-    repeated ImageTileSummary tiles = 3;
+    AABB bounds = 1; // Bounding box of the entire layer
+
+    repeated ImageTileSummary tiles = 2;
 }
 
 message ImagePyramid
 {
-    repeated ImagePyramidLayer pyramid = 1;
-    AABB bounds = 2;
+    AABB bounds = 1;
+
+    repeated ImagePyramidLayer pyramid = 2;
+    repeated string imagePrefixes = 3; // All images will have this prefix with _<layer>_<x>_<y> appended
 }
