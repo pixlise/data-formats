@@ -19,7 +19,7 @@ message Polygon3D
 }
 
 // The basic structure for the tile containing:
-// - A list of images
+// - A list of images for the element maps 
 // - Points representing locations we have data from
 // - Polygons generated to display the point data in a map layer
 // - Summary information like the bounding volume
@@ -43,7 +43,7 @@ message ImageTileSummary
 {
     string id = 1;
     AABB bounds = 2;
-    repeated string images = 3; // All images
+    repeated string images = 3; // All images (element maps) 
     uint32 points = 4; // How many points this tile has
     uint32 polygons = 5; // How many polygons this tile has
 }
