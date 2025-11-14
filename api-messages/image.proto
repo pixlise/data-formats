@@ -45,6 +45,8 @@ message ScanImage
 
     // If its "matched" to another image, this should be filled out
     ImageMatchTransform matchInfo = 10;
+
+    ImagePyramid pyramidDescription = 11;
 }
 
 message ImageMatchTransform
