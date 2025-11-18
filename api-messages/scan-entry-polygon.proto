@@ -1,6 +1,8 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "image-beam-location.proto";
+
 // Defines a polygon that can be drawn where a scan point is. This can be tinted to
 // allow visualising maps of data over the scan area
 
@@ -23,8 +25,6 @@ message ScanEntryPolygons
     string id = 1; // @gotags: bson:"_id,omitempty"
     string imageName = 2; // Which images beam locations were used to generate this
     uint32 beamVersion = 3;
-
-    clusters
     repeated ScanEntryPolygon polygons = 4; 
 }
 
