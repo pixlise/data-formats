@@ -1,0 +1,49 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+// Defines a polygon that can be drawn where a scan point is. This can be tinted to
+// allow visualising maps of data over the scan area
+
+message Rectangle
+{
+    float x = 1;
+    float y = 2;
+    float w = 3;
+    float h = 4;
+}
+
+message ScanEntryPolygon
+{
+    repeated Coordinate2D points = 1;
+    Rectangle bbox = 2;
+}
+
+message ScanEntryPolygons
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    string imageName = 2; // Which images beam locations were used to generate this
+    uint32 beamVersion = 3;
+
+    clusters
+    repeated ScanEntryPolygon polygons = 4; 
+}
+
+message HullPoint
+{
+	Coordinate2D point = 1;
+	Coordinate2D normal = 2;
+	int32 scanEntryIndex = 3;
+}
+
+message PointCluster
+{
+    repeated int32 scanEntryIndexes = 1;
+    float averagePointDistance = 2;
+	float angleRadiansToImage = 3;
+	repeated HullPoint footprintPoints = 4;
+}
+
+message ScanPointAreas
+{
+	repeated PointCluster clusters = 1;
+}

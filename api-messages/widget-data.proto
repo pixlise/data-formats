@@ -240,6 +240,14 @@ message Scan3DViewState
     repeated ROILayerVisibility roiLayers = 24;
 }
 
+message ContextImage2State
+{
+    Coordinate3D cameraPosition = 1;
+    Coordinate4D cameraRotation = 2;
+    Coordinate3D cameraTarget = 3;
+    float cameraZoom = 4;
+}
+
 message AnnotationPoint
 {
     float x = 1;
@@ -343,4 +351,5 @@ message WidgetData
     ParallelogramWidgetState parallelogram = 14;
     MarkdownViewState markdownView = 15;
     Scan3DViewState scan3DView = 18;
+    ContextImage2State contextImage2 = 19;
 }
