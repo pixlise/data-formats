@@ -242,6 +242,8 @@ message Scan3DViewState
 
 message ContextImage2State
 {
+    string contextImage = 5;
+
     Coordinate3D cameraPosition = 1;
     Coordinate4D cameraRotation = 2;
     Coordinate3D cameraTarget = 3;
