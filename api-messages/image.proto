@@ -1,8 +1,6 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
-import "image-pyramid.proto";
-
 
 // Where it came from - the instrument or some other source
 enum ScanImageSource
@@ -49,7 +47,7 @@ message ScanImage
     // If its "matched" to another image, this should be filled out
     ImageMatchTransform matchInfo = 10;
 
-    ImagePyramid pyramidDescription = 11;
+    string pyramidId = 12;
 }
 
 message ImageMatchTransform

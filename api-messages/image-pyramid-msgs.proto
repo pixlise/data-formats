@@ -9,7 +9,6 @@ import "image-pyramid.proto";
 message ImagePyramidGetReq
 {
     string id = 1;
-    // Perhaps add controls to limit what layer of the pyramid to return?
 }
 
 message ImagePyramidGetResp

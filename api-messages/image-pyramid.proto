@@ -61,3 +61,9 @@ message ImagePyramid
     repeated ImagePyramidLayer pyramid = 2;
     repeated string imagePrefixes = 3; // All images will have this prefix with _<layer>_<x>_<y> appended
 }
+
+message ImagePyramidDBEntry
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+    ImagePyramid pyramid = 2;
+}
