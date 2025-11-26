@@ -60,6 +60,8 @@ message ImagePyramid
 
     repeated ImagePyramidLayer pyramid = 2;
     repeated string imagePrefixes = 3; // All images will have this prefix with _<layer>_<x>_<y> appended
+
+    uint32 tileSize = 4; // Size of each tile in pixels
 }
 
 message ImagePyramidDBEntry
