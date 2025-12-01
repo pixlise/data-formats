@@ -51,8 +51,8 @@ message ImagePyramidLayer
 {
     AABB bounds = 1; // Bounding box of the entire layer
 
-    uint16 tilesWide = 3;
-    uint16 tilesHigh = 4;
+    uint32 tilesWide = 3;
+    uint32 tilesHigh = 4;
 
     repeated ImageTileSummary tiles = 2;
 }
