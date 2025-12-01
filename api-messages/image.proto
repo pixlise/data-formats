@@ -47,7 +47,8 @@ message ScanImage
     // If its "matched" to another image, this should be filled out
     ImageMatchTransform matchInfo = 10;
 
-    string pyramidId = 12;
+    string pyramidId = 12; // id of the pyramid structure stored that's relevant to how this image is broken into tiles
+    string pyramidTileFormat = 13; // "jpg", "png", etc
 }
 
 message ImageMatchTransform
