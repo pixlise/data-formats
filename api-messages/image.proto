@@ -49,6 +49,10 @@ message ScanImage
 
     string pyramidId = 12; // id of the pyramid structure stored that's relevant to how this image is broken into tiles
     string pyramidTileFormat = 13; // "jpg", "png", etc
+
+    // Storage of any metadata that came out of whatever input format. Eg OMETIFF, BIOTIFF or GEOTIFF fields can be written
+    // here and displayed on the UI if it's interpreted right 
+    map<string, string> metaData = 14;
 }
 
 message ImageMatchTransform
