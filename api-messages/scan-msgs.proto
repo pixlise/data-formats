@@ -112,6 +112,16 @@ message ScanUploadUpd
     JobStatus status = 1;
 }
 
+// requires(EDIT_SCAN)
+message ScanCreateUserDefinedReq
+{
+    string id = 1;
+}
+
+message ScanCreateUserDefinedResp
+{
+}
+
 // Editing who to auto-share a scan with
 // requires(EDIT_SCAN)
 message ScanAutoShareReq
