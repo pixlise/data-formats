@@ -113,6 +113,9 @@ message ImageUploadHttpRequest
         // data for another image, put the name of the other image here
         ImageMatchTransform beamImageRef = 4;
     }
+
+    uint32 partNo = 7;
+    uint32 totalParts = 8;
 }
 
 // Deletes ONLY user-created image, should publish a ImageListUpd to go out
