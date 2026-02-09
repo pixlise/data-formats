@@ -116,6 +116,7 @@ message ImageUploadHttpRequest
 
     uint32 partNo = 7;
     uint32 totalParts = 8;
+    uint64 imageByteSize = 9;
 }
 
 message ImageUploadHttpPartialInfo
