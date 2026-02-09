@@ -29,7 +29,8 @@ message ScanImage
     ScanImageSource source = 2;
     uint32 width = 3;
     uint32 height = 4;
-    uint32 fileSize = 5;
+    uint32 fileSize = 5; // deprecated! Use fileSize64 but read fileSize if fileSize64 is 0...
+    uint64 fileSize64 = 15;
     ScanImagePurpose purpose = 6;
 
     // All scans associated with this image
