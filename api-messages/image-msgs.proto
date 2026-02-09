@@ -118,6 +118,11 @@ message ImageUploadHttpRequest
     uint32 totalParts = 8;
 }
 
+message ImageUploadHttpPartialInfo
+{
+    uint64 bytesReceived = 1;
+}
+
 // Deletes ONLY user-created image, should publish a ImageListUpd to go out
 
 // requires(EDIT_SCAN)
