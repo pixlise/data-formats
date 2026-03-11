@@ -37,6 +37,7 @@ import "roi-msgs.proto";
 import "scan-beam-location-msgs.proto";
 import "scan-entry-metadata-msgs.proto";
 import "scan-entry-msgs.proto";
+import "scan-entry-polygon-msgs.proto";
 import "scan-msgs.proto";
 import "selection-pixel-msgs.proto";
 import "selection-entry-msgs.proto";
@@ -187,6 +188,8 @@ message WSMessage
         ImageListUpd imageListUpd = 278;
         ImagePyramidGetReq imagePyramidGetReq = 352;
         ImagePyramidGetResp imagePyramidGetResp = 353;
+        ImageScanEntryDisplayElementsGetReq imageScanEntryDisplayElementsGetReq = 360;
+        ImageScanEntryDisplayElementsGetResp imageScanEntryDisplayElementsGetResp = 361;
         ImageSetDefaultReq imageSetDefaultReq = 63;
         ImageSetDefaultResp imageSetDefaultResp = 64;
         ImageSetMatchTransformReq imageSetMatchTransformReq = 266;

@@ -8,42 +8,37 @@ import "image-beam-location.proto";
 
 message Rectangle
 {
-    float x = 1;
-    float y = 2;
-    float w = 3;
-    float h = 4;
+    double x = 1;
+    double y = 2;
+    double w = 3;
+    double h = 4;
 }
 
 message ScanEntryPolygon
 {
+    // Ideally we'd prefer Coordinate2D to have x,y not i,j here...
     repeated Coordinate2D points = 1;
     Rectangle bbox = 2;
 }
 
-message ScanEntryPolygons
-{
-    string id = 1; // @gotags: bson:"_id,omitempty"
-    string imageName = 2; // Which images beam locations were used to generate this
-    uint32 beamVersion = 3;
-    repeated ScanEntryPolygon polygons = 4; 
-}
-
 message HullPoint
 {
+    // Ideally we'd prefer Coordinate2D to have x,y not i,j here...
 	Coordinate2D point = 1;
+    // Ideally we'd prefer Coordinate2D to have x,y not i,j here...
 	Coordinate2D normal = 2;
-	int32 scanEntryIndex = 3;
+	uint64 scanEntryIndex = 3;
 }
 
 message PointCluster
 {
-    repeated int32 scanEntryIndexes = 1;
-    float averagePointDistance = 2;
-	float angleRadiansToImage = 3;
+    repeated uint64 scanEntryIndexes = 1;
+    double averagePointDistance = 2;
+	double angleRadiansToImage = 3;
 	repeated HullPoint footprintPoints = 4;
 }
 
-message ScanPointAreas
+message Footprint
 {
-	repeated PointCluster clusters = 1;
+	repeated HullPoint hullPoints = 1;
 }
