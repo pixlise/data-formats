@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "scan-entry-polygon.proto";
+
+// requires(NONE)
+message ImageScanEntryDisplayElementsGetReq
+{
+    string imageName = 1;
+    string scanId = 2;
+    uint32 beamVersion = 3;
+}
+
+message ImageScanEntryDisplayElementsGetResp
+{
+    repeated PointCluster pointClusters = 1;
+    repeated ScanEntryPolygon scanEntryPolygons = 2;
+    repeated Footprint footprints = 3;
+
+    double pixelToMMConversion = 4;
+    double scanPointDisplayRadius = 5;
+    Rectangle scanPointBBox = 6;
+}
