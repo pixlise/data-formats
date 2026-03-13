@@ -42,3 +42,14 @@ message Footprint
 {
 	repeated HullPoint hullPoints = 1;
 }
+
+message ScanPoint
+{
+    uint64 PMC = 1;
+	Coordinate2D coord = 2;
+	uint64 locationIdx = 3;
+	bool hasNormalSpectra = 4;
+	bool hasDwellSpectra = 5;
+	bool hasPseudoIntensities = 6;
+	bool hasMissingData = 7;
+}

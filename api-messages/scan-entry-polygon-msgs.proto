@@ -16,8 +16,10 @@ message ImageScanEntryDisplayElementsGetResp
     repeated PointCluster pointClusters = 1;
     repeated ScanEntryPolygon scanEntryPolygons = 2;
     repeated Footprint footprints = 3;
+    repeated ScanPoint scanPoints = 7;
 
     double pixelToMMConversion = 4;
     double scanPointDisplayRadius = 5;
     Rectangle scanPointBBox = 6;
+    double beamRadiusMM = 8;
 }
