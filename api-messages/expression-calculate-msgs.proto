@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expression-calculate.proto";
+
+// requires(NONE)
+message ExpressionCalculateReq
+{
+    repeated DataSourceParams requests = 1;
+}
+
+message ExpressionCalculateResp
+{
+    RegionDataResults result = 1;
+}

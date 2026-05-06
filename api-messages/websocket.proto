@@ -16,6 +16,7 @@ import "element-set-msgs.proto";
 import "export-msgs.proto";
 import "expression-group-msgs.proto";
 import "expression-msgs.proto";
+import "expression-calculate-msgs.proto";
 import "image-3d-model-point-msgs.proto";
 import "image-beam-location-msgs.proto";
 import "image-msgs.proto";
@@ -143,6 +144,8 @@ message WSMessage
         ElementSetWriteResp elementSetWriteResp = 37;
         ExportFilesReq exportFilesReq = 38;
         ExportFilesResp exportFilesResp = 39;
+        ExpressionCalculateReq expressionCalculateReq = 362;
+        ExpressionCalculateResp expressionCalculateResp = 363;
         ExpressionDeleteReq expressionDeleteReq = 40;
         ExpressionDeleteResp expressionDeleteResp = 41;
         ExpressionDisplaySettingsGetReq expressionDisplaySettingsGetReq = 288;

@@ -1,0 +1,84 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "expressions.proto";
+
+
+enum DataUnit
+{
+    UNIT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    UNIT_DEFAULT = 1;
+    UNIT_MMOL = 2;
+    UNIT_PPM = 3;
+}
+
+// Designed to reflect what the front-end was doing internally when running an expression
+// NOTE: This may (probably should) change somewhat to make a more general purpose back-end expression runner!
+
+// Requesting a single expression to be run
+message DataSourceParams
+{
+    string scanId = 1;
+    string quantId = 2;
+    string expressionId = 3;
+    string roiId = 4;
+    DataUnit units = 5;
+}
+
+// Grouped results of expressions having run
+message RegionDataResults
+{
+  repeated RegionDataResultItem queryResults = 1;
+  string error = 2;
+}
+
+// Complete result of running an individual expression, output is in exprResult but we also receive some meta-data
+// for free because it was queried/used in the expression run, and we get the query structure back too.
+message RegionDataResultItem
+{
+    DataQueryResult exprResult = 1;
+    string error = 2;
+    string warning = 3;
+    DataExpression expression = 4; // NOTE: Is this redundant??? There's also the same field in DataQueryResult
+    //RegionSettings region = 5; // NOTE: Is this redundant??? There's also the same field in DataQueryResult
+    DataSourceParams query = 6;
+    bool isPMCTable = 7; // NOTE: Is this redundant??? There's also the same field in DataQueryResult
+}
+
+// The actual result output of running an expression
+message DataQueryResult
+{
+    PMCDataValues resultValues = 1;
+    bool isPMCTable = 2;
+    repeated string dataRequired = 3;
+    uint64 runtimeMs = 4;
+    string stdout = 5;
+    string stderr = 6;
+    map<string, PMCDataValues> recordedExpressionInputs = 7;
+    map<string, string> recordedExpressionInputValues = 8;
+    string errorMsg = 9;
+    DataExpression expression = 10;
+    //RegionSettings region = 11;
+}
+
+message PMCDataValues
+{
+    repeated PMCDataValue values = 1;
+    MinMaxFloat valueRange = 2;
+    bool isBinary = 3;
+    string warning = 4;
+}
+
+message PMCDataValue
+{
+    uint64 pmc = 1;
+    float value = 2;
+    bool isUndefined = 3;
+    string label = 4;
+}
+
+message MinMaxFloat
+{
+    float min = 1;
+    float max = 2;
+}
