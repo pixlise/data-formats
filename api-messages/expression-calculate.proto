@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "expressions.proto";
+import "memoisation.proto";
 
 
 enum DataUnit
@@ -36,7 +37,7 @@ message RegionDataResults
 // for free because it was queried/used in the expression run, and we get the query structure back too.
 message RegionDataResultItem
 {
-    DataQueryResult exprResult = 1;
+    MemDataQueryResult exprResult = 1;
     string error = 2;
     string warning = 3;
     DataExpression expression = 4; // NOTE: Is this redundant??? There's also the same field in DataQueryResult
@@ -45,6 +46,7 @@ message RegionDataResultItem
     bool isPMCTable = 7; // NOTE: Is this redundant??? There's also the same field in DataQueryResult
 }
 
+/*
 // The actual result output of running an expression
 message DataQueryResult
 {
@@ -81,4 +83,4 @@ message MinMaxFloat
 {
     float min = 1;
     float max = 2;
-}
+}*/

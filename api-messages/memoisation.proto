@@ -43,7 +43,7 @@ message MemPMCDataValues
     float minValue = 1;
     float maxValue = 2;
     repeated MemPMCDataValue values = 3;
-    bool isBinary = 4;;
+    bool isBinary = 4;
     string warning = 5;
 }
 
