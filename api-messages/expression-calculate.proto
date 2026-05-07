@@ -7,10 +7,9 @@ import "memoisation.proto";
 
 enum DataUnit
 {
-    UNIT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-    UNIT_DEFAULT = 1;
-    UNIT_MMOL = 2;
-    UNIT_PPM = 3;
+    UNIT_DEFAULT = 0; // Doubles as unknown, see https://protobuf.dev/programming-guides/dos-donts/
+    UNIT_MMOL = 1;
+    UNIT_PPM = 2;
 }
 
 // Designed to reflect what the front-end was doing internally when running an expression
