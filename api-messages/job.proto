@@ -2,6 +2,21 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 
+enum JobType
+{
+    JT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+    JT_IMPORT_SCAN = 1;
+    JT_REIMPORT_SCAN = 2;
+    JT_IMPORT_IMAGE = 3;
+    JT_RUN_QUANT = 4;
+    JT_RUN_FIT = 5;
+    // TODO:
+    // Future types:
+    // JT_RUN_EXPRESSION,
+    // JT_RUN_PYTHON_SCRIPT,
+    // JT_RUN_DIFFRACTION_DETECTOR, <-- to create the existing diffraction.db file, decouple from import
+}
+
 message JobStatus
 {
     enum Status
@@ -26,15 +41,6 @@ message JobStatus
     // JT_RUN_QUANT => quant id
     string jobItemId = 10;
 
-    enum JobType
-    {
-		JT_UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-        JT_IMPORT_SCAN = 1;
-        JT_REIMPORT_SCAN = 2;
-        JT_IMPORT_IMAGE = 3;
-        JT_RUN_QUANT = 4;
-        JT_RUN_FIT = 5;
-    }
 
     JobType jobType = 11;
 
@@ -54,6 +60,22 @@ message JobStatus
     repeated string elements = 14; // If it's a quant, the list of elements being quantified
 }
 
+/*
+message JobGroupConfig {
+	string jobGroupId = 1; // @gotags: bson:"_id,omitempty"
+	JobType jobType = 2;
+	string dockerImage = 3;
+	bool gastStart = 4; // May go unused - but could be a way to run it locally on this machine if we know it's a quick job
+	uint32 nodeCount = 5; // Node count, because NodeConfig can be asked to retrieve config of each node, but here we know the total
+	JobConfig nodeConfig = 6;
+
+	// Job meta-data
+	string associatedScanId = 7;   // Empty if none, or if it's across scans
+	string jobName = 8;   // Optional job name, eg used for quants
+	repeated string elementList = 9; // Optional element list, eg used for quants
+	string requestorUserId = 10;
+}
+*/
 
 // Which API instance wants to handle this job? This is only used
 // when it's an external request and APIs realise that an unknown
@@ -67,4 +89,34 @@ message JobHandlerDBItem {
     string jobId = 2;
     string handlerInstanceId = 3;
     uint32 timeStampUnixSec = 4;
+}
+
+// Individual jobs are written to the job queue. If a Job (above) involves multiple sub-jobs (eg PIQUANT run)
+// then a single entry exists in the JobStatus table, but JobQueue will contain one for each sub-job. This way
+// it can be individually run on a node (eg in a docker container on another machine) and accounted for when
+// it completes/fails. Once all JobQueueItems for a given job group are complete, its completion code can run
+// and it then gets removed from the job queue
+message JobQueueItem
+{
+    string jobId = 1; // @gotags: bson:"_id,omitempty"
+
+    // Include enough info to be able to start the job just using this structure! These form the
+    // S3 path to the job, where the job param JSON should be waiting
+    string jobGroupId = 2;
+    string associatedScanId = 7;
+    uint32 nodeIndex = 8;
+
+    int64 createdTimeStampUnixSec = 3;
+    int64 lastUpdatedTimeStampUnixSec = 4;
+
+    enum State
+    {
+		UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+        RUNNING = 1;
+        COMPLETE = 2;
+        FAILED = 3;
+    }
+
+    State state = 5;
+    string message = 6;
 }
