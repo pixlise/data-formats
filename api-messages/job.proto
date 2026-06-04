@@ -119,4 +119,5 @@ message JobQueueItem
 
     State state = 5;
     string message = 6;
+    string instanceId = 9;
 }
