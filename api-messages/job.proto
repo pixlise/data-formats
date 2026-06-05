@@ -112,9 +112,10 @@ message JobQueueItem
     enum State
     {
 		UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
-        RUNNING = 1;
-        COMPLETE = 2;
-        FAILED = 3;
+        ASSIGNED = 1;
+        RUNNING = 2;
+        COMPLETE = 3;
+        FAILED = 4;
     }
 
     State state = 5;
