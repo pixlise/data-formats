@@ -22,6 +22,24 @@ message GetOwnershipResp
 }
 
 ////////////////////////////////////////////////////////////////
+// Even if we have no access to this item, here we can query
+// a description of it (basically it's name field) so we can
+// display more meaningful error messages about items the user
+// has no access to, so they can ask for access!
+
+// requires(NONE)
+message GetOwnershipDescriptionReq
+{
+    string objectId = 1;
+    ObjectType objectType = 2;
+}
+
+message GetOwnershipDescriptionResp
+{
+    string name = 1;
+}
+
+////////////////////////////////////////////////////////////////
 // Adding viewers to an object (sharing/unsharing)
 
 // requires(NONE)

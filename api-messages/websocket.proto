@@ -168,6 +168,8 @@ message WSMessage
         ExpressionWriteExecStatResp expressionWriteExecStatResp = 53;
         ExpressionWriteReq expressionWriteReq = 54;
         ExpressionWriteResp expressionWriteResp = 55;
+        GetOwnershipDescriptionReq getOwnershipDescriptionReq = 364;
+        GetOwnershipDescriptionResp getOwnershipDescriptionResp = 365;
         GetOwnershipReq getOwnershipReq = 172;
         GetOwnershipResp getOwnershipResp = 173;
         Image3DModelPointUploadReq image3DModelPointUploadReq = 346;
