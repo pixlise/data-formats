@@ -37,6 +37,7 @@ message GetOwnershipDescriptionReq
 message GetOwnershipDescriptionResp
 {
     string name = 1;
+    UserInfo creatorUser = 2;
 }
 
 ////////////////////////////////////////////////////////////////
