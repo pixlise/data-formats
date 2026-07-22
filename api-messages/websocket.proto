@@ -144,8 +144,6 @@ message WSMessage
         ElementSetWriteResp elementSetWriteResp = 37;
         ExportFilesReq exportFilesReq = 38;
         ExportFilesResp exportFilesResp = 39;
-        ExpressionCalculateReq expressionCalculateReq = 362;
-        ExpressionCalculateResp expressionCalculateResp = 363;
         ExpressionDeleteReq expressionDeleteReq = 40;
         ExpressionDeleteResp expressionDeleteResp = 41;
         ExpressionDisplaySettingsGetReq expressionDisplaySettingsGetReq = 288;
@@ -164,6 +162,8 @@ message WSMessage
         ExpressionGroupWriteResp expressionGroupWriteResp = 47;
         ExpressionListReq expressionListReq = 48;
         ExpressionListResp expressionListResp = 49;
+        ExpressionOutputReq expressionOutputReq = 366;
+        ExpressionOutputResp expressionOutputResp = 367;
         ExpressionWriteExecStatReq expressionWriteExecStatReq = 52;
         ExpressionWriteExecStatResp expressionWriteExecStatResp = 53;
         ExpressionWriteReq expressionWriteReq = 54;

@@ -4,12 +4,18 @@ option go_package = ".;protos";
 import "expression-calculate.proto";
 
 // requires(NONE)
-message ExpressionCalculateReq
+message ExpressionOutputReq
 {
-    repeated DataSourceParams requests = 1;
+    DataSourceParams request = 1;
 }
 
-message ExpressionCalculateResp
+message ExpressionOutputResp
 {
-    RegionDataResults result = 1;
+    // We don't return the result here, that's a HTTP request to memoisation! We return
+    // the key that the data is available with - and a flag indicating if it's available
+    // already, because we may have had to trigger the expression to be calculated and that
+    // will take time. If available==false, the client should listen for completed jobs
+    // for the key. When the job is complete it can then query it from memoisation
+    string key = 1;
+    bool available = 2;
 }
