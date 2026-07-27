@@ -12,11 +12,10 @@ message ExpressionOutputReq
 message ExpressionOutputResp
 {
     // We don't return the result here, that's a HTTP request to memoisation! We return
-    // the key that the data is available with - and a flag indicating if it's available
-    // already, because we may have had to trigger the expression to be calculated and that
-    // will take time. If available==false, the client should listen for completed jobs
-    // for the key. When the job is complete it can then query it from memoisation
+    // the key that the data is available with - and a job id if the data is not read yet,
+    // because we may have had to trigger the expression to be calculated and that
+    // will take time. If jobId is not blank, the client should listen for completed jobs
+    // for that jobId. When the job is complete it can then query it from memoisation
     string key = 1;
-    bool available = 2;
-    string jobId = 3; // The job id to listen for, once the job is complete, the data is available memoised under key above
+    string jobId = 3;
 }
