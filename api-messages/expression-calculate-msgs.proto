@@ -18,4 +18,5 @@ message ExpressionOutputResp
     // for the key. When the job is complete it can then query it from memoisation
     string key = 1;
     bool available = 2;
+    string jobId = 3; // The job id to listen for, once the job is complete, the data is available memoised under key above
 }
