@@ -23,7 +23,7 @@ Need messages for:
 // requires(QUANTIFY)
 message JobListReq
 {
-    uint32 startIndex = 1;
+    uint32 skipJobs = 1;
     uint32 jobCount = 2;
 }
 
