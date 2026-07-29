@@ -17,15 +17,23 @@ Need messages for:
 // For now we use quant permissions, but we may want a specific job permission in future
 // because a job might come from multiple places. Currently: import, quantification...
 
+// Listing jobs - returns all active jobs and the rest are returned in blocks
+// depending on the start/end index specified
+
 // requires(QUANTIFY)
 message JobListReq
 {
-    //SearchParams searchParams = 1;
+    uint32 startIndex = 1;
+    uint32 jobCount = 2;
 }
 
 message JobListResp
 {
+    // The jobs requested by index
     repeated JobStatus jobs = 1;
+    uint32 totalJobCount = 2;
+
+    repeated JobStatus activeJobs = 3;
 }
 
 message JobListUpd
