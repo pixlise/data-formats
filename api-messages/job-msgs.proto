@@ -59,6 +59,7 @@ message SetScheduledJobReq
 
 message SetScheduledJobResp
 {
+    ScheduledJob job = 1;
 }
 
 // requires(QUANTIFY)
