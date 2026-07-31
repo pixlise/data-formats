@@ -221,23 +221,3 @@ message ScanTriggerJobReq
 message ScanTriggerJobResp
 {
 }
-
-// requires(NONE)
-message ScanListJobsReq
-{
-}
-
-message ScanListJobsResp
-{
-    repeated JobGroupConfig jobs = 1;
-}
-
-// requires(EDIT_SCAN)
-message ScanWriteJobReq
-{
-    JobGroupConfig job = 3;
-}
-
-message ScanWriteJobResp
-{
-}
