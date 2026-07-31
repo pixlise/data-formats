@@ -25,6 +25,7 @@ message JobListReq
 {
     uint32 skipJobs = 1;
     uint32 jobCount = 2;
+    repeated JobType jobTypes = 3;
 }
 
 message JobListResp
