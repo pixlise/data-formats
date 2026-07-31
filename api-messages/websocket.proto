@@ -116,6 +116,8 @@ message WSMessage
         DataModuleListResp dataModuleListResp = 11;
         DataModuleWriteReq dataModuleWriteReq = 14;
         DataModuleWriteResp dataModuleWriteResp = 15;
+        DeleteScheduledJobReq deleteScheduledJobReq = 368;
+        DeleteScheduledJobResp deleteScheduledJobResp = 369;
         DetectedDiffractionPeaksReq detectedDiffractionPeaksReq = 224;
         DetectedDiffractionPeaksResp detectedDiffractionPeaksResp = 225;
         DetectorConfigListReq detectorConfigListReq = 258;
@@ -344,6 +346,8 @@ message WSMessage
         ScanUploadUpd scanUploadUpd = 268;
         ScanWriteJobReq scanWriteJobReq = 328;
         ScanWriteJobResp scanWriteJobResp = 329;
+        ScheduledJobListReq scheduledJobListReq = 370;
+        ScheduledJobListResp scheduledJobListResp = 371;
         ScreenConfigurationDeleteReq screenConfigurationDeleteReq = 260;
         ScreenConfigurationDeleteResp screenConfigurationDeleteResp = 261;
         ScreenConfigurationGetReq screenConfigurationGetReq = 248;
@@ -362,6 +366,8 @@ message WSMessage
         SelectedScanEntriesWriteResp selectedScanEntriesWriteResp = 233;
         SendUserNotificationReq sendUserNotificationReq = 112;
         SendUserNotificationResp sendUserNotificationResp = 113;
+        SetScheduledJobReq setScheduledJobReq = 372;
+        SetScheduledJobResp setScheduledJobResp = 373;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
         TagCreateReq tagCreateReq = 116;

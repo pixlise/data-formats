@@ -40,3 +40,33 @@ message JobListUpd
 {
     JobStatus job = 1;
 }
+
+// requires(QUANTIFY)
+message ScheduledJobListReq
+{
+}
+
+message ScheduledJobListResp
+{
+    repeated ScheduledJob jobs = 1;
+}
+
+// requires(QUANTIFY)
+message SetScheduledJobReq
+{
+    ScheduledJob job = 1;
+}
+
+message SetScheduledJobResp
+{
+}
+
+// requires(QUANTIFY)
+message DeleteScheduledJobReq
+{
+    string id = 1;
+}
+
+message DeleteScheduledJobResp
+{
+}

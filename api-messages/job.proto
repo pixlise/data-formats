@@ -123,3 +123,27 @@ message JobQueueItem
     string instanceId = 9;
     JobType jobType = 10;
 }
+
+message ScheduledJob
+{
+    string id = 1; // @gotags: bson:"_id,omitempty"
+
+    enum ScheduleType
+    {
+		UNKNOWN = 0; // https://protobuf.dev/programming-guides/dos-donts/ says specify an unknown as 0
+        AFTER_IMPORT = 1;
+        TIME_BASED = 2;
+    }
+
+    ScheduleType scheduleType = 2;
+
+    // Ignored for AFTER_IMPORT type schedules
+    int64 scheduledTimeUnixSec = 3;
+
+    // Defines the order of jobs running after import
+    int64 jobOrder = 4;
+
+    // What to run?
+    JobType jobType = 5;
+    map<string, string> jobParameters = 6;
+}
