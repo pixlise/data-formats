@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "scan.proto";
 
 enum JobType
 {
@@ -130,6 +131,8 @@ message ScheduledJob
 
     string name = 8;
     string description = 9;
+
+    ScanInstrument instrument = 10;
 
     enum ScheduleType
     {
