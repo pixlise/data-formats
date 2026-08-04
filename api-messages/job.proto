@@ -144,7 +144,7 @@ message ScheduledJob
     ScheduleType scheduleType = 2;
 
     // Ignored for AFTER_IMPORT type schedules
-    int64 scheduledFirstTimeUnixSec = 3;
+    //int64 scheduledFirstTimeUnixSec = 3;
     int64 intervalSec = 7;
 
     // Defines the order of jobs running after import
