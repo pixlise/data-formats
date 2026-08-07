@@ -72,3 +72,15 @@ message DeleteScheduledJobReq
 message DeleteScheduledJobResp
 {
 }
+
+// requires(QUANTIFY)
+message TriggerScheduledJobReq
+{
+    string scheduledJobId = 1;
+    map<string, string> jobParameters = 2;
+}
+
+message TriggerScheduledJobResp
+{
+    string jobId = 1;
+}

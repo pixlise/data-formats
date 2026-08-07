@@ -372,6 +372,8 @@ message WSMessage
         TagDeleteResp tagDeleteResp = 119;
         TagListReq tagListReq = 120;
         TagListResp tagListResp = 121;
+        TriggerScheduledJobReq triggerScheduledJobReq = 374;
+        TriggerScheduledJobResp triggerScheduledJobResp = 375;
         UserAddRoleReq userAddRoleReq = 122;
         UserAddRoleResp userAddRoleResp = 123;
         UserDeleteRoleReq userDeleteRoleReq = 124;
