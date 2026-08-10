@@ -2,6 +2,8 @@ syntax = "proto3";
 option go_package = ".;protos";
 
 import "scan.proto";
+import "roi.proto";
+
 
 enum JobType
 {
@@ -61,22 +63,84 @@ message JobStatus
     repeated string elements = 14; // If it's a quant, the list of elements being quantified
 }
 
-/*
+enum NodeIndexMethod {
+    NONE = 0;
+	LOCAL = 1;
+	REMOTE = 2;
+	BOTH = 3;
+}
+
+message JobFilePath {
+	// The remote file info
+	string remoteBucket = 1;
+	string remotePath = 2;
+
+	// Local copy
+	string localPath = 3;
+
+    // Apply node index to this path (or not)
+    // If this is false, we just use the path as is, but if
+    // it's set to true, the local and remote paths have the
+    // node number inserted in between the file name and its
+    // extension. Eg node.pmcs becomes node00001.pmcs
+    NodeIndexMethod applyNodeIndex = 4;
+}
+
+message JobConfig {
+	// The job id
+	string jobId = 1;
+
+	// Logging method - If these are empty, we just log to stdout
+	// LogCloudwatchGroup string
+	// LogCloudwatchStream string
+
+	// What files are required to be present when running the job?
+	repeated JobFilePath requiredFiles = 2;
+
+	// What command to execute
+	string command = 3;
+	repeated string args = 4;
+
+	// What to upload on completion (if file doesn't exist, it can be ignored with a warning)
+	repeated JobFilePath outputFiles = 5;
+
+    // eg if this contains a 2, it means
+    // we need to apply the node index to
+    // Args[2] before running this job
+    repeated int32 argIndexToApplyNodeIndexes = 6;
+}
+
+message ROIItemWithPMCs {
+	repeated int32 pmcs = 1;
+	ROIItem roiItem = 2;
+}
+
 message JobGroupConfig {
 	string jobGroupId = 1; // @gotags: bson:"_id,omitempty"
-	JobType jobType = 2;
-	string dockerImage = 3;
-	bool gastStart = 4; // May go unused - but could be a way to run it locally on this machine if we know it's a quick job
-	uint32 nodeCount = 5; // Node count, because NodeConfig can be asked to retrieve config of each node, but here we know the total
-	JobConfig nodeConfig = 6;
+	JobType jobType = 2; // Job type, mostly for annotation of job state
+    string completionMethod = 3; // What to do when the job is completed, one of the JobComplete_* names
+	string dockerImage = 4; // Docker image to run in each node
+	bool fastStart = 5; // May go unused - but could be a way to run it locally on this machine if we know it's a quick job
+	uint32 nodeCount = 6; // Node count, because NodeConfig can be asked to retrieve config of each node, but here we know the total
+	JobConfig nodeConfig = 7;
 
-	// Job meta-data
-	string associatedScanId = 7;   // Empty if none, or if it's across scans
-	string jobName = 8;   // Optional job name, eg used for quants
-	repeated string elementList = 9; // Optional element list, eg used for quants
-	string requestorUserId = 10;
+	// Job meta-data - this contains task specific fields
+	// TODO: Remove this or make it generic somehow! Perhaps move these to a json file that is saved with the job and expect it to be available at the end?
+	// The problem is they are available at job creation, but also needed in the job completion task for certain jobs
+	string associatedScanId = 8;   // Empty if none, or if it's across scans
+	string jobName = 9;   // Optional job name, eg used for quants
+	repeated string elementList = 10; // Optional element list, eg used for quants
+	string requestorUserId = 11;
+    string outputTitle = 12; // Optional, ends up in the title of an output file, eg the first row of a CSV
+    bool combined = 13;
+    bool quantByROI = 14;
+
+    repeated ROIItemWithPMCs ROIs = 15;
+	// Need configs for:
+	// NodeOutputCombining - how to combine the outputs, eg PIQUANT map commands
+	// Do we need to write overall job output/logs somewhere?
 }
-*/
+
 
 // Which API instance wants to handle this job? This is only used
 // when it's an external request and APIs realise that an unknown

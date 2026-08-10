@@ -43,6 +43,18 @@ message JobListUpd
 }
 
 // requires(QUANTIFY)
+message JobGetReq
+{
+    string jobId = 1;
+}
+
+message JobGetResp
+{
+    JobStatus status = 1;
+    JobGroupConfig config = 2;
+}
+
+// requires(QUANTIFY)
 message ScheduledJobListReq
 {
 }
