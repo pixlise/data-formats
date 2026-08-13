@@ -58,6 +58,7 @@ import "screen-configuration-msgs.proto";
 import "widget-data-msgs.proto";
 import "system.proto";
 import "references-msgs.proto";
+import "repository-msgs.proto";
 
 
 // This is expected to appear in all Resp messages. It is
@@ -362,6 +363,12 @@ message WSMessage
         SendUserNotificationResp sendUserNotificationResp = 113;
         SetScheduledJobReq setScheduledJobReq = 372;
         SetScheduledJobResp setScheduledJobResp = 373;
+        SourceRepositoryDeleteReq sourceRepositoryDeleteReq = 378;
+        SourceRepositoryDeleteResp sourceRepositoryDeleteResp = 379;
+        SourceRepositoryListReq sourceRepositoryListReq = 380;
+        SourceRepositoryListResp sourceRepositoryListResp = 381;
+        SourceRepositorySetReq sourceRepositorySetReq = 382;
+        SourceRepositorySetResp sourceRepositorySetResp = 383;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
         TagCreateReq tagCreateReq = 116;
