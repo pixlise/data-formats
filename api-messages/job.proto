@@ -13,10 +13,10 @@ enum JobType
     JT_IMPORT_IMAGE = 3;
     JT_RUN_QUANT = 4;
     JT_RUN_FIT = 5;
+    JT_RUN_EXPRESSION = 6;
+    JT_RUN_PYTHON_SCRIPT = 7;
     // TODO:
     // Future types:
-    JT_RUN_EXPRESSION = 6;
-    // JT_RUN_PYTHON_SCRIPT,
     // JT_RUN_DIFFRACTION_DETECTOR, <-- to create the existing diffraction.db file, decouple from import
 }
 
