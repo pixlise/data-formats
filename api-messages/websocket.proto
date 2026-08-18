@@ -106,6 +106,8 @@ message WSMessage
         BackupDBReq backupDBReq = 311;
         BackupDBResp backupDBResp = 312;
         BackupDBUpd backupDBUpd = 313;
+        BulkReplaceExpressionModuleReferenceReq bulkReplaceExpressionModuleReferenceReq = 384;
+        BulkReplaceExpressionModuleReferenceResp bulkReplaceExpressionModuleReferenceResp = 385;
         DBAdminConfigGetReq dBAdminConfigGetReq = 314;
         DBAdminConfigGetResp dBAdminConfigGetResp = 315;
         DataModuleAddVersionReq dataModuleAddVersionReq = 198;
