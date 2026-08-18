@@ -92,3 +92,18 @@ message ExpressionDisplaySettingsGetResp
 {
     ExpressionDisplaySettings displaySettings = 1;
 }
+
+
+// requires(NONE)
+message BulkReplaceExpressionModuleReferenceReq
+{
+    string moduleId = 1;
+    SemanticVersion version = 2;
+
+    repeated string expressionIds = 3;
+}
+
+message BulkReplaceExpressionModuleReferenceResp
+{
+    ExpressionDisplaySettings displaySettings = 1;
+}
