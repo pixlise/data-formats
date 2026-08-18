@@ -3,6 +3,7 @@ option go_package = ".;protos";
 
 import "expressions.proto";
 import "search-params.proto";
+import "version.proto";
 
 
 /* Original:
