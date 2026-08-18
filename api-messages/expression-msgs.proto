@@ -106,5 +106,5 @@ message BulkReplaceExpressionModuleReferenceReq
 
 message BulkReplaceExpressionModuleReferenceResp
 {
-    ExpressionDisplaySettings displaySettings = 1;
+    map<string, string> errors = 1;
 }
