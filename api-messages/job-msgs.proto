@@ -55,6 +55,19 @@ message JobGetResp
 }
 
 // requires(QUANTIFY)
+message JobOutputGetReq
+{
+    string jobId = 1;
+    uint32 nodeIndex = 2;
+    string filePath = 3;
+}
+
+message JobOutputGetResp
+{
+    bytes content = 1;
+}
+
+// requires(QUANTIFY)
 message ScheduledJobListReq
 {
 }

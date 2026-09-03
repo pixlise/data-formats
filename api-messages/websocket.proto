@@ -212,6 +212,8 @@ message WSMessage
         JobListReq jobListReq = 296;
         JobListResp jobListResp = 297;
         JobListUpd jobListUpd = 298;
+        JobOutputGetReq jobOutputGetReq = 386;
+        JobOutputGetResp jobOutputGetResp = 387;
         LogGetLevelReq logGetLevelReq = 67;
         LogGetLevelResp logGetLevelResp = 68;
         LogReadReq logReadReq = 69;
