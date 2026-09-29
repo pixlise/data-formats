@@ -42,6 +42,16 @@ message ClientSpectrum
     map<string, ScanMetaDataItem> meta = 5;
 }
 
+message ClientSpectra
+{
+    repeated ClientSpectrum spectra = 1;
+}
+
+message ClientSpectraPerLocation
+{
+    repeated ClientSpectra locations = 1;
+}
+
 message ClientSpectrumEnergyCalibration
 {
     float StarteV = 1;

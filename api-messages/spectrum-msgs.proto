@@ -31,3 +31,23 @@ message SpectrumResp
 
     uint32 timeStampUnixSec = 8; // Scan import time stamp, older scans won't have one
 }
+
+// Uploads spectra - allows adding or editing spectra to a scan in batches. First location index can indicate the index of where
+// to save the first spectrum - if there are 3000 locations, and we upload in batches of 100, we'd expect the first message to
+// have firstLocationIndex=0, then firstLocationIndex=100, firstLocationIndex=200, etc
+// Each batch is saved in a separate file, and only merged into the scan bin file when the last spectrum is uploaded.
+//
+// NOTE: If we're dealing with a PIXL scan, this should only allow adding spectra not from detector A and B. It should also only
+// allow the same sized spectra as other existing spectra. Bulk and Max Value spectra won't be re-calculated.
+//
+// requires(EDIT_SCAN)
+message SpectrumUploadReq
+{
+    string scanId = 1;
+    uint32 firstLocationIndex = 2;
+    repeated Spectra spectraPerLocation = 3; // Note a location may have 0 or more spectra
+}
+
+message SpectrumUploadResp
+{
+}

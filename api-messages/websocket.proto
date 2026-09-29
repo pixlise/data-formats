@@ -366,6 +366,8 @@ message WSMessage
         SendUserNotificationResp sendUserNotificationResp = 113;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
+        SpectrumUploadReq spectrumUploadReq = 386;
+        SpectrumUploadResp spectrumUploadResp = 387;
         TagCreateReq tagCreateReq = 116;
         TagCreateResp tagCreateResp = 117;
         TagDeleteReq tagDeleteReq = 118;
