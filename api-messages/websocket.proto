@@ -317,6 +317,8 @@ message WSMessage
         ScanAutoShareWriteResp scanAutoShareWriteResp = 282;
         ScanBeamLocationsReq scanBeamLocationsReq = 192;
         ScanBeamLocationsResp scanBeamLocationsResp = 193;
+        ScanCloneReq scanCloneReq = 388;
+        ScanCloneResp scanCloneResp = 389;
         ScanCreateUserDefinedReq scanCreateUserDefinedReq = 358;
         ScanCreateUserDefinedResp scanCreateUserDefinedResp = 359;
         ScanDeleteReq scanDeleteReq = 276;

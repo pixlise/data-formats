@@ -122,6 +122,19 @@ message ScanCreateUserDefinedResp
 {
 }
 
+// requires(EDIT_SCAN)
+message ScanCloneReq
+{
+    string id = 1;
+    string clonedIdPrefix = 2;
+}
+
+message ScanCloneResp
+{
+    string id = 1;
+    string clonedId = 2;
+}
+
 // Editing who to auto-share a scan with
 // requires(EDIT_SCAN)
 message ScanAutoShareReq
