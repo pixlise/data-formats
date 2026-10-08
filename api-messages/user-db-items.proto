@@ -15,4 +15,5 @@ message UserDBItem
 
     string dataCollectionVersion = 3;
     UserNotificationSettings notificationSettings = 5;
+    UserGuidance guidance = 6;
 }
