@@ -17,13 +17,18 @@ message UserInfo
     string nonSecretPassword = 7; // @gotaags: bson:"nonsecretpassword,omitempty"
 }
 
+message UserGuidance
+{
+    bool tipsDisabled = 2;
+    repeated string seenFeatureIds = 3;
+}
+
 message UserDetails
 {
     UserInfo info = 1;
-
     string dataCollectionVersion = 5;
-
     repeated string permissions = 8;
+    UserGuidance guidance = 9;
 }
 
 message Auth0UserRole
