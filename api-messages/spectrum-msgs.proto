@@ -51,3 +51,17 @@ message SpectrumUploadReq
 message SpectrumUploadResp
 {
 }
+
+// To retrieve the list of detectors. Eg PIXL will always have A and B, while if we process new spectra
+// or import data from other sources, we may have a different list with 0 or more detectors.
+
+// requires(NONE)
+message SpectrumDetectorsReq
+{
+    string scanId = 1;
+}
+
+message SpectrumDetectorsResp
+{
+    repeated string detectorId = 1;
+}
