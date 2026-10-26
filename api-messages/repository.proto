@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+
+message SourceRepository
+{
+	string id = 1; // @gotags: bson:"_id,omitempty"
+    string name = 2;
+    string url = 3;
+    string user = 4;
+    string secret = 5; // Password or a token string. Stored in DB and can be set but not retrieved via API
+}
