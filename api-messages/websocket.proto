@@ -379,8 +379,8 @@ message WSMessage
         SpectrumResp spectrumResp = 115;
         SpectrumDetectorsReq spectrumDetectorsReq = 390;
         SpectrumDetectorsResp spectrumDetectorsResp = 391;
-        SpectrumUploadReq spectrumUploadReq = 386;
-        SpectrumUploadResp spectrumUploadResp = 387;
+        SpectrumUploadReq spectrumUploadReq = 392;
+        SpectrumUploadResp spectrumUploadResp = 393;
         TagCreateReq tagCreateReq = 116;
         TagCreateResp tagCreateResp = 117;
         TagDeleteReq tagDeleteReq = 118;
