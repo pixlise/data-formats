@@ -375,6 +375,10 @@ message WSMessage
         SourceRepositoryListResp sourceRepositoryListResp = 381;
         SourceRepositorySetReq sourceRepositorySetReq = 382;
         SourceRepositorySetResp sourceRepositorySetResp = 383;
+        SpectrumAggregateReq spectrumAggregateReq = 394;
+        SpectrumAggregateResp spectrumAggregateResp = 395;
+        SpectrumDetectorsReq spectrumDetectorsReq = 390;
+        SpectrumDetectorsResp spectrumDetectorsResp = 391;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
         SpectrumDetectorsReq spectrumDetectorsReq = 390;
