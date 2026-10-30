@@ -212,8 +212,8 @@ message WSMessage
         JobListReq jobListReq = 296;
         JobListResp jobListResp = 297;
         JobListUpd jobListUpd = 298;
-        JobOutputGetReq jobOutputGetReq = 386;
-        JobOutputGetResp jobOutputGetResp = 387;
+        JobOutputGetReq jobOutputGetReq = 392;
+        JobOutputGetResp jobOutputGetResp = 393;
         LogGetLevelReq logGetLevelReq = 67;
         LogGetLevelResp logGetLevelResp = 68;
         LogReadReq logReadReq = 69;
@@ -377,8 +377,6 @@ message WSMessage
         SourceRepositorySetResp sourceRepositorySetResp = 383;
         SpectrumAggregateReq spectrumAggregateReq = 394;
         SpectrumAggregateResp spectrumAggregateResp = 395;
-        SpectrumDetectorsReq spectrumDetectorsReq = 390;
-        SpectrumDetectorsResp spectrumDetectorsResp = 391;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
         SpectrumDetectorsReq spectrumDetectorsReq = 390;
