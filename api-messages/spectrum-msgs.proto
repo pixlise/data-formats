@@ -65,3 +65,37 @@ message SpectrumDetectorsResp
 {
     repeated string detectorId = 1;
 }
+
+// Previously the client would download all spectra (in batches) to have locally so we could use it in 2 fast/random access ways:
+// - If the user selects points, we wanted to display the sum of their spectra on the spectrum chart
+// - Running the expression language in the browser, which has several spectrum-related calls, which may
+//   needed to be serviced locally.
+// Now that we can run expressions on the back-end, and we have the need to import much larger scans (eg bruker), it doesn't make
+// sense to download all spectra to the client anymore. We can sum the spectra server-side and just return their sum for the
+// user selecting points case, while large expressions should only run on the back-end anyway.
+
+// requires(NONE)
+message SpectrumAggregateReq
+{
+    // Which scan's spectra
+    string scanId = 1;
+
+    // Which points
+    ScanEntryRange entries = 2;
+
+    // Which detectors
+    repeated string detectors = 3;
+
+    // What read type to work from
+    SpectrumType readType = 4;
+
+    // How to aggregate, these can't both be unset/false!
+    bool bulkSum = 5;
+    bool maxValue = 6;
+}
+
+message SpectrumAggregateResp
+{
+    repeated Spectrum bulkSpectra = 1;
+    repeated Spectrum maxSpectra = 2;
+}

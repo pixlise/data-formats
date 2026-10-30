@@ -366,6 +366,8 @@ message WSMessage
         SelectedScanEntriesWriteResp selectedScanEntriesWriteResp = 233;
         SendUserNotificationReq sendUserNotificationReq = 112;
         SendUserNotificationResp sendUserNotificationResp = 113;
+        SpectrumAggregateReq spectrumAggregateReq = 394;
+        SpectrumAggregateResp spectrumAggregateResp = 395;
         SpectrumDetectorsReq spectrumDetectorsReq = 390;
         SpectrumDetectorsResp spectrumDetectorsResp = 391;
         SpectrumReq spectrumReq = 114;
