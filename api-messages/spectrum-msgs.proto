@@ -98,4 +98,6 @@ message SpectrumAggregateResp
 {
     repeated Spectrum bulkSpectra = 1;
     repeated Spectrum maxSpectra = 2;
+
+    repeated string warnings = 3;
 }
