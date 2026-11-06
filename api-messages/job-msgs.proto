@@ -17,18 +17,95 @@ Need messages for:
 // For now we use quant permissions, but we may want a specific job permission in future
 // because a job might come from multiple places. Currently: import, quantification...
 
+// Listing jobs - returns all active jobs and the rest are returned in blocks
+// depending on the start/end index specified
+
 // requires(QUANTIFY)
 message JobListReq
 {
-    //SearchParams searchParams = 1;
+    uint32 skipJobs = 1;
+    uint32 jobCount = 2;
+    repeated JobType jobTypes = 3;
 }
 
 message JobListResp
 {
+    // The jobs requested by index
     repeated JobStatus jobs = 1;
+    uint32 totalJobCount = 2;
+
+    repeated JobStatus activeJobs = 3;
 }
 
 message JobListUpd
 {
     JobStatus job = 1;
+}
+
+// requires(QUANTIFY)
+message JobGetReq
+{
+    string jobId = 1;
+}
+
+message JobGetResp
+{
+    JobStatus status = 1;
+    JobGroupConfig config = 2;
+}
+
+// requires(QUANTIFY)
+message JobOutputGetReq
+{
+    string jobId = 1;
+    uint32 nodeIndex = 2;
+    string filePath = 3;
+}
+
+message JobOutputGetResp
+{
+    bytes content = 1;
+}
+
+// requires(QUANTIFY)
+message ScheduledJobListReq
+{
+}
+
+message ScheduledJobListResp
+{
+    repeated ScheduledJob jobs = 1;
+}
+
+// requires(QUANTIFY)
+message SetScheduledJobReq
+{
+    ScheduledJob job = 1;
+}
+
+message SetScheduledJobResp
+{
+    ScheduledJob job = 1;
+}
+
+// requires(QUANTIFY)
+message DeleteScheduledJobReq
+{
+    string id = 1;
+}
+
+message DeleteScheduledJobResp
+{
+}
+
+// requires(QUANTIFY)
+message TriggerScheduledJobReq
+{
+    string scheduledJobId = 1;
+    map<string, string> jobParameters = 2;
+}
+
+message TriggerScheduledJobResp
+{
+    string jobId = 1;
 }

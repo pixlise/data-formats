@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = ".;protos";
+
+import "repository.proto";
+
+
+// requires(EDIT_EXPRESSION)
+message SourceRepositoryListReq
+{
+}
+
+message SourceRepositoryListResp
+{
+    repeated SourceRepository repositories = 1;
+}
+
+// requires(EDIT_EXPRESSION)
+message SourceRepositorySetReq
+{
+    // If id is not set, it creates a new one, otherwise tries to overwrite the one with that id
+    SourceRepository repository = 1;
+}
+
+message SourceRepositorySetResp
+{
+    SourceRepository repository = 1;
+}
+
+// requires(EDIT_EXPRESSION)
+message SourceRepositoryDeleteReq
+{
+    string id = 1;
+}
+
+message SourceRepositoryDeleteResp
+{
+}
