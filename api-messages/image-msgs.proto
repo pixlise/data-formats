@@ -114,8 +114,9 @@ message ImageUploadHttpRequest
         ImageMatchTransform beamImageRef = 4;
     }
 
-    uint32 partNo = 7;
-    uint32 totalParts = 8;
+    reserved 7; // was uint32 partNo
+    reserved 8; // was uint32 totalParts
+
     uint64 imageByteSize = 9;
     uint64 bytesUploadedSoFar = 10;
 }
