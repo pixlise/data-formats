@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;protos";
 
+import "memoisation.proto";
 import "spectrum.proto";
 import "scan.proto";
 
@@ -100,4 +101,38 @@ message SpectrumAggregateResp
     repeated Spectrum maxSpectra = 2;
 
     repeated string warnings = 3;
+}
+
+enum SpectrumRangeOp
+{
+    SRO_UNKNOWN = 0;
+    SRO_SUM = 1;
+    SRO_SUM_OF_DIFF = 2;
+    SRO_MAX_OF_DIFF = 3;
+}
+
+// requires(NONE)
+message SpectrumRangeCalcReq
+{
+    // Which scan's spectra
+    string scanId = 1;
+
+    // Which detectors
+    // For SUM ops it must be 1 or more, for DIFF ops it must have 2
+    repeated string detectors = 3;
+
+    // What read type to work from
+    SpectrumType readType = 4;
+
+    // Channel indexes to sum between
+    int32 channelStart = 5;
+    int32 channelEnd = 6;
+
+    // What kind of calculation
+    SpectrumRangeOp op = 7;
+}
+
+message SpectrumRangeCalcResp
+{
+    MemPMCDataValues result = 1;
 }

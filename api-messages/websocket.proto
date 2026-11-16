@@ -379,6 +379,8 @@ message WSMessage
         SpectrumAggregateResp spectrumAggregateResp = 395;
         SpectrumDetectorsReq spectrumDetectorsReq = 390;
         SpectrumDetectorsResp spectrumDetectorsResp = 391;
+        SpectrumRangeCalcReq spectrumRangeCalcReq = 396;
+        SpectrumRangeCalcResp spectrumRangeCalcResp = 397;
         SpectrumReq spectrumReq = 114;
         SpectrumResp spectrumResp = 115;
         SpectrumUploadReq spectrumUploadReq = 386;
