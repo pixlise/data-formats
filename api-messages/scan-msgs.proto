@@ -102,10 +102,10 @@ message ScanUploadFormatsResp
 
 message ScanUploadHttpRequest
 {
-    string name = 1;
+    string fileName = 1;
     bytes data = 2;
 
-    uint64 imageByteSize = 3;
+    uint64 fileByteSize = 3;
     uint64 bytesUploadedSoFar = 4;
 }
 
