@@ -100,6 +100,20 @@ message ScanUploadFormatsResp
     repeated string formats = 1;
 }
 
+message ScanUploadHttpRequest
+{
+    string name = 1;
+    bytes data = 2;
+
+    uint64 imageByteSize = 3;
+    uint64 bytesUploadedSoFar = 4;
+}
+
+message ScanUploadHttpPartialInfo
+{
+    uint64 bytesReceived = 1;
+}
+
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
 message ScanUploadReq
@@ -109,7 +123,8 @@ message ScanUploadReq
 
     // NOTE: We used to send the zip data up here, but message size was never big enough
     //       so instead of increasing that, we now have a PUT /scan endpoint to pass up
-    //       the zip first, then this can be called, passing the same scan id & file name
+    //       the zip first (maybe even in chunks!), then this can be called, passing
+    //       the same scan id & file name
     // bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
     string zipFileName = 4;
 
