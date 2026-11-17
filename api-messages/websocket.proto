@@ -344,6 +344,8 @@ message WSMessage
         ScanTriggerReImportReq scanTriggerReImportReq = 108;
         ScanTriggerReImportResp scanTriggerReImportResp = 109;
         ScanTriggerReImportUpd scanTriggerReImportUpd = 269;
+        ScanUploadFormatsReq scanUploadFormatsReq = 398;
+        ScanUploadFormatsResp scanUploadFormatsResp = 399;
         ScanUploadReq scanUploadReq = 110;
         ScanUploadResp scanUploadResp = 111;
         ScanUploadUpd scanUploadUpd = 268;

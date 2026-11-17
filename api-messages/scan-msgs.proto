@@ -84,6 +84,22 @@ message ScanGetResp
     ScanItem scan = 1;
 }
 
+
+// Returns a list of formats (for use in ScanUploadReq)
+// These used to be hard-coded in the client but it makes
+// sense to request these from the back-end as that's what
+// interprets them when an upload happens
+
+// requires(EDIT_SCAN)
+message ScanUploadFormatsReq
+{
+}
+
+message ScanUploadFormatsResp
+{
+    repeated string formats = 1;
+}
+
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
 message ScanUploadReq
