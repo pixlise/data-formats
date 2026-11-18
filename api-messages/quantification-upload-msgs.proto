@@ -24,3 +24,21 @@ message QuantUploadResp
 {
     string createdQuantId = 1;
 }
+
+
+// Importing an uploaded large image as a quantification. This expects a floating point tif image and imports
+// it as a quantification with the ability to skip rows/columns to reduce the data size if needed
+
+// requires(QUANTIFY)
+message QuantImportReq
+{
+    string scanId = 1;
+    string name = 2;
+    string comments = 3;
+    string uploadedFileName = 5;
+}
+
+message QuantImportResp
+{
+    string createdQuantId = 1;
+}

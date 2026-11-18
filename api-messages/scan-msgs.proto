@@ -111,29 +111,30 @@ message UploadHttpResponseBody
 
 // This should trigger a ScanListUpd to go out
 // requires(EDIT_SCAN)
-message ScanUploadReq
+message ScanImportReq
 {
     string id = 1;
     string format = 2; // currently only allows jpl-breadboard
 
     // NOTE: We used to send the zip data up here, but message size was never big enough
-    //       so instead of increasing that, we now have a PUT /scan endpoint to pass up
+    //       so instead of increasing that, we now have a PUT /file endpoint to pass up
     //       the zip first (maybe even in chunks!), then this can be called, passing
     //       the same scan id & file name
     // bytes zippedData = 3; // jpl-breadboard implies this is a zip file of MSA files
-    string zipFileName = 4;
+
+    string zipFileName = 4; // File name of something uploaded via HTTP /file PUT
 
     uint32 skipRows = 5;
     uint32 skipColumns = 6;
     uint32 maxMapPoints = 7;
 }
 
-message ScanUploadResp
+message ScanImportResp
 {
     string jobId = 1;
 }
 
-message ScanUploadUpd
+message ScanImportUpd
 {
     JobStatus status = 1;
 }

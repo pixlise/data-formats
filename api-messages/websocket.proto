@@ -192,6 +192,8 @@ message WSMessage
         ImageGetDefaultResp imageGetDefaultResp = 263;
         ImageGetReq imageGetReq = 264;
         ImageGetResp imageGetResp = 265;
+        ImageImportReq imageImportReq = 400;
+        ImageImportResp imageImportResp = 401;
         ImageListReq imageListReq = 60;
         ImageListResp imageListResp = 61;
         ImageListUpd imageListUpd = 278;
@@ -266,6 +268,8 @@ message WSMessage
         QuantDeleteResp quantDeleteResp = 211;
         QuantGetReq quantGetReq = 212;
         QuantGetResp quantGetResp = 213;
+        QuantImportReq quantImportReq = 402;
+        QuantImportResp quantImportResp = 403;
         QuantLastOutputGetReq quantLastOutputGetReq = 214;
         QuantLastOutputGetResp quantLastOutputGetResp = 215;
         QuantListReq quantListReq = 216;
@@ -332,6 +336,9 @@ message WSMessage
         ScanEntryResp scanEntryResp = 197;
         ScanGetReq scanGetReq = 292;
         ScanGetResp scanGetResp = 293;
+        ScanImportReq scanImportReq = 110;
+        ScanImportResp scanImportResp = 111;
+        ScanImportUpd scanImportUpd = 268;
         ScanListReq scanListReq = 99;
         ScanListResp scanListResp = 100;
         ScanListUpd scanListUpd = 101;
@@ -346,9 +353,6 @@ message WSMessage
         ScanTriggerReImportUpd scanTriggerReImportUpd = 269;
         ScanUploadFormatsReq scanUploadFormatsReq = 398;
         ScanUploadFormatsResp scanUploadFormatsResp = 399;
-        ScanUploadReq scanUploadReq = 110;
-        ScanUploadResp scanUploadResp = 111;
-        ScanUploadUpd scanUploadUpd = 268;
         ScheduledJobListReq scheduledJobListReq = 370;
         ScheduledJobListResp scheduledJobListResp = 371;
         ScreenConfigurationDeleteReq screenConfigurationDeleteReq = 260;
