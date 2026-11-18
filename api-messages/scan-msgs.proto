@@ -100,18 +100,13 @@ message ScanUploadFormatsResp
     repeated string formats = 1;
 }
 
-message ScanUploadHttpRequest
-{
-    string fileName = 1;
-    bytes data = 2;
+// We don't have an upload message because it was replaced with a HTTP PUT with fields in query parameters
 
-    uint64 fileByteSize = 3;
-    uint64 bytesUploadedSoFar = 4;
-}
-
-message ScanUploadHttpPartialInfo
+// Here is the response message
+message UploadHttpResponseBody
 {
     uint64 bytesReceived = 1;
+    bool completed = 2;
 }
 
 // This should trigger a ScanListUpd to go out
